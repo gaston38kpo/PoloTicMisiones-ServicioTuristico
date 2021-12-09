@@ -18,9 +18,11 @@ public class EmployeeJpaController implements Serializable {
     public EmployeeJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
+    
     public EmployeeJpaController(){
         emf = Persistence.createEntityManagerFactory("TpFinalPU");    
     }
+    
     private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {

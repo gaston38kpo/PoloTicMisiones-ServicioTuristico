@@ -19,8 +19,8 @@ public class SaleJpaController implements Serializable {
         this.emf = emf;
     }
     
-    public SaleJpaController(){
-        emf = Persistence.createEntityManagerFactory("TpFinalPU");    
+    public SaleJpaController() {
+        emf = Persistence.createEntityManagerFactory("TpFinalPU");
     }
     
     private EntityManagerFactory emf = null;
@@ -132,5 +132,5 @@ public class SaleJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }

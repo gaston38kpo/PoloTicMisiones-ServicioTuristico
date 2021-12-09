@@ -18,9 +18,11 @@ public class UserJpaController implements Serializable {
     public UserJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
+    
     public UserJpaController(){
         emf = Persistence.createEntityManagerFactory("TpFinalPU");    
     }
+    
     private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {

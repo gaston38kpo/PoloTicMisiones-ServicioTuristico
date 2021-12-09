@@ -27,7 +27,7 @@ public class Sale implements Serializable {
     
     @ManyToOne
     @JoinColumn(name="client_fk")
-    private int client_fk;
+    private Client client_fk;
     
     @ManyToOne
     @JoinColumn(name="employee_fk")
@@ -45,7 +45,7 @@ public class Sale implements Serializable {
     public Sale() {
     }
 
-    public Sale(int sale_number, String payment_mehod, Date date_sale, int client_fk, Employee employee_fk, Service service_code_fk, Package package_code_fk) {
+    public Sale(int sale_number, String payment_mehod, Date date_sale, Client client_fk, Employee employee_fk, Service service_code_fk, Package package_code_fk) {
         this.sale_number = sale_number;
         this.payment_mehod = payment_mehod;
         this.date_sale = date_sale;
@@ -79,11 +79,11 @@ public class Sale implements Serializable {
         this.date_sale = date_sale;
     }
 
-    public int getClient_fk() {
+    public Client getClient_fk() {
         return client_fk;
     }
 
-    public void setClient_fk(int client_fk) {
+    public void setClient_fk(Client client_fk) {
         this.client_fk = client_fk;
     }
 
@@ -111,5 +111,6 @@ public class Sale implements Serializable {
         this.package_code_fk = package_code_fk;
     }
 
+    
     
 }
