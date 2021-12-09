@@ -16,30 +16,33 @@ public class Client implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+
     @Basic
     private String first_name;
     private String second_name;
     private String street;
     private String dni;
-    @Temporal(TemporalType.DATE)
-    private Date birthdate;
     private String nationality;
     private String cellphone;
     private String email;
 
+    @Temporal(TemporalType.DATE)
+    private Date birthdate;
+    
+    
     public Client() {
     }
 
-    public Client(int id, String first_name, String second_name, String street, String dni, Date birthdate, String nationality, String cellphone, String email) {
+    public Client(int id, String first_name, String second_name, String street, String dni, String nationality, String cellphone, String email, Date birthdate) {
         this.id = id;
         this.first_name = first_name;
         this.second_name = second_name;
         this.street = street;
         this.dni = dni;
-        this.birthdate = birthdate;
         this.nationality = nationality;
         this.cellphone = cellphone;
         this.email = email;
+        this.birthdate = birthdate;
     }
 
     public int getId() {
@@ -82,14 +85,6 @@ public class Client implements Serializable {
         this.dni = dni;
     }
 
-    public Date getBirthdate() {
-        return birthdate;
-    }
-
-    public void setBirthdate(Date birthdate) {
-        this.birthdate = birthdate;
-    }
-
     public String getNationality() {
         return nationality;
     }
@@ -113,5 +108,14 @@ public class Client implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public Date getBirthdate() {
+        return birthdate;
+    }
+
+    public void setBirthdate(Date birthdate) {
+        this.birthdate = birthdate;
+    }
+
 
 }

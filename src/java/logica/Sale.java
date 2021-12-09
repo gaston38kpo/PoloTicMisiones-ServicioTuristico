@@ -1,57 +1,66 @@
-
 package logica;
 
+import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Basic;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
-public class Sale {
+@Entity
+public class Sale implements Serializable {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;    
-    private int id_client_fk;
-    private Date date_sale;
+    private int sale_number;    
+    
+    @Basic
     private String payment_mehod;
-    private int id_employee_fk;
-    private int service_code_fk;
-    private int package_code_fk;
+    
+    @Temporal(TemporalType.DATE)
+    private Date date_sale;    
+    
+    @ManyToOne
+    @JoinColumn(name="client_fk")
+    private int client_fk;
+    
+    @ManyToOne
+    @JoinColumn(name="employee_fk")
+    private Employee employee_fk;
+    
+    @ManyToOne
+    @JoinColumn(name="service_code_fk")
+    private Service service_code_fk;
+    
+    @ManyToOne
+    @JoinColumn(name="package_code_fk")
+    private Package package_code_fk;
+    
 
     public Sale() {
     }
 
-    public Sale(int id, int id_client_fk, Date date_sale, String payment_mehod, int id_employee_fk, int service_code_fk, int package_code_fk) {
-        this.id = id;
-        this.id_client_fk = id_client_fk;
-        this.date_sale = date_sale;
+    public Sale(int sale_number, String payment_mehod, Date date_sale, int client_fk, Employee employee_fk, Service service_code_fk, Package package_code_fk) {
+        this.sale_number = sale_number;
         this.payment_mehod = payment_mehod;
-        this.id_employee_fk = id_employee_fk;
+        this.date_sale = date_sale;
+        this.client_fk = client_fk;
+        this.employee_fk = employee_fk;
         this.service_code_fk = service_code_fk;
         this.package_code_fk = package_code_fk;
     }
 
-    public int getId() {
-        return id;
+    public int getSale_number() {
+        return sale_number;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getId_client_fk() {
-        return id_client_fk;
-    }
-
-    public void setId_client_fk(int id_client_fk) {
-        this.id_client_fk = id_client_fk;
-    }
-
-    public Date getDate_sale() {
-        return date_sale;
-    }
-
-    public void setDate_sale(Date date_sale) {
-        this.date_sale = date_sale;
+    public void setSale_number(int sale_number) {
+        this.sale_number = sale_number;
     }
 
     public String getPayment_mehod() {
@@ -62,29 +71,45 @@ public class Sale {
         this.payment_mehod = payment_mehod;
     }
 
-    public int getId_employee_fk() {
-        return id_employee_fk;
+    public Date getDate_sale() {
+        return date_sale;
     }
 
-    public void setId_employee_fk(int id_employee_fk) {
-        this.id_employee_fk = id_employee_fk;
+    public void setDate_sale(Date date_sale) {
+        this.date_sale = date_sale;
     }
 
-    public int getService_code_fk() {
+    public int getClient_fk() {
+        return client_fk;
+    }
+
+    public void setClient_fk(int client_fk) {
+        this.client_fk = client_fk;
+    }
+
+    public Employee getEmployee_fk() {
+        return employee_fk;
+    }
+
+    public void setEmployee_fk(Employee employee_fk) {
+        this.employee_fk = employee_fk;
+    }
+
+    public Service getService_code_fk() {
         return service_code_fk;
     }
 
-    public void setService_code_fk(int service_code_fk) {
+    public void setService_code_fk(Service service_code_fk) {
         this.service_code_fk = service_code_fk;
     }
 
-    public int getPackage_code_fk() {
+    public Package getPackage_code_fk() {
         return package_code_fk;
     }
 
-    public void setPackage_code_fk(int package_code_fk) {
+    public void setPackage_code_fk(Package package_code_fk) {
         this.package_code_fk = package_code_fk;
     }
-    
+
     
 }
