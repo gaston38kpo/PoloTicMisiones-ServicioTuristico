@@ -16,6 +16,16 @@
         <link rel="stylesheet" href="assets/css/form.css">
 
         <title>index</title>
+        <style>
+            .table-wrapper{
+                max-width: 60%;
+                margin: 0 auto;
+            }
+            .box-size {
+                max-width: 60%;
+                min-width: 825px;
+            }
+        </style>
     </head>
 
     <body>         
@@ -129,7 +139,7 @@
                                     </option>
 
                                     <% }%>
-                                </select>
+                                </select> 
                             </td>
                             <td>
                                 <form class="form-delete" action="SvPackageDelete" method="POST">
