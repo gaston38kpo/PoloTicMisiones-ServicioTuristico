@@ -2,13 +2,11 @@ package logica;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -27,22 +25,18 @@ public class Service implements Serializable {
 
     @Temporal(TemporalType.DATE)
     private Date date_service;
-
-    @ManyToMany
-    private List<Package> list_of_packages;
     
 
     public Service() {
     }
 
-    public Service(int service_code, String name, String description, String destination, double cost_service, Date date_service, List<Package> list_of_packages) {
+    public Service(int service_code, String name, String description, String destination, double cost_service, Date date_service) {
         this.service_code = service_code;
         this.name = name;
         this.description = description;
         this.destination = destination;
         this.cost_service = cost_service;
         this.date_service = date_service;
-        this.list_of_packages = list_of_packages;
     }
 
     public int getService_code() {
@@ -93,13 +87,5 @@ public class Service implements Serializable {
         this.date_service = date_service;
     }
 
-    public List<Package> getList_of_packages() {
-        return list_of_packages;
-    }
-
-    public void setList_of_packages(List<Package> list_of_packages) {
-        this.list_of_packages = list_of_packages;
-    }
-
-    
+   
 }

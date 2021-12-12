@@ -1,16 +1,14 @@
 package persistencia;
 
 import java.io.Serializable;
-import javax.persistence.Query;
-import javax.persistence.EntityNotFoundException;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-import logica.Package;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Query;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.Persistence;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import logica.Service;
 import persistencia.exceptions.NonexistentEntityException;
 
@@ -21,8 +19,8 @@ public class ServiceJpaController implements Serializable {
         this.emf = emf;
     }
     
-    public ServiceJpaController(){
-        emf = Persistence.createEntityManagerFactory("TpFinalPU");    
+    public ServiceJpaController() {       
+        emf = Persistence.createEntityManagerFactory("TpFinalPU");
     }
     
     private EntityManagerFactory emf = null;
@@ -32,24 +30,11 @@ public class ServiceJpaController implements Serializable {
     }
 
     public void create(Service service) {
-        if (service.getList_of_packages() == null) {
-            service.setList_of_packages(new ArrayList<Package>());
-        }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            List<Package> attachedList_of_packages = new ArrayList<Package>();
-            for (Package list_of_packagesPackageToAttach : service.getList_of_packages()) {
-                list_of_packagesPackageToAttach = em.getReference(list_of_packagesPackageToAttach.getClass(), list_of_packagesPackageToAttach.getPackage_code());
-                attachedList_of_packages.add(list_of_packagesPackageToAttach);
-            }
-            service.setList_of_packages(attachedList_of_packages);
             em.persist(service);
-            for (Package list_of_packagesPackage : service.getList_of_packages()) {
-                list_of_packagesPackage.getList_of_services().add(service);
-                list_of_packagesPackage = em.merge(list_of_packagesPackage);
-            }
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -63,29 +48,7 @@ public class ServiceJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Service persistentService = em.find(Service.class, service.getService_code());
-            List<Package> list_of_packagesOld = persistentService.getList_of_packages();
-            List<Package> list_of_packagesNew = service.getList_of_packages();
-            List<Package> attachedList_of_packagesNew = new ArrayList<Package>();
-            for (Package list_of_packagesNewPackageToAttach : list_of_packagesNew) {
-                list_of_packagesNewPackageToAttach = em.getReference(list_of_packagesNewPackageToAttach.getClass(), list_of_packagesNewPackageToAttach.getPackage_code());
-                attachedList_of_packagesNew.add(list_of_packagesNewPackageToAttach);
-            }
-            list_of_packagesNew = attachedList_of_packagesNew;
-            service.setList_of_packages(list_of_packagesNew);
             service = em.merge(service);
-            for (Package list_of_packagesOldPackage : list_of_packagesOld) {
-                if (!list_of_packagesNew.contains(list_of_packagesOldPackage)) {
-                    list_of_packagesOldPackage.getList_of_services().remove(service);
-                    list_of_packagesOldPackage = em.merge(list_of_packagesOldPackage);
-                }
-            }
-            for (Package list_of_packagesNewPackage : list_of_packagesNew) {
-                if (!list_of_packagesOld.contains(list_of_packagesNewPackage)) {
-                    list_of_packagesNewPackage.getList_of_services().add(service);
-                    list_of_packagesNewPackage = em.merge(list_of_packagesNewPackage);
-                }
-            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -114,11 +77,6 @@ public class ServiceJpaController implements Serializable {
                 service.getService_code();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The service with id " + id + " no longer exists.", enfe);
-            }
-            List<Package> list_of_packages = service.getList_of_packages();
-            for (Package list_of_packagesPackage : list_of_packages) {
-                list_of_packagesPackage.getList_of_services().remove(service);
-                list_of_packagesPackage = em.merge(list_of_packagesPackage);
             }
             em.remove(service);
             em.getTransaction().commit();

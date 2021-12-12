@@ -19,7 +19,7 @@ public class Client implements Serializable {
 
     @Basic
     private String first_name;
-    private String second_name;
+    private String last_name;
     private String street;
     private String dni;
     private String nationality;
@@ -33,10 +33,10 @@ public class Client implements Serializable {
     public Client() {
     }
 
-    public Client(int id, String first_name, String second_name, String street, String dni, String nationality, String cellphone, String email, Date birthdate) {
+    public Client(int id, String first_name, String last_name, String street, String dni, String nationality, String cellphone, String email, Date birthdate) {
         this.id = id;
         this.first_name = first_name;
-        this.second_name = second_name;
+        this.last_name = last_name;
         this.street = street;
         this.dni = dni;
         this.nationality = nationality;
@@ -61,12 +61,12 @@ public class Client implements Serializable {
         this.first_name = first_name;
     }
 
-    public String getSecond_name() {
-        return second_name;
+    public String getLast_name() {
+        return last_name;
     }
 
-    public void setSecond_name(String second_name) {
-        this.second_name = second_name;
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
     }
 
     public String getStreet() {
