@@ -50,7 +50,7 @@
             <input type="checkbox" id="show">
             <label class="show-btn" for="show">Registrar nuevo servicio</label>
 
-            <!-- Form to create new employees -->
+            <!-- Form to create new services -->
 
             <form id="content" action="SvServiceCreate" method="POST">
 
@@ -82,7 +82,7 @@
         </section>
 
 
-        <!-- List all employees on database -->
+        <!-- List all services on database -->
 
         <section class="log-section">
 
@@ -95,6 +95,7 @@
                         <tr>
 
                             <th></th>
+                            <th>Codigo</th>
                             <th>Nombre</th>
                             <th>Descripcion</th>
                             <th>Destino</th>
@@ -126,6 +127,7 @@
                                     <button type="submit" class="edit-btn">Editar</button>
                                 </form>
                             </td>
+                            <td><%= service.getService_code()%></td>
                             <td><%= service.getName()%></td>
                             <td><%= service.getDescription()%></td>
                             <td><%= service.getDestination()%></td>

@@ -90,6 +90,17 @@ input {
   border-radius: 4px;
 }
 
+input[type="checkbox"] {
+  width: auto;
+  margin: 4px;
+  width: 18px;
+  height: 18px;
+}
+
+.checkbox-label {
+  margin-left: 15%;
+}
+
 .submit-btn {
   width: 40%;
   margin: 8px 0;
