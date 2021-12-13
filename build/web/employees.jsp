@@ -146,24 +146,13 @@
                     <tbody class="log-body">
                         <%
                             Controladora control = new Controladora();
+                            SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
                             List<Employee> employeeList = control.getAllEmployees();
 
                             for (Employee emp : employeeList) {
-
-                                SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
-
                                 int id = emp.getId();
-                                String first_name = emp.getFirst_name();
-                                String last_name = emp.getLast_name();
-                                String street = emp.getStreet();
-                                String dni = emp.getDni();
                                 String birthdate = DATE_FORMAT.format(emp.getBirthdate());
-                                String nationality = emp.getNationality();
-                                String cellphone = emp.getCellphone();
-                                String email = emp.getEmail();
-                                String position = emp.getPosition();
-                                double salary = emp.getSalary();
                                 User user = emp.getUser_fk();
                         %>
                         <tr>
@@ -174,16 +163,16 @@
                                     <button type="submit" class="edit-btn">Editar</button>
                                 </form>
                             </td>
-                            <td><%= first_name%></td>
-                            <td><%= last_name%></td>
-                            <td><%= street%></td>
-                            <td><%= dni%></td>
+                            <td><%= emp.getFirst_name()%></td>
+                            <td><%= emp.getLast_name()%></td>
+                            <td><%= emp.getStreet()%></td>
+                            <td><%= emp.getDni()%></td>
                             <td><%= birthdate%></td>
-                            <td><%= nationality%></td>
-                            <td><%= cellphone%></td>
-                            <td><%= email%></td>
-                            <td><%= position%></td>
-                            <td>&dollar;<%= salary%></td>
+                            <td><%= emp.getNationality()%></td>
+                            <td><%= emp.getCellphone()%></td>
+                            <td><%= emp.getEmail()%></td>
+                            <td><%= emp.getPosition()%></td>
+                            <td>&dollar; <%= emp.getSalary()%></td>
                             <td><%= user.getUsername()%></td>
                             <td><%= user.getPassword()%></td>
                             <td>

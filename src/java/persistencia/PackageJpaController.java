@@ -18,7 +18,7 @@ public class PackageJpaController implements Serializable {
     public PackageJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
-        
+            
     public PackageJpaController(){
         emf = Persistence.createEntityManagerFactory("TpFinalPU");    
     }

@@ -179,7 +179,10 @@ public void deleteService(int service_code) {
 ////////////////////////////////////////////////////////////////////////////////
      
 ////////////////////////////// Create Zone /////////////////////////////////////
-    
+
+    public void createPackage(Package pkg) {
+        packageJPA.create(pkg);
+    }    
     
 /////////////////////////////// Read Zone //////////////////////////////////////
     public List<Package> getAllPackages() {
@@ -190,6 +193,14 @@ public void deleteService(int service_code) {
     
     
 ////////////////////////////// Delete Zone /////////////////////////////////////
+    public void deletePackage(int package_code) {
+        try {
+            packageJPA.destroy(package_code);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(ControladoraPersistencia.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        }
+    }
 
 ////////////////////////////////////////////////////////////////////////////////
 //                               S A L E                                      //
@@ -205,7 +216,6 @@ public void deleteService(int service_code) {
     
     
 ////////////////////////////// Delete Zone /////////////////////////////////////
-
 
 
     

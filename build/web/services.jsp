@@ -57,7 +57,7 @@
                 <div class="form-group">
 
                     <h2>Informacion del Servicio</h2>
-
+                    
                     <label for="name_id">Nombre*</label>
                     <input type="text" name="name" id="name_id" placeholder="Pasajes de avión" required>
 
@@ -85,6 +85,7 @@
         <!-- List all services on database -->
 
         <section class="log-section">
+                    <p style="height: auto;">Recuerde que no puede eliminar un servicio que ya esta asignado a un paquete, da error!</p>
 
             <h2>Lista de Servicios</h2>
 

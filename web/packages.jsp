@@ -77,7 +77,8 @@
 
                     <label  class="checkbox-label" >
                         <input 
-                            type="checkbox" 
+                            type="checkbox"
+                            name="service_code"
                             value="<%= service.getService_code()%>">
                         <%= name%>
                     </label>
@@ -101,12 +102,13 @@
 
             <div class="table-wrapper">                
                 <table class="fl-table">
-                    
+
                     <thead class="log-header">
                         <tr>
                             <th></th>
-                            <th>Codigo del paquete</th>                            
-                            <th>Servicios incluidos</th>                            
+                            <th>Codigo del paquete</th>
+                            <th>Servicios incluidos</th>
+                            <th>Costo del paquete</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -124,7 +126,7 @@
                         <tr>
                             <td>
                                 <form class="form-edit" action="SvPackageEdit" method="POST">
-                                    <input type="hidden" name="id" value="<%= package_code%>">
+                                    <input type="hidden" name="package_code" value="<%= package_code%>">
                                     <button type="submit" class="edit-btn">Editar</button>
                                 </form>
                             </td>
@@ -132,7 +134,7 @@
                             <td>
                                 <select>
 
-                                    <%for (Service pkgService : packageServiceList){%>
+                                    <%for (Service pkgService : packageServiceList) {%>
 
                                     <option>
                                         <%= pkgService.getName()%>
@@ -141,21 +143,22 @@
                                     <% }%>
                                 </select> 
                             </td>
+                            <td><%= pkg.getPackage_cost()%></td>
                             <td>
                                 <form class="form-delete" action="SvPackageDelete" method="POST">
-                                    <input type="hidden" name="id" value="<%= package_code%>">
+                                    <input type="hidden" name="package_code" value="<%= package_code%>">
                                     <button type="submit" class="delete-btn">Eliminar</button>
                                 </form>
                             </td>
                         </tr>
                         <% }%>                        
                     </tbody>
-                    
+
                 </table>                    
             </div>
-                    
+
         </section>
-                    
+
     </main>
 
     <footer class="box-size">

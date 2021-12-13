@@ -55,7 +55,7 @@ public class Package implements Serializable {
     public void setList_of_services(List<Service> list_of_services) {
         this.list_of_services = list_of_services;
     }
-    
+
     
 }
     

@@ -1,6 +1,7 @@
 package logica;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import persistencia.ControladoraPersistencia;
 
@@ -199,7 +200,41 @@ public class Controladora {
 ////////////////////////////////////////////////////////////////////////////////
      
 ////////////////////////////// Create Zone /////////////////////////////////////
-    
+    public void createPackage(String[] service_code_list) {
+        
+        Package pkg = new Package();
+        
+        // Inicializo una lista para almacenar los servicios
+        List<Service> services = new ArrayList<>();
+        // Inicializo una acumulador de costo
+        double total_cost_service = 0;
+        
+        // Itero en cada codigo de servicio
+        for (String code : service_code_list) {
+            
+            // Convierdo el codigo a int ya que es el tipo de dato de la PK
+            // a buscar.
+            int service_code = Integer.parseInt(code);
+            
+            // Hallo el servicio y lo almaceno en una variable
+            Service service = this.searchService(service_code);
+            
+            // Agrego el servicio a la lista de servicios
+            services.add(service);
+            
+            // Obtengo el valor de ese servicio especifico y lo acumulo al total
+            total_cost_service += service.getCost_service();            
+        }
+        
+        // Hago el descuento del 10%
+        double cost_service_discount = total_cost_service - (total_cost_service * 0.1);
+        
+        // Seteo la lista de servicios y su costo calculado al paquete
+        pkg.setList_of_services(services);                
+        pkg.setPackage_cost(cost_service_discount);
+        
+        controlPersis.createPackage(pkg);
+    }    
     
 /////////////////////////////// Read Zone //////////////////////////////////////
     public List<Package> getAllPackages () {
@@ -210,6 +245,9 @@ public class Controladora {
     
     
 ////////////////////////////// Delete Zone /////////////////////////////////////
+    public void deletePackage(int package_code) {
+        controlPersis.deletePackage(package_code);
+    }
     
 ////////////////////////////////////////////////////////////////////////////////
 //                               S A L E                                      //
@@ -226,10 +264,4 @@ public class Controladora {
     
 ////////////////////////////// Delete Zone /////////////////////////////////////
 
-        
-
-
-
-    
-        
 }
