@@ -9,7 +9,7 @@
 <%@page import="logica.Controladora" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
     <head>
         <meta charset="UTF-8">
@@ -20,13 +20,27 @@
         <link rel="stylesheet" href="assets/css/log-manager.css">
         <link rel="stylesheet" href="assets/css/form.css">
 
-        <title>index</title>
+        <title>VENTAS</title>
+        <script>
+            function toggle() {
+                if (document.getElementById('toggle_id').checked) {
+                    document.getElementById('service_code_fk_id').disabled = false;
+                    document.getElementById('package_code_fk_id').disabled = true;
+                    document.getElementById('package_code_fk_id').value = "";
+                } else {
+                    document.getElementById('service_code_fk_id').disabled = true;
+                    document.getElementById('service_code_fk_id').value = "";
+                    document.getElementById('package_code_fk_id').disabled = false;
+                }
+            }
+        </script>
     </head>
 
     <body>
         <%
             HttpSession thisSession = request.getSession();
             String user = (String) thisSession.getAttribute("username");
+            
             if (user == null) {
                 response.sendRedirect("login.jsp");
             } else {
@@ -57,7 +71,7 @@
             <input type=checkbox id="show">
             <label class="show-btn" for="show">Registrar nueva Venta</label>
 
-            <!-- Form to create new Sale -->
+            <!-- NUEVA VENTA -->
             <form id="content" action="SvSaleCreate" method="POST">
 
                 <div class="form-group">
@@ -67,26 +81,24 @@
                     <label for="payment_mehod_id">Metodo de pago*</label>
                     <select name="payment_mehod" id="payment_mehod_id" required>
                         <option disabled selected value> -- SELECCIONE UNA OPCION -- </option>
-
                         <optgroup label="SISTEMA DE COMISIONES AUN NO IMPLEMENTADO"></optgroup>
                         <optgroup label="Sin comisión">                            
                             <option value="efectivo">Efectivo</option>
-                            <option value="monedero_virtual">Monedeo Virtual</option>
+                            <option value="Monedero Virtual">Monedero Virtual</option>
                         </optgroup>
                         <optgroup label="2.45%">                            
-                            <option value="transferencia">Transferencia</option>
+                            <option value="Transferencia">Transferencia</option>
                         </optgroup>
                         <optgroup label="3%">                            
-                            <option value="tarjeta_de_debito">Tarjeta de Débito</option>
+                            <option value="Tarjeta de Debito">Tarjeta de D&eacute;bito</option>
                         </optgroup>
                         <optgroup label="9%">                            
-                            <option value="tarjeta_de_credito">Tarjeta de Crédito</option>
+                            <option value="Tarjeta de Credito">Tarjeta de Cr&eacute;dito</option>
                         </optgroup>
                     </select>
 
                     <label for="date_sale_id">Fecha de venta*</label>
                     <input type="date" name="date_sale" id="date_sale_id" required>
-
 
                     <label for="client_fk_id">CLIENTES*</label>
                     <select name="client_fk" id="client_fk_id" required>
@@ -104,8 +116,8 @@
                         </option>
 
                         <% }%>
-                    </select>
 
+                    </select>
 
                     <label for="employee_fk_id">EMPLEADOS*</label>
                     <select name="employee_fk" id="employee_fk_id" required>
@@ -121,8 +133,13 @@
                         </option>
 
                         <% }%>
+
                     </select>
 
+                    <div>
+                        <input type="checkbox" id="toggle_id" checked="checked" onclick="toggle()">
+                        <label for="toggle_id">SERVICIO/PAQUETE</label>
+                    </div>
 
                     <label for="service_code_fk_id">SERVICIOS</label>
                     <select name="service_code_fk" id="service_code_fk_id" >
@@ -138,11 +155,11 @@
                         </option>
 
                         <% }%>
+
                     </select>
 
-
                     <label for="package_code_fk_id">PAQUETES</label>
-                    <select name="package_code_fk" id="package_code_fk_id" >
+                    <select name="package_code_fk" id="package_code_fk_id" disabled>
                         <option selected value> -- SELECCIONE UNA OPCION -- </option>
                         <%
                             List<Package> packageList = control.getAllPackages();
@@ -151,12 +168,12 @@
                         %>                  
 
                         <option value="<%= pkg.getPackage_code()%>">
-                            Codigo: <%= pkg.getPackage_code()%> (&dollar; <%= pkg.getPackage_cost()%> )
+                            Codigo: <%= pkg.getPackage_code()%> (&dollar; <%= pkg.getPackage_cost()%>). Cant. servicios: <%= pkg.getList_of_services().size()%> 
                         </option>
 
                         <% }%>
-                    </select>
 
+                    </select>
 
                 </div>               
                 <input type="submit" value="Crear Venta" class="submit-btn">
@@ -176,9 +193,9 @@
                             <th>Numero de venta</th>
                             <th>Metodo de pago</th>
                             <th>Fecha de venta</th>
-                            <th>Cliente</th>
+                            <th>Cliente (DNI)</th>
                             <th>Empleado</th>
-                            <th>Servicio(Si corresponde)</th>
+                            <th>Servicio (Si corresponde)</th>
                             <th>Paquete (Si corresponde)</th>
                             <th></th>
                         </tr>
@@ -229,8 +246,8 @@
                         <tr>
                             <td>
                                 <form class="form-edit" action="SvSaleEdit" method="POST">
-                                        <input type="hidden" name="sale_number" value="<%= sale.getSale_number()%>">
-                                        <button type="submit" class="edit-btn">Editar</button>
+                                    <input type="hidden" name="sale_number" value="<%= sale.getSale_number()%>">
+                                    <button type="submit" class="edit-btn">Editar</button>
                                 </form>
                             </td>
                             <td>
@@ -260,16 +277,17 @@
 
                                             for (Service pkgService : pkg.getList_of_services()) {
                                                 String service_name_pkg = pkgService.getName();
-                                                
+
                                                 String service_cost_pkg = String.valueOf(pkgService.getCost_service());
-                                                
+
                                     %>
 
                                     <option>
                                         Servicio: <%= service_name_pkg%> (&dollar; <%= service_cost_pkg%>)
                                     </option>
 
-                                    <% }} catch (Exception e) {%>
+                                    <% }
+                                    } catch (Exception e) {%>
                                     <option>
                                         -
                                     </option>
@@ -278,8 +296,8 @@
                             </td>
                             <td>
                                 <form class="form-edit" action="SvSaleDelete" method="POST">
-                                        <input type="hidden" name="sale_number" value="<%= sale.getSale_number()%>">
-                                        <button type="submit" class="delete-btn">Eliminar</button>
+                                    <input type="hidden" name="sale_number" value="<%= sale.getSale_number()%>">
+                                    <button type="submit" class="delete-btn">Eliminar</button>
                                 </form>
                             </td>
                         </tr>
@@ -295,6 +313,6 @@
             Hecho con ♥ por Gaston Giacobini (Proyecto Polo Tic Misiones 2021)
         </p>
     </footer>
-    <% }%>
+    <% }%>    
 </body>
 </html>

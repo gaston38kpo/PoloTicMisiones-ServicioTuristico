@@ -9,7 +9,7 @@
 
     <link rel="stylesheet" href="assets/css/style.css">
 
-    <title>index</title>
+    <title>Agencia de Turismo</title>
 </head>
 
 <body>
@@ -25,17 +25,17 @@
         <a href="index.jsp">
             <h1>Agencia de Turismo UwU</h1>
         </a>
-        <p>Konnichiwa <%= request.getSession().getAttribute("username")%>!</p>
+        <p>Konnichiwa <%= request.getSession().getAttribute("username")%>-chan!</p>
     </div>
     <navbar class="navbar-default box-size">
         <ul class="links">
             <li><a href="https://youtu.be/dQw4w9WgXcQ">
                     SOY UN LINK :D
                 </a></li>
-            <li><a href="#">
+            <li><a href="https://github.com/gaston38kpo/servicio-turistico">
                     GITHUB
                 </a></li>
-            <li><a href="#">
+            <li><a href="https://www.linkedin.com/in/gaston-giacobini/">
                     SOBRE MI
                 </a></li>
         </ul>

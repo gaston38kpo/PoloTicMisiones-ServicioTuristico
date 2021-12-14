@@ -81,7 +81,7 @@
                         // A LA LISTA COMPLETA SE LE RESTAN LOS SERVICIOS DEL PAQUETE
                         List<Service> newServiceList = new <Service> ArrayList();
 
-                        // (1) RECORRO LOS SERVICIOS DEL PAQUETE
+                        // (1) RECORRO LOS SERVICIOS DE MI PAQUETE Y LOS MUESTRO
                         for (Service serviceInPkg : list_of_services) {
                     %>
 
@@ -93,11 +93,11 @@
                     <%
                             // (2) RECORRO TODOS LOS SERVICIOS DE LA BD
                             for (Service service : serviceList) {
-                                // (3) VALIDACION 1: SI NO COINCIDEN LAS PK CONTINÚA
+                                // (3) VALIDACION 1: SI NO COINCIDEN LAS PK CONTINÚA (ESTO ES PARA MOSTRAR SOLO LOS QUE NO TIENE MI PAQUETE)
                                 if (serviceInPkg.getService_code() != service.getService_code()) {
                                     boolean exist = false;
 
-                                    // (4) RECORRO LOS SERVICIOS DEL PAQUETE
+                                    // (4) RECORRO LOS SERVICIOS DE MI PAQUETE
                                     for (Service serviceRecheck : list_of_services) {
                                         // (5) VALIDACION 2: SI COINCIDE EL SERVICIO DE LA BD CON EL DE LA PK CONTINÚA
                                         if (service.getService_code() == serviceRecheck.getService_code()) {
