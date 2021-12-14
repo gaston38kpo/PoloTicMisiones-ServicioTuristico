@@ -9,7 +9,7 @@
 <%@page import="logica.Controladora" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
     <head>
         <meta charset="UTF-8">
@@ -20,7 +20,7 @@
         <link rel="stylesheet" href="assets/css/log-manager.css">
         <link rel="stylesheet" href="assets/css/form.css">
 
-        <title>index</title>
+        <title>VENTAS</title>
         <script>
             function toggle() {
                 if (document.getElementById('toggle_id').checked) {
@@ -40,6 +40,7 @@
         <%
             HttpSession thisSession = request.getSession();
             String user = (String) thisSession.getAttribute("username");
+            
             if (user == null) {
                 response.sendRedirect("login.jsp");
             } else {
@@ -70,7 +71,7 @@
             <input type=checkbox id="show">
             <label class="show-btn" for="show">Registrar nueva Venta</label>
 
-            <!-- Form to create new Sale -->
+            <!-- NUEVA VENTA -->
             <form id="content" action="SvSaleCreate" method="POST">
 
                 <div class="form-group">
@@ -80,7 +81,6 @@
                     <label for="payment_mehod_id">Metodo de pago*</label>
                     <select name="payment_mehod" id="payment_mehod_id" required>
                         <option disabled selected value> -- SELECCIONE UNA OPCION -- </option>
-
                         <optgroup label="SISTEMA DE COMISIONES AUN NO IMPLEMENTADO"></optgroup>
                         <optgroup label="Sin comisión">                            
                             <option value="efectivo">Efectivo</option>
@@ -100,7 +100,6 @@
                     <label for="date_sale_id">Fecha de venta*</label>
                     <input type="date" name="date_sale" id="date_sale_id" required>
 
-
                     <label for="client_fk_id">CLIENTES*</label>
                     <select name="client_fk" id="client_fk_id" required>
                         <option disabled selected value> -- SELECCIONE UNA OPCION -- </option>
@@ -117,8 +116,8 @@
                         </option>
 
                         <% }%>
-                    </select>
 
+                    </select>
 
                     <label for="employee_fk_id">EMPLEADOS*</label>
                     <select name="employee_fk" id="employee_fk_id" required>
@@ -134,13 +133,13 @@
                         </option>
 
                         <% }%>
+
                     </select>
 
                     <div>
                         <input type="checkbox" id="toggle_id" checked="checked" onclick="toggle()">
                         <label for="toggle_id">SERVICIO/PAQUETE</label>
                     </div>
-
 
                     <label for="service_code_fk_id">SERVICIOS</label>
                     <select name="service_code_fk" id="service_code_fk_id" >
@@ -156,8 +155,8 @@
                         </option>
 
                         <% }%>
-                    </select>
 
+                    </select>
 
                     <label for="package_code_fk_id">PAQUETES</label>
                     <select name="package_code_fk" id="package_code_fk_id" disabled>
@@ -169,12 +168,12 @@
                         %>                  
 
                         <option value="<%= pkg.getPackage_code()%>">
-                            Codigo: <%= pkg.getPackage_code()%> (&dollar; <%= pkg.getPackage_cost()%> )
+                            Codigo: <%= pkg.getPackage_code()%> (&dollar; <%= pkg.getPackage_cost()%>). Cant. servicios: <%= pkg.getList_of_services().size()%> 
                         </option>
 
                         <% }%>
-                    </select>
 
+                    </select>
 
                 </div>               
                 <input type="submit" value="Crear Venta" class="submit-btn">
@@ -194,9 +193,9 @@
                             <th>Numero de venta</th>
                             <th>Metodo de pago</th>
                             <th>Fecha de venta</th>
-                            <th>Cliente</th>
+                            <th>Cliente (DNI)</th>
                             <th>Empleado</th>
-                            <th>Servicio(Si corresponde)</th>
+                            <th>Servicio (Si corresponde)</th>
                             <th>Paquete (Si corresponde)</th>
                             <th></th>
                         </tr>
