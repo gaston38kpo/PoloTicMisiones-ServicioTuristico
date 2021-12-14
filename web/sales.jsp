@@ -1,3 +1,7 @@
+<%@page import="logica.Sale"%>
+<%@page import="logica.Package"%>
+<%@page import="logica.Service"%>
+<%@page import="logica.Client"%>
 <%@page import="java.util.Date" %>
 <%@page import="java.text.SimpleDateFormat" %>
 <%@page import="logica.Employee" %>
@@ -20,12 +24,12 @@
     </head>
 
     <body>
-        <%        
-        HttpSession thisSession = request.getSession();
-        String user = (String) thisSession.getAttribute("username");
-        if (user == null) {
-            response.sendRedirect("login.jsp");
-        } else {
+        <%
+            HttpSession thisSession = request.getSession();
+            String user = (String) thisSession.getAttribute("username");
+            if (user == null) {
+                response.sendRedirect("login.jsp");
+            } else {
         %>   
 
         <div class="logobar-default box-size">
@@ -53,67 +57,114 @@
             <input type=checkbox id="show">
             <label class="show-btn" for="show">Registrar nueva Venta</label>
 
-            <!-- Form to create new employees -->
-            <form id="content" action="SvEmployee" method="POST">
-                <div class="form-group form-personal-info">
-                    <h2>Informacion personal</h2>
-                    <label for="first_name_id">Nombre*</label>
-                    <input type="text" name="first_name" id="first_name_id" placeholder="Tony"
-                           required>
+            <!-- Form to create new Sale -->
+            <form id="content" action="SvSaleCreate" method="POST">
 
-                    <label for="last_name_id">Apellido*</label>
-                    <input type="text" name="last_name" id="last_name_id" placeholder="Stark"
-                           required>
+                <div class="form-group">
 
-                    <label for="street_id">Dirección*</label>
-                    <input type="text" name="street" id="street_id" placeholder="Calle 123"
-                           required>
+                    <h2>Informacion de Venta</h2>
 
-                    <label for="dni_id">DNI*</label>
-                    <input type="number" name="dni" id="dni_id" placeholder="12345678" required>
+                    <label for="payment_mehod_id">Metodo de pago*</label>
+                    <select name="payment_mehod" id="payment_mehod_id" required>
+                        <option disabled selected value> -- SELECCIONE UNA OPCION -- </option>
 
-                    <label for="birthdate_id">Fecha de nacimiento*</label>
-                    <input type="date" name="birthdate" id="birthdate_id" required>
+                        <optgroup label="SISTEMA DE COMISIONES AUN NO IMPLEMENTADO"></optgroup>
+                        <optgroup label="Sin comisión">                            
+                            <option value="efectivo">Efectivo</option>
+                            <option value="monedero_virtual">Monedeo Virtual</option>
+                        </optgroup>
+                        <optgroup label="2.45%">                            
+                            <option value="transferencia">Transferencia</option>
+                        </optgroup>
+                        <optgroup label="3%">                            
+                            <option value="tarjeta_de_debito">Tarjeta de Débito</option>
+                        </optgroup>
+                        <optgroup label="9%">                            
+                            <option value="tarjeta_de_credito">Tarjeta de Crédito</option>
+                        </optgroup>
+                    </select>
 
-                    <label for="nationality_id">Nacionalidad*</label>
-                    <input type="text" name="nationality" id="nationality_"
-                           placeholder="Argentina" required>
+                    <label for="date_sale_id">Fecha de venta*</label>
+                    <input type="date" name="date_sale" id="date_sale_id" required>
 
-                    <label for="cellphone_id">Telefono*</label>
-                    <input type="text" name="cellphone" id="cellphone_id"
-                           placeholder="+54115551122" required>
 
-                    <label for="email_id">Email*</label>
-                    <input type="email" name="email" id="email_id"
-                           placeholder="email@example.com" required>
+                    <label for="client_fk_id">CLIENTES*</label>
+                    <select name="client_fk" id="client_fk_id" required>
+                        <option disabled selected value> -- SELECCIONE UNA OPCION -- </option>
+                        <%
+                            Controladora control = new Controladora();
 
-                </div>
-                <div class="form-group form-employee-info">
-                    <h2>Informacion laboral</h2>
-                    <label for="position_id">Cargo*</label>
-                    <input type="text" name="position" id="position_id"
-                           placeholder="Vendedor, Administrator, etc" required>
+                            List<Client> clientList = control.getAllClients();
 
-                    <label for="salary_id">Salario*</label>
-                    <input type="number" name="salary" id="salary_id" placeholder="50000"
-                           required>
-                </div>
-                <div class="form-group form-user-info">
-                    <h2>Cuenta</h2>
-                    <label for="username_id">Nombre de Usuario*</label>
-                    <input type="text" name="username" id="username_id" placeholder="TonyStark"
-                           required>
+                            for (Client client : clientList) {
+                        %>                  
 
-                    <label for="password_id">Contraseña*</label>
-                    <input type="password" name="password" id="password_id"
-                           placeholder="********" required>
-                </div>
-                <input type="submit" value="Crear Empleado" class="submit-btn">
+                        <option value="<%= client.getId()%>">
+                            <%= client.getDni()%> - <%= client.getLast_name()%> <%= client.getFirst_name()%>
+                        </option>
+
+                        <% }%>
+                    </select>
+
+
+                    <label for="employee_fk_id">EMPLEADOS*</label>
+                    <select name="employee_fk" id="employee_fk_id" required>
+                        <option disabled selected value> -- SELECCIONE UNA OPCION -- </option>
+                        <%
+                            List<Employee> employeeList = control.getAllEmployees();
+
+                            for (Employee employee : employeeList) {
+                        %>                  
+
+                        <option value="<%= employee.getId()%>">
+                            <%= employee.getLast_name()%> <%= employee.getFirst_name()%>
+                        </option>
+
+                        <% }%>
+                    </select>
+
+
+                    <label for="service_code_fk_id">SERVICIOS</label>
+                    <select name="service_code_fk" id="service_code_fk_id" >
+                        <option selected value> -- SELECCIONE UNA OPCION -- </option>
+                        <%
+                            List<Service> serviceList = control.getAllServices();
+
+                            for (Service service : serviceList) {
+                        %>                  
+
+                        <option value="<%= service.getService_code()%>">
+                            Servicio: <%= service.getName()%> (&dollar; <%= service.getCost_service()%>)
+                        </option>
+
+                        <% }%>
+                    </select>
+
+
+                    <label for="package_code_fk_id">PAQUETES</label>
+                    <select name="package_code_fk" id="package_code_fk_id" >
+                        <option selected value> -- SELECCIONE UNA OPCION -- </option>
+                        <%
+                            List<Package> packageList = control.getAllPackages();
+
+                            for (Package pkg : packageList) {
+                        %>                  
+
+                        <option value="<%= pkg.getPackage_code()%>">
+                            Codigo: <%= pkg.getPackage_code()%> (&dollar; <%= pkg.getPackage_cost()%> )
+                        </option>
+
+                        <% }%>
+                    </select>
+
+
+                </div>               
+                <input type="submit" value="Crear Venta" class="submit-btn">
             </form>
         </section>
 
 
-        <!-- List all employees on database -->
+        <!-- List all sales on database -->
 
         <section class="log-section">
             <h2>Lista de Ventas</h2>
@@ -122,59 +173,105 @@
                     <thead class="log-header">
                         <tr>                                                    
                             <th></th>
-                            <th>Nombre</th>
-                            <th>Apellido</th>
-                            <th>Direccion</th>
-                            <th>DNI</th>
-                            <th>F. de Nac</th>
-                            <th>Nacionalidad</th>
-                            <th>Celular</th>
-                            <th>Email</th>
-                            <th>Cargo</th>
-                            <th>Salario</th>
+                            <th>Numero de venta</th>
+                            <th>Metodo de pago</th>
+                            <th>Fecha de venta</th>
+                            <th>Cliente</th>
+                            <th>Empleado</th>
+                            <th>Servicio(Si corresponde)</th>
+                            <th>Paquete (Si corresponde)</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody class="log-body">
-                        <% Controladora control = new Controladora();
-                            List<Employee> employeeList
-                                    = control.getAllEmployees();
-                            for (Employee emp : employeeList) {
+                        <%
+                            SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
+
+                            List<Sale> saleList = control.getAllSales();
+
+                            for (Sale sale : saleList) {
+
+                                String sale_number = String.valueOf(sale.getSale_number());
+                                String payment_method = sale.getPayment_mehod();
+                                String date_sale = DATE_FORMAT.format(sale.getDate_sale());
+
+                                Client client = sale.getClient_fk();
+                                String client_dni;
+                                try {
+                                    client_dni = client.getDni();
+                                } catch (Exception e) {
+                                    client_dni = "-";
+                                }
+
+                                Employee employee = sale.getEmployee_fk();
+                                String employee_last_name;
+                                try {
+                                    employee_last_name = employee.getLast_name();
+                                } catch (Exception e) {
+                                    employee_last_name = "-";
+                                }
+                                String employee_first_name;
+                                try {
+                                    employee_first_name = employee.getFirst_name();
+                                } catch (Exception e) {
+                                    employee_first_name = "";
+                                }
+
+                                Service service = sale.getService_code_fk();
+                                String service_name;
+                                try {
+                                    service_name = service.getName();
+                                } catch (Exception e) {
+                                    service_name = "-";
+                                }
+
                         %>
-                        <% SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
-                                                        String birthdate = DATE_FORMAT.format(emp.getBirthdate());%>
                         <tr>
                             <td>
                                 <a class="edit-btn" href="">EDIT</a>
                             </td>
                             <td>
-                                <%=emp.getFirst_name()%>
+                                <%=sale_number%>
                             </td>
                             <td>
-                                <%=emp.getLast_name()%>
+                                <%=payment_method%>
                             </td>
                             <td>
-                                <%=emp.getStreet()%>
+                                <%=date_sale%>
                             </td>
                             <td>
-                                <%=emp.getDni()%>
+                                <%=client_dni%>
                             </td>
                             <td>
-                                <%=birthdate%>
+                                <%=employee_last_name%> <%=employee_first_name%>
                             </td>
                             <td>
-                                <%=emp.getNationality()%>
-                            </td>
+                                <%=service_name%>
+                            </td>        
                             <td>
-                                <%=emp.getCellphone()%>
-                            </td>
-                            <td>
-                                <%=emp.getEmail()%>
-                            </td>
-                            <td>
-                                <%=emp.getPosition()%>
-                            </td>
-                            <td>&dollar;<%=emp.getSalary()%>
+                                <select>
+
+                                    <%
+                                        try {
+                                            Package pkg = sale.getPackage_code_fk();
+
+                                            for (Service pkgService : pkg.getList_of_services()) {
+                                                String service_name_pkg = pkgService.getName();
+                                                
+                                                String service_cost_pkg = String.valueOf(pkgService.getCost_service());
+                                                
+                                    %>
+
+                                    <option>
+                                        Servicio: <%= service_name_pkg%> (&dollar; <%= service_cost_pkg%>)
+                                    </option>
+
+                                    <% }} catch (Exception e) {%>
+                                    <option>
+                                        -
+                                    </option>
+                                    <%}%>
+                                </select> 
                             </td>
                             <td>
                                 <a class="delete-btn" href="">ELIM</a>
@@ -192,6 +289,6 @@
             Hecho con ♥ por Gaston Giacobini (Proyecto Polo Tic Misiones 2021)
         </p>
     </footer>
-    <% } %>
+    <% }%>
 </body>
 </html>

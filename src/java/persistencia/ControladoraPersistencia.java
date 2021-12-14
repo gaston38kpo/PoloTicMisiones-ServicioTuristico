@@ -7,6 +7,7 @@ import javax.persistence.metamodel.ListAttribute;
 import logica.Client;
 import logica.Employee;
 import logica.Package;
+import logica.Sale;
 import logica.Service;
 import logica.User;
 import persistencia.exceptions.NonexistentEntityException;
@@ -217,15 +218,21 @@ public void deleteService(int service_code) {
 ////////////////////////////////////////////////////////////////////////////////
      
 ////////////////////////////// Create Zone /////////////////////////////////////
-    
+    public void createSale(Sale sale) {
+        saleJPA.create(sale);
+    }    
     
 /////////////////////////////// Read Zone //////////////////////////////////////
-    
+    public List<Sale> getAllSales() {
+        return saleJPA.findSaleEntities();
+    }    
     
 ////////////////////////////// Update Zone /////////////////////////////////////
     
     
 ////////////////////////////// Delete Zone /////////////////////////////////////
+
+
 
 
     

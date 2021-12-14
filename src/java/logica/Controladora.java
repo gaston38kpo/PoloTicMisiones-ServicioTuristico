@@ -3,7 +3,6 @@ package logica;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.metamodel.ListAttribute;
 import persistencia.ControladoraPersistencia;
 
 
@@ -218,7 +217,7 @@ public class Controladora {
             int service_code = Integer.parseInt(code);
             
             // Hallo el servicio y lo almaceno en una variable
-            Service service = this.searchService(service_code);
+            Service service = searchService(service_code);
             
             // Agrego el servicio a la lista de servicios
             services.add(service);
@@ -297,14 +296,50 @@ public class Controladora {
 ////////////////////////////////////////////////////////////////////////////////
      
 ////////////////////////////// Create Zone /////////////////////////////////////
-    
+    public void createSale(String payment_mehod, Date date_sale, int client_fk,
+            int employee_fk, String service_code_fk, String package_code_fk) {
+        
+        Sale sale = new Sale();
+        
+        sale.setPayment_mehod(payment_mehod);
+        sale.setDate_sale(date_sale);
+        
+        Client client = searchClient(client_fk);
+        sale.setClient_fk(client);
+        
+        Employee employee = searchEmployee(employee_fk);
+        sale.setEmployee_fk(employee);
+        
+            
+        if (service_code_fk != null && !service_code_fk.isEmpty()) {
+            int service_code_int = Integer.parseInt(service_code_fk);
+            Service service = searchService(service_code_int);
+            sale.setService_code_fk(service);
+        } else {
+            sale.setService_code_fk(null);
+        }
+        
+        if (package_code_fk != null && !package_code_fk.isEmpty()) {
+            int package_code_int = Integer.parseInt(package_code_fk);
+            Package pkg = searchPackage(package_code_int);
+            sale.setPackage_code_fk(pkg);        
+        } else {
+            sale.setPackage_code_fk(null);        
+        }
+        
+        controlPersis.createSale(sale);
+        
+    }    
     
 /////////////////////////////// Read Zone //////////////////////////////////////
-    
+    public List<Sale> getAllSales () {
+        return controlPersis.getAllSales();
+    }       
     
 ////////////////////////////// Update Zone /////////////////////////////////////
     
     
 ////////////////////////////// Delete Zone /////////////////////////////////////
+
 
 }
