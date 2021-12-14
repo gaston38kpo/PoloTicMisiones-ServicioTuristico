@@ -228,7 +228,10 @@
                         %>
                         <tr>
                             <td>
-                                <a class="edit-btn" href="">EDIT</a>
+                                <form class="form-edit" action="SvSaleEdit" method="POST">
+                                        <input type="hidden" name="sale_number" value="<%= sale.getSale_number()%>">
+                                        <button type="submit" class="edit-btn">Editar</button>
+                                </form>
                             </td>
                             <td>
                                 <%=sale_number%>
@@ -274,7 +277,10 @@
                                 </select> 
                             </td>
                             <td>
-                                <a class="delete-btn" href="">ELIM</a>
+                                <form class="form-edit" action="SvSaleDelete" method="POST">
+                                        <input type="hidden" name="sale_number" value="<%= sale.getSale_number()%>">
+                                        <button type="submit" class="delete-btn">Eliminar</button>
+                                </form>
                             </td>
                         </tr>
                         <% }%>

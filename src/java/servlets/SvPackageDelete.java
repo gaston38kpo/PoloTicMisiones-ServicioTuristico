@@ -32,7 +32,6 @@ public class SvPackageDelete extends HttpServlet {
             throws ServletException, IOException {
         
         // Se almacena el id de ese momento del ciclo
-        System.out.println(request.getParameter("package_code"));
         int package_code = Integer.parseInt(request.getParameter("package_code"));
         
         // Se envia el dato a la controladora 

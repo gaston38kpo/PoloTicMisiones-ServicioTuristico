@@ -231,6 +231,14 @@ public void deleteService(int service_code) {
     
     
 ////////////////////////////// Delete Zone /////////////////////////////////////
+    public void deleteSale(int sale_number) {
+        try {
+            saleJPA.destroy(sale_number);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(ControladoraPersistencia.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        }
+    }
 
 
 

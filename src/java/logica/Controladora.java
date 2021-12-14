@@ -340,6 +340,8 @@ public class Controladora {
     
     
 ////////////////////////////// Delete Zone /////////////////////////////////////
-
+    public void deleteSale(int sale_number) {
+        controlPersis.deleteSale(sale_number);
+    }
 
 }
