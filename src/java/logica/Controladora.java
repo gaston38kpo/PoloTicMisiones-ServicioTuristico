@@ -3,6 +3,7 @@ package logica;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.metamodel.ListAttribute;
 import persistencia.ControladoraPersistencia;
 
 
@@ -226,12 +227,15 @@ public class Controladora {
             total_cost_service += service.getCost_service();            
         }
         
-        // Hago el descuento del 10%
-        double cost_service_discount = total_cost_service - (total_cost_service * 0.1);
+        // Porcentaje de Descuento 
+        double discount_percent = 10;
         
-        // Seteo la lista de servicios y su costo calculado al paquete
+        // Aplico el Descuento
+        double cost_with_discount = total_cost_service - ( total_cost_service * (discount_percent / 100) );
+        
+        // Seteo la lista de servicios con su costo ya calculado
         pkg.setList_of_services(services);                
-        pkg.setPackage_cost(cost_service_discount);
+        pkg.setPackage_cost(cost_with_discount);
         
         controlPersis.createPackage(pkg);
     }    
@@ -239,10 +243,49 @@ public class Controladora {
 /////////////////////////////// Read Zone //////////////////////////////////////
     public List<Package> getAllPackages () {
         return controlPersis.getAllPackages();
-    }    
+    }   
     
-////////////////////////////// Update Zone /////////////////////////////////////
+    public Package searchPackage(int package_code) {
+        return controlPersis.searchPackage(package_code);
+    }
     
+////////////////////////////// Update Zone ///////////////////////////////////// 
+    public void updatePackage(Package pkg, String[] list_of_services) {
+        
+        // Inicializo una lista para almacenar los servicios
+        List<Service> services = new ArrayList<>();
+        // Inicializo una acumulador de costo
+        double total_cost_service = 0;
+        
+        // Itero en cada codigo de servicio
+        for (String code : list_of_services) {
+            
+            // Convierdo el codigo a int ya que es el tipo de dato de la PK
+            // a buscar.
+            int service_code = Integer.parseInt(code);
+            
+            // Hallo el servicio y lo almaceno en una variable
+            Service service = this.searchService(service_code);
+            
+            // Agrego el servicio a la lista de servicios
+            services.add(service);
+            
+            // Obtengo el valor de ese servicio especifico y lo acumulo al total
+            total_cost_service += service.getCost_service();            
+        }
+        
+        // Porcentaje de Descuento 
+        double discount_percent = 10;
+        
+        // Aplico el Descuento
+        double cost_with_discount = total_cost_service - ( total_cost_service * (discount_percent / 100) );
+        
+        // Seteo la lista de servicios con su costo ya calculado
+        pkg.setList_of_services(services);                
+        pkg.setPackage_cost(cost_with_discount);
+        
+        controlPersis.updatePackage(pkg);        
+    }
     
 ////////////////////////////// Delete Zone /////////////////////////////////////
     public void deletePackage(int package_code) {

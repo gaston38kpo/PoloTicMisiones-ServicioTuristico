@@ -1,3 +1,8 @@
+/* --------------------------------- */
+/* ---- CSS HECHO CON ♥         ---- */
+/* ---- POR GASTON GIACOBINI    ---- */
+/* --------------------------------- */
+
 * {
   margin: 0;
   padding: 0;
@@ -31,6 +36,8 @@ a:hover {
 }
 
 .logobar-default {
+  display: flex;
+  justify-content: space-between;
   max-height: 50px;
 
   background-color: #324960;
@@ -38,7 +45,7 @@ a:hover {
 
 .logobar-default a {
   padding: 10px 0;
-
+  
   color: #FAD271;
   font-size: 0.8rem;
 }
@@ -47,10 +54,15 @@ a:hover {
   color: #181820;
 }
 
+.logobar-default p {
+  color: white;
+}
+
 .navbar-default {
   min-height: 30px;
 
-  background-color: #968BB2;
+  /*background-color: #968BB2;*/
+  background-color: #7e2e3b;
 }
 
 .navbar-default a {
@@ -106,8 +118,9 @@ a:hover {
   width: 100%;
   padding: 10px;
 
-  background-color: #7e2e3b;
-  color: #d6d6d6;
+  /*background-color: #7e2e3b;*/
+  background-color: #FAD271;
+  color: #181820;
   border-radius: 5px;
   transition: background-color 0.2s;
 }

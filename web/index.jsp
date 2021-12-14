@@ -25,6 +25,7 @@
         <a href="index.jsp">
             <h1>Agencia de Turismo UwU</h1>
         </a>
+        <p>Konnichiwa <%= request.getSession().getAttribute("username")%>!</p>
     </div>
     <navbar class="navbar-default box-size">
         <ul class="links">

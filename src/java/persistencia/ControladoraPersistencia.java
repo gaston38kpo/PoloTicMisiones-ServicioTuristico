@@ -3,6 +3,7 @@ package persistencia;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.metamodel.ListAttribute;
 import logica.Client;
 import logica.Employee;
 import logica.Package;
@@ -171,15 +172,13 @@ public void deleteService(int service_code) {
             Logger.getLogger(ControladoraPersistencia.class.getName()).log(
                     Level.SEVERE, null, ex);
         }
-    }
-    
+    }    
         
 ////////////////////////////////////////////////////////////////////////////////
 //                            P A C K A G E                                   //
 ////////////////////////////////////////////////////////////////////////////////
      
 ////////////////////////////// Create Zone /////////////////////////////////////
-
     public void createPackage(Package pkg) {
         packageJPA.create(pkg);
     }    
@@ -189,8 +188,19 @@ public void deleteService(int service_code) {
         return packageJPA.findPackageEntities();
     }    
     
-////////////////////////////// Update Zone /////////////////////////////////////
+    public Package searchPackage(int package_code) {
+        return packageJPA.findPackage(package_code);
+    }
     
+////////////////////////////// Update Zone /////////////////////////////////////
+    public void updatePackage(Package pkg) {
+        try {
+            packageJPA.edit(pkg);
+        } catch (Exception ex) {
+            Logger.getLogger(ControladoraPersistencia.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        }
+    }    
     
 ////////////////////////////// Delete Zone /////////////////////////////////////
     public void deletePackage(int package_code) {
