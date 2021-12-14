@@ -3,7 +3,6 @@ package persistencia;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.persistence.metamodel.ListAttribute;
 import logica.Client;
 import logica.Employee;
 import logica.Package;
@@ -13,6 +12,10 @@ import logica.User;
 import persistencia.exceptions.NonexistentEntityException;
 
 public class ControladoraPersistencia {
+////////////////////////////////////////////////////////////////////////////////
+//                    J P A - C O N T R O L L E R S                           //
+////////////////////////////////////////////////////////////////////////////////
+//<editor-fold defaultstate="collapsed" desc="JPA Controllers">    
 
     UserJpaController userJPA = new UserJpaController();
     EmployeeJpaController employeeJPA = new EmployeeJpaController();
@@ -20,11 +23,12 @@ public class ControladoraPersistencia {
     ServiceJpaController serviceJPA = new ServiceJpaController();
     PackageJpaController packageJPA = new PackageJpaController();
     SaleJpaController saleJPA = new SaleJpaController();
+//</editor-fold>
 
 ////////////////////////////////////////////////////////////////////////////////
 //                               U S E R                                      //
 ////////////////////////////////////////////////////////////////////////////////
-     
+//<editor-fold defaultstate="collapsed" desc="CRUD USER">     
 ////////////////////////////// Create Zone /////////////////////////////////////    
     public void createUser(User user) {
         userJPA.create(user);
@@ -34,11 +38,11 @@ public class ControladoraPersistencia {
     public List<User> getAllUsers() {
         return userJPA.findUserEntities();
     }
-        
+
     public User searchUser(int id) {
         return userJPA.findUser(id);
     }
-    
+
 ////////////////////////////// Update Zone /////////////////////////////////////
     public void updateUser(User user) {
         try {
@@ -47,23 +51,23 @@ public class ControladoraPersistencia {
             Logger.getLogger(ControladoraPersistencia.class.getName()).log(
                     Level.SEVERE, null, ex);
         }
-    }    
-    
+    }
+
 ////////////////////////////// Delete Zone /////////////////////////////////////
     public void deleteUser(int id) {
-        try {        
+        try {
             userJPA.destroy(id);
         } catch (NonexistentEntityException ex) {
             Logger.getLogger(
                     ControladoraPersistencia.class.getName()).log(
-                            Level.SEVERE, null, ex);
+                    Level.SEVERE, null, ex);
         }
-    }
-    
+    }//</editor-fold>    
+
 ////////////////////////////////////////////////////////////////////////////////
 //                           E M P L O Y E E                                  //
 ////////////////////////////////////////////////////////////////////////////////
-    
+//<editor-fold defaultstate="collapsed" desc="CRUD EMPLOYEE">
 ////////////////////////////// Create Zone /////////////////////////////////////    
     public void createEmployee(Employee employee, User user) {
         userJPA.create(user);
@@ -78,7 +82,7 @@ public class ControladoraPersistencia {
     public Employee searchEmployee(int id) {
         return employeeJPA.findEmployee(id);
     }
-    
+
 ////////////////////////////// Update Zone /////////////////////////////////////    
     public void updateEmployee(Employee employee) {
         try {
@@ -88,7 +92,7 @@ public class ControladoraPersistencia {
                     Level.SEVERE, null, ex);
         }
     }
-    
+
 ////////////////////////////// Delete Zone /////////////////////////////////////    
     public void deleteEmployee(int id) {
         try {
@@ -97,17 +101,17 @@ public class ControladoraPersistencia {
             Logger.getLogger(ControladoraPersistencia.class.getName()).log(
                     Level.SEVERE, null, ex);
         }
-    }
+    }//</editor-fold>
 
 ////////////////////////////////////////////////////////////////////////////////
 //                             C L I E N T                                    //
 ////////////////////////////////////////////////////////////////////////////////
-     
+//<editor-fold defaultstate="collapsed" desc="CRUD CLIENT">     
 ////////////////////////////// Create Zone /////////////////////////////////////    
     public void createClient(Client client) {
         clientJPA.create(client);
     }
-  
+
 /////////////////////////////// Read Zone //////////////////////////////////////    
     public List<Client> getAllClients() {
         return clientJPA.findClientEntities();
@@ -135,26 +139,26 @@ public class ControladoraPersistencia {
             Logger.getLogger(ControladoraPersistencia.class.getName()).log(
                     Level.SEVERE, null, ex);
         }
-    }    
-    
+    }//</editor-fold>
+
 ////////////////////////////////////////////////////////////////////////////////
 //                            S E R V I C E                                   //
 ////////////////////////////////////////////////////////////////////////////////
-     
+//<editor-fold defaultstate="collapsed" desc="CRUD SERVICE">     
 ////////////////////////////// Create Zone /////////////////////////////////////
     public void createService(Service service) {
         serviceJPA.create(service);
-    }   
-    
+    }
+
 /////////////////////////////// Read Zone //////////////////////////////////////
     public List<Service> getAllServices() {
         return serviceJPA.findServiceEntities();
     }
-    
+
     public Service searchService(int service_code) {
         return serviceJPA.findService(service_code);
-    } 
-    
+    }
+
 ////////////////////////////// Update Zone /////////////////////////////////////
     public void updateService(Service service) {
         try {
@@ -164,35 +168,35 @@ public class ControladoraPersistencia {
                     Level.SEVERE, null, ex);
         }
     }
-       
+
 ////////////////////////////// Delete Zone /////////////////////////////////////
-public void deleteService(int service_code) {
+    public void deleteService(int service_code) {
         try {
             serviceJPA.destroy(service_code);
         } catch (NonexistentEntityException ex) {
             Logger.getLogger(ControladoraPersistencia.class.getName()).log(
                     Level.SEVERE, null, ex);
         }
-    }    
-        
+    }//</editor-fold>
+
 ////////////////////////////////////////////////////////////////////////////////
 //                            P A C K A G E                                   //
 ////////////////////////////////////////////////////////////////////////////////
-     
+//<editor-fold defaultstate="collapsed" desc="CRUD PACKAGE">
 ////////////////////////////// Create Zone /////////////////////////////////////
     public void createPackage(Package pkg) {
         packageJPA.create(pkg);
-    }    
-    
+    }
+
 /////////////////////////////// Read Zone //////////////////////////////////////
     public List<Package> getAllPackages() {
         return packageJPA.findPackageEntities();
-    }    
-    
+    }
+
     public Package searchPackage(int package_code) {
         return packageJPA.findPackage(package_code);
     }
-    
+
 ////////////////////////////// Update Zone /////////////////////////////////////
     public void updatePackage(Package pkg) {
         try {
@@ -201,8 +205,8 @@ public void deleteService(int service_code) {
             Logger.getLogger(ControladoraPersistencia.class.getName()).log(
                     Level.SEVERE, null, ex);
         }
-    }    
-    
+    }
+
 ////////////////////////////// Delete Zone /////////////////////////////////////
     public void deletePackage(int package_code) {
         try {
@@ -211,25 +215,36 @@ public void deleteService(int service_code) {
             Logger.getLogger(ControladoraPersistencia.class.getName()).log(
                     Level.SEVERE, null, ex);
         }
-    }
+    }//</editor-fold>
 
 ////////////////////////////////////////////////////////////////////////////////
 //                               S A L E                                      //
 ////////////////////////////////////////////////////////////////////////////////
-     
+//<editor-fold defaultstate="collapsed" desc="CRUD SALE">    
 ////////////////////////////// Create Zone /////////////////////////////////////
     public void createSale(Sale sale) {
         saleJPA.create(sale);
-    }    
-    
+    }
+
 /////////////////////////////// Read Zone //////////////////////////////////////
     public List<Sale> getAllSales() {
         return saleJPA.findSaleEntities();
-    }    
-    
+    }
+
+    public Sale searchSale(int sale_number) {
+        return saleJPA.findSale(sale_number);
+    }
 ////////////////////////////// Update Zone /////////////////////////////////////
-    
-    
+
+    public void updateSale(Sale sale) {
+        try {
+            saleJPA.edit(sale);
+        } catch (Exception ex) {
+            Logger.getLogger(ControladoraPersistencia.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        }
+    }
+
 ////////////////////////////// Delete Zone /////////////////////////////////////
     public void deleteSale(int sale_number) {
         try {
@@ -238,10 +253,6 @@ public void deleteService(int service_code) {
             Logger.getLogger(ControladoraPersistencia.class.getName()).log(
                     Level.SEVERE, null, ex);
         }
-    }
+    }//</editor-fold>
 
-
-
-
-    
 }

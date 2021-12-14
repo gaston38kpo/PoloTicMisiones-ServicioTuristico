@@ -21,6 +21,19 @@
         <link rel="stylesheet" href="assets/css/form.css">
 
         <title>index</title>
+        <script>
+            function toggle() {
+                if (document.getElementById('toggle_id').checked) {
+                    document.getElementById('service_code_fk_id').disabled = false;
+                    document.getElementById('package_code_fk_id').disabled = true;
+                    document.getElementById('package_code_fk_id').value = "";
+                } else {
+                    document.getElementById('service_code_fk_id').disabled = true;
+                    document.getElementById('service_code_fk_id').value = "";
+                    document.getElementById('package_code_fk_id').disabled = false;
+                }
+            }
+        </script>
     </head>
 
     <body>
@@ -71,16 +84,16 @@
                         <optgroup label="SISTEMA DE COMISIONES AUN NO IMPLEMENTADO"></optgroup>
                         <optgroup label="Sin comisión">                            
                             <option value="efectivo">Efectivo</option>
-                            <option value="monedero_virtual">Monedeo Virtual</option>
+                            <option value="Monedero Virtual">Monedero Virtual</option>
                         </optgroup>
                         <optgroup label="2.45%">                            
-                            <option value="transferencia">Transferencia</option>
+                            <option value="Transferencia">Transferencia</option>
                         </optgroup>
                         <optgroup label="3%">                            
-                            <option value="tarjeta_de_debito">Tarjeta de Débito</option>
+                            <option value="Tarjeta de Debito">Tarjeta de D&eacute;bito</option>
                         </optgroup>
                         <optgroup label="9%">                            
-                            <option value="tarjeta_de_credito">Tarjeta de Crédito</option>
+                            <option value="Tarjeta de Credito">Tarjeta de Cr&eacute;dito</option>
                         </optgroup>
                     </select>
 
@@ -123,6 +136,11 @@
                         <% }%>
                     </select>
 
+                    <div>
+                        <input type="checkbox" id="toggle_id" checked="checked" onclick="toggle()">
+                        <label for="toggle_id">SERVICIO/PAQUETE</label>
+                    </div>
+
 
                     <label for="service_code_fk_id">SERVICIOS</label>
                     <select name="service_code_fk" id="service_code_fk_id" >
@@ -142,7 +160,7 @@
 
 
                     <label for="package_code_fk_id">PAQUETES</label>
-                    <select name="package_code_fk" id="package_code_fk_id" >
+                    <select name="package_code_fk" id="package_code_fk_id" disabled>
                         <option selected value> -- SELECCIONE UNA OPCION -- </option>
                         <%
                             List<Package> packageList = control.getAllPackages();
@@ -229,8 +247,8 @@
                         <tr>
                             <td>
                                 <form class="form-edit" action="SvSaleEdit" method="POST">
-                                        <input type="hidden" name="sale_number" value="<%= sale.getSale_number()%>">
-                                        <button type="submit" class="edit-btn">Editar</button>
+                                    <input type="hidden" name="sale_number" value="<%= sale.getSale_number()%>">
+                                    <button type="submit" class="edit-btn">Editar</button>
                                 </form>
                             </td>
                             <td>
@@ -260,16 +278,17 @@
 
                                             for (Service pkgService : pkg.getList_of_services()) {
                                                 String service_name_pkg = pkgService.getName();
-                                                
+
                                                 String service_cost_pkg = String.valueOf(pkgService.getCost_service());
-                                                
+
                                     %>
 
                                     <option>
                                         Servicio: <%= service_name_pkg%> (&dollar; <%= service_cost_pkg%>)
                                     </option>
 
-                                    <% }} catch (Exception e) {%>
+                                    <% }
+                                    } catch (Exception e) {%>
                                     <option>
                                         -
                                     </option>
@@ -278,8 +297,8 @@
                             </td>
                             <td>
                                 <form class="form-edit" action="SvSaleDelete" method="POST">
-                                        <input type="hidden" name="sale_number" value="<%= sale.getSale_number()%>">
-                                        <button type="submit" class="delete-btn">Eliminar</button>
+                                    <input type="hidden" name="sale_number" value="<%= sale.getSale_number()%>">
+                                    <button type="submit" class="delete-btn">Eliminar</button>
                                 </form>
                             </td>
                         </tr>
@@ -295,6 +314,6 @@
             Hecho con ♥ por Gaston Giacobini (Proyecto Polo Tic Misiones 2021)
         </p>
     </footer>
-    <% }%>
+    <% }%>    
 </body>
 </html>
