@@ -41,9 +41,15 @@ public class SvEmployeeEdit extends HttpServlet {
         String email = request.getParameter("email");
         String position = request.getParameter("position");
         double salary = Double.parseDouble(request.getParameter("salary"));
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
         
         // Traigo el objeto con su respectivo ID
         Employee employee = control.searchEmployee(id);
+        User user_fk = employee.getUser_fk();
+        int user_id = user_fk.getId();
+        
+        User user = control.searchUser(user_id);
         
         // Asignacion de los datos anteriormente almacenados al objeto
         employee.setFirst_name(first_name);
@@ -56,9 +62,12 @@ public class SvEmployeeEdit extends HttpServlet {
         employee.setEmail(email);
         employee.setPosition(position);
         employee.setSalary(salary);
+        user.setUsername(username);
+        user.setPassword(password);
         
         // Se envia el objeto con los nuevos datos a la controladora para persistirlo
         control.updateEmployee(employee);
+        control.updateUser(user);
         
         // Regresa a la pagina para obervar el cambio
         response.sendRedirect("employees.jsp");
