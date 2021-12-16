@@ -23,14 +23,17 @@
         <title>VENTAS</title>
         <script>
             function toggle() {
+                let service = document.getElementById('service_code_fk_id');
+                let package = document.getElementById('package_code_fk_id');
+
                 if (document.getElementById('toggle_id').checked) {
-                    document.getElementById('service_code_fk_id').disabled = false;
-                    document.getElementById('package_code_fk_id').disabled = true;
-                    document.getElementById('package_code_fk_id').value = "";
+                    service.disabled = !service.disabled;
+                    package.disabled = !package.disabled;
+                    package.value = "";
                 } else {
-                    document.getElementById('service_code_fk_id').disabled = true;
-                    document.getElementById('service_code_fk_id').value = "";
-                    document.getElementById('package_code_fk_id').disabled = false;
+                    service.disabled = !service.disabled;
+                    package.disabled = !package.disabled;
+                    service.value = "";
                 }
             }
         </script>

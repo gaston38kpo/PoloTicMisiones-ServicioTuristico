@@ -2,6 +2,7 @@
 /* ---- CSS HECHO CON ♥         ---- */
 /* ---- POR GASTON GIACOBINI    ---- */
 /* --------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400,500,700,900&display=swap');
 
 :root {
     --color-btn: #03E9F4;
@@ -15,12 +16,12 @@ body {
 
   font-family: sans-serif;
   background: linear-gradient(#141e30, #243b55);
-  background-image: url(../img/wallpaperLoginScreenHD.jpg);
+  background-image: url(../img/wallpaperLoginScreen1080.jpg);
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: center;  
-
+  background-position: center;
 }
+
 .login-box {
   position: absolute;
   top: 50%;
@@ -29,17 +30,18 @@ body {
   padding: 40px;
   transform: translate(-50%, -50%);
 
-  background: rgba(0, 0, 0, 0.25);
+  background: rgba(0, 0, 0, 0.45);
   box-sizing: border-box;
   border-radius: 10px;
-  backdrop-filter: blur(3px);
+  backdrop-filter: blur(1px);
 }
 .login-box h1 {
   margin: 0 0 30px;
   padding: 0;
   color: #fff;
   text-align: center;
-  letter-spacing: 2px;
+  letter-spacing: 3px;
+  font-family: 'Open Sans', sans-serif;
 }
 .login-box .user-box {
   position: relative;
@@ -93,6 +95,7 @@ body {
 .login-box a:hover {
   background-color: var(--color-btn);
   color: #FFF;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
   box-shadow: 0 0 5px var(--color-btn), 
               0 0 25px var(--color-btn), 
               0 0 50px var(--color-btn),
