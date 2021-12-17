@@ -2,45 +2,49 @@
 <!DOCTYPE html>
 <html lang="es">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="assets/css/log-in.css">
-    <title>LOG-IN</title>
-</head>
+        <link rel="stylesheet" href="assets/css/log-in.css">
 
-<body>
-    <section class="login-box">
+        <link rel="shortcut icon" href="https://img.icons8.com/external-becris-lineal-color-becris/64/000000/external-analytics-digital-economy-becris-lineal-color-becris-3.png" type="image/x-icon">
 
-        <h1>LOGIN</h1>
-        <form action="SvUserSession" method="POST">
-            <div class="user-box">
-                <input type="text" name="username" id="username_id" required>
-                <label for="username_id">Nombre de Usuario</label>
-            </div>
-            <div class="user-box">
-                <input type="password" name="password" id="password_id" required>
-                <label for="password_id">Contrase&ntilde;a</label>
-            </div>            
-            <button type="submit">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                LOGIN
-            </button>
-            <a href="users.jsp">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                REGISTRARSE
-            </a>
-        </form>
+        <title>LOG-IN</title>
 
-    </section>
-</body>
+    </head>
+
+    <body>
+        <section class="login-box">
+
+            <h1>LOGIN</h1>
+            <form name="loginform" class="login-form" action="SvUserSession" method="POST">
+                <div class="user-box">
+                    <input type="text" name="username" id="username_id" required>
+                    <label for="username_id">Nombre de Usuario</label>
+                </div>
+                <div class="user-box">
+                    <input type="password" name="password" id="password_id" required>
+                    <label for="password_id">Contrase&ntilde;a</label>
+                </div>            
+                <button type="submit" onclick="document.loginform.action = 'SvUserSession'">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    LOGIN
+                </button>
+                <button type="submit" onclick="document.loginform.action = 'SvUserCreate'">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    REGISTER & LOGIN
+                </button>
+            </form>
+
+        </section>
+    </body>
 
 </html>

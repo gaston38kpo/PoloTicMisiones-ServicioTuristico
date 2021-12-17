@@ -1,131 +1,173 @@
 <%@page import="logica.User"%>
-<%@page import="java.util.Date" %>
-<%@page import="java.text.SimpleDateFormat" %>
-<%@page import="logica.Employee" %>
-<%@page import="java.util.List" %>
-<%@page import="logica.Controladora" %>
-<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@page import="java.util.List"%>
+<%@page import="logica.Controladora"%>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link rel="stylesheet" href="assets/css/style.css">
-        <link rel="stylesheet" href="assets/css/log-manager.css">
-        <link rel="stylesheet" href="assets/css/form.css">
+        <link rel="stylesheet" href="assets/css/index.css">
+        <link rel="stylesheet" href="assets/css/form-neon.css">
+        <link rel="stylesheet" href="assets/css/log-neon.css">
 
-        <title>index</title>
+        <link rel="shortcut icon"
+              href="https://img.icons8.com/external-becris-lineal-color-becris/64/000000/external-analytics-digital-economy-becris-lineal-color-becris-3.png"
+              type="image/x-icon">
+
+        <title>Agencia de Turismo</title>
+
         <style>
-            .table-wrapper{
-                max-width: 60%;
-                margin: 0 auto;
-            }
-            .box-size {
-                max-width: 60%;
-                min-width: 825px;
+            .section-log {
+                width: 50%;
             }
         </style>
+
     </head>
 
     <body>
-        <div class="logobar-default box-size">
-            <a href="index.jsp">
-                <h1>Agencia de Turismo UwU</h1>
-            </a>
-        </div>
-    <navbar class="navbar-default box-size">
-        <ul class="links">
-            <li><a href="https://youtu.be/dQw4w9WgXcQ">
-                    SOY UN LINK :D
-                </a></li>
-            <li><a href="#">
-                    GITHUB
-                </a></li>
-            <li><a href="#">
-                    SOBRE MI
-                </a></li>
-        </ul>
-    </navbar>
 
-    <main class="container-default box-size">
-        <section class="form-section">
+        <%
+            HttpSession thisSession = request.getSession();
 
-            <input type=checkbox id="show">
-            <label class="show-btn" for="show">Registrar nuevo usuario</label>
+            String userSession = (String) thisSession.getAttribute("username");
 
-            <!-- Form to create new users -->
-            <form id="content" action="SvUserCreate" method="POST">                
-                <div class="form-group form-user-info">
+            if (userSession == null) {
+                response.sendRedirect("login.jsp");
+            } else if (userSession != null) {
+        %>
 
-                    <h2>Cuenta</h2>
-
-                    <p style="text-align: center">La cuenta se crea en la seccion empleados, crear una aqui generará una cuenta huerfana!!<br><br> Usted queda avisado! </p>
-
-                    <label for="username_id">Nombre de Usuario*</label>
-                    <input type="text" name="username" id="username_id" placeholder="TonyStark" required>
-
-                    <label for="password_id">Contraseña*</label>
-                    <input type="password" name="password" id="password_id" placeholder="********" required>
-                    
+        <nav class="navbar">
+            <section class="buttons">
+                <div class="outer button">
+                    <a href="index.jsp">
+                        HOME
+                    </a>
+                    <span></span>
+                    <span></span>
                 </div>
-                <input type="submit" value="Crear Usuario" class="submit-btn">
-            </form>
-        </section>
+                <div class="outer button" title="ola ke mira">
+                    <a target="_blank" href="https://youtu.be/dQw4w9WgXcQ">
+                        easter-egg
+                    </a>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="outer button">
+                    <a href="https://github.com/gaston38kpo/servicio-turistico">
+                        GITHUB
+                    </a>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="outer button">
+                    <a href="https://www.linkedin.com/in/gaston-giacobini/">
+                        SOBRE MI
+                    </a>
+                    <span></span>
+                    <span></span>
+                </div>
+            </section>
+            <section class="username-nav">
+                <p>Bienvenido <strong>
+                        <%= request.getSession().getAttribute("username")%>
+                    </strong> !</p>
+            </section>
+        </nav>
 
-        
-        <!-- List all employees on database -->
+        <main class="main-crud">
 
-        <section class="log-section">
-            <h2>Lista insegura de Usuarios</h2>
-            <div class="table-wrapper">
-                <table class="fl-table">
-                    <thead class="log-header">
+            <section class="section-form">
+
+                <!-- Formulario de creacion -->
+                <form class="container-form" action="SvUserCreate" method="POST">
+                    <h2>Nuevo Usuario</h2>
+
+                    <div class="row100">
+                        <div class="col">
+                            <div class="input-box">
+                                <input type="text" name="username" required>
+                                <span class="text">Nombre de Usuario*</span>
+                                <span class="line"></span>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-box">
+                                <input type="password" name="password" required>
+                                <span class="text">Contrase&ntilde;a*</span>
+                                <span class="line"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row100">
+                        <div class="col">
+                            <input type="submit" value="Crear" class="submit-btn">
+                        </div>
+                    </div>
+
+                </form>
+
+            </section>
+
+
+            <!-- Tabla con todos los datos listados -->        
+            <section class="section-log">
+
+                <h1 contenteditable="true" class="title-log"><span>List&lt;&gt; Usuarios</span></h1>
+
+                <table class="container">
+                    <thead>
                         <tr>
-                            <th></th>
-                            <th>USUARIO</th>
-                            <th>PASSWORD</th>                                                    
-                            <th></th>
+                            <th><h1></h1></th>
+                            <th><h1>Usuario</h1></th>
+                            <th><h1>Password</h1></th>
+                            <th><h1></h1></th>
                         </tr>
                     </thead>
-                    <tbody class="log-body">
-                        <% Controladora control = new Controladora();
+                    <tbody>
+                        <%
+                            Controladora control = new Controladora();
+
                             List<User> userList = control.getAllUsers();
+
                             for (User user : userList) {
-                        %>                                                   
+                                int id = user.getId();
+                        %>
+
                         <tr>
-                            <td>
-                                <form class="form-edit" action="SvUserEdit" method="POST" name="formEditUser">
-                                        <input type="hidden" name="id" value="<%= user.getId()%>">
-                                        <button type="submit" class="edit-btn">Editar</button>
+                            <td class="td-edit-btn">
+                                <form class="form-edit" action="SvUserEdit" method="POST">
+                                    <input type="hidden" name="id" value="<%= id%>">
+                                    <button type="submit" class="edit-btn"><span>EDITAR</span></button>
                                 </form>
                             </td>
-                            <td>
-                                <%=user.getUsername()%>
-                            </td>
-                            <td>
-                                <%=user.getPassword()%>
-                            </td>                            
-                            <td>
-                                <form class="form-delete" action="SvUserDelete" method="POST" name="formDeleteUser">
-                                    <input type="hidden" name="id" value="<%= user.getId()%>">
-                                    <button type="submit" class="delete-btn">Eliminar</button>
+                            <td><%=user.getUsername()%></td>
+                            <td><%=user.getPassword()%></td>
+                            <td class="td-delete-btn">
+                                <form class="form-delete" action="SvUserDelete" method="POST">
+                                    <input type="hidden" name="id" value="<%= id%>">
+                                    <button type="submit" class="delete-btn"><span>ELIMINAR</span></button>
                                 </form>
                             </td>
                         </tr>
                         <% }%>
+
                     </tbody>
                 </table>
-            </div>
-        </section>
-    </main>
 
-    <footer class="box-size">
-        <p>
-            Hecho con ♥ por Gaston Giacobini (Proyecto Polo Tic Misiones 2021)
-        </p>
-    </footer>
+            </section>
+
+        </main>
+        <footer class="box-size">
+            <p>
+                Hecho con &hearts; por Gaston Giacobini (Proyecto Polo Tic Misiones 2021)
+            </p>
+        </footer>
+
+        <% }%>
     </body>
+
 </html>

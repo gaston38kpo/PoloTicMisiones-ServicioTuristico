@@ -2,8 +2,9 @@
 /* ---- CSS HECHO CON ♥         ---- */
 /* ---- POR GASTON GIACOBINI    ---- */
 /* --------------------------------- */
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400,500,700,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap');
 @import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap");
+
 :root {
   --height-navbtn: 50px;
   --width-navbtn: 145px;
@@ -27,7 +28,10 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+  background-attachment: fixed;
 }
+
+
 /* NAVBAR */
 
 .navbar {
@@ -57,6 +61,11 @@ body {
     justify-content: center;
     align-items: center;
     color: #FFF;
+    text-shadow: 0 0 10px #f40303, 
+                    0 0 20px #f40303, 
+                    0 0 40px #f40303, 
+                    0 0 80px #f40303, 
+                    0 0 160px #f40303;
 }
 
 .outer {
@@ -115,17 +124,15 @@ body {
   filter: blur(14px);
 }
 
-.buttons .outer:nth-child(1):hover>a {
-    background: #cb621a;
-    font-weight: 500;
+.buttons .outer:hover{
+  text-shadow: 0 0 10px #cb621a, 
+                    0 0 20px #cb621a, 
+                    0 0 40px #6b9838, 
+                    0 0 80px #74a8da;
 }
-.buttons .outer:nth-child(2):hover>a {
-    background: #6b9838;
-    font-weight: 500;
-}
-.buttons .outer:nth-child(3):hover>a {
-    background: #74a8da;
-    font-weight: 500;
+
+.buttons .outer:hover>a {
+    background: #0D0F2B;
 }
 
 .outer:hover span {
@@ -146,7 +153,7 @@ body {
 }
 
 /* MAIN */
-.container {
+.container-index {
   padding: 0;
   width: 85%;
   display: flex;
@@ -154,13 +161,13 @@ body {
   justify-content: space-evenly;
 }
 
-.container > div {
+.container-index > div {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
 }
 
-.container .btn {
+.container-index .btn {
   position: relative;
   padding: 4vh 5vw;
   width: 155px;
@@ -170,14 +177,14 @@ body {
   transition: border-radius 0s;
 }
 
-.container .btn:hover {
+.container-index .btn:hover {
   border-radius: 30px;
   box-shadow: 0 0 5px #8efbfb, 0 0 25px #8efbfb, 0 0 50px #8efbfb,
     0 0 100px #8efbfb;
   background: #8efbfbaa;
 }
 
-.container .btn a {
+.container-index .btn a {
   position: absolute;
   top: 0;
   left: 0;
@@ -205,11 +212,11 @@ body {
   -webkit-backdrop-filter: blur(15px);
 }
 
-.container .btn a:hover {
+.container-index .btn a:hover {
   letter-spacing: 3px;
 }
 
-.container .btn a::before {
+.container-index .btn a::before {
   content: "";
   position: absolute;
   top: 0;
@@ -221,13 +228,13 @@ body {
   transition: 0.5s;
 }
 
-.container .btn:hover a::before {
+.container-index .btn:hover a::before {
   transform: skewX(45deg) translateX(200%);
 
   filter: blur(10px);
 }
 
-.container .btn:hover a {
+.container-index .btn:hover a {
   color: #fff68a;
   text-shadow: 0 0 1px #ad2577, 0 0 2px #ad2577, 0 0 5px #ad2577,
     0 0 15px #ad2577, 0 0 25px #ad2577;

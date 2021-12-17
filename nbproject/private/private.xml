@@ -3,10 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Flacus/workspace/Polo%20TIC%20Misiones/TpFinal/src/java/servlets/SvEmployeeEdit.java</file>
-            <file>file:/C:/Users/Flacus/workspace/Polo%20TIC%20Misiones/TpFinal/src/java/logica/Controladora.java</file>
-            <file>file:/C:/Users/Flacus/workspace/Polo%20TIC%20Misiones/TpFinal/web/employees.jsp</file>
+            <file>file:/C:/Users/Flacus/workspace/Polo%20TIC%20Misiones/TpFinal/web/sales.jsp</file>
+            <file>file:/C:/Users/Flacus/workspace/Polo%20TIC%20Misiones/TpFinal/web/sales-edit.jsp</file>
+            <file>file:/C:/Users/Flacus/workspace/Polo%20TIC%20Misiones/TpFinal/web/users-edit.jsp</file>
+            <file>file:/C:/Users/Flacus/workspace/Polo%20TIC%20Misiones/TpFinal/web/assets/css/form-neon.css</file>
             <file>file:/C:/Users/Flacus/workspace/Polo%20TIC%20Misiones/TpFinal/web/employees-edit.jsp</file>
+            <file>file:/C:/Users/Flacus/workspace/Polo%20TIC%20Misiones/TpFinal/src/java/servlets/SvSale.java</file>
         </group>
     </open-files>
 </project-private>

@@ -2,10 +2,10 @@
 /* ---- CSS HECHO CON ♥         ---- */
 /* ---- POR GASTON GIACOBINI    ---- */
 /* --------------------------------- */
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400,500,700,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400,500,700,900&display=swap");
 
 :root {
-    --color-btn: #03E9F4;
+  --color-btn: #03e9f4;
 }
 html {
   height: 100%;
@@ -20,6 +20,11 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
 }
 
 .login-box {
@@ -41,7 +46,7 @@ body {
   color: #fff;
   text-align: center;
   letter-spacing: 3px;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 .login-box .user-box {
   position: relative;
@@ -74,7 +79,7 @@ body {
   color: var(--color-btn);
   font-size: 12px;
 }
-.login-box form button, 
+.login-box form button,
 .login-box form a {
   background-color: transparent;
   border: none;
@@ -94,18 +99,16 @@ body {
 .login-box button:hover,
 .login-box a:hover {
   background-color: var(--color-btn);
-  color: #FFF;
+  color: #fff;
   text-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
-  box-shadow: 0 0 5px var(--color-btn), 
-              0 0 25px var(--color-btn), 
-              0 0 50px var(--color-btn),
-              0 0 100px var(--color-btn);
+  box-shadow: 0 0 5px var(--color-btn), 0 0 25px var(--color-btn),
+    0 0 50px var(--color-btn), 0 0 100px var(--color-btn);
 }
 
 .login-box a:nth-child(4) {
-   text-decoration: none;
-   position: absolute;
-   right: 40px;
+  text-decoration: none;
+  position: absolute;
+  right: 40px;
 }
 
 .login-box button span,
@@ -135,7 +138,7 @@ body {
 }
 
 .login-box button span:nth-child(2),
-.login-box a span:nth-child(2) {    
+.login-box a span:nth-child(2) {
   top: -100%;
   right: 0;
   width: 2px;
@@ -196,4 +199,3 @@ body {
     bottom: 100%;
   }
 }
-

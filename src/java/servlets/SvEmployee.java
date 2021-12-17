@@ -62,7 +62,7 @@ public class SvEmployee extends HttpServlet {
                 break;
             case "/SvEmployeeEdit":
                 //<editor-fold defaultstate="collapsed" desc="[GET]EDIT">
-
+                
                 // Se almacena el ID
                 id = Integer.parseInt(request.getParameter("id"));
 

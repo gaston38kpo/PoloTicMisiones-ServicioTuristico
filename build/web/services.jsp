@@ -1,10 +1,10 @@
 <%@page import="logica.Service"%>
-<%@page import="java.util.Date" %>
-<%@page import="java.text.SimpleDateFormat" %>
-<%@page import="logica.Employee" %>
-<%@page import="java.util.List" %>
-<%@page import="logica.Controladora" %>
-<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@page import="logica.Client"%>
+<%@page import="logica.Employee"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="logica.User"%>
+<%@page import="java.util.List"%>
+<%@page import="logica.Controladora"%>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -13,101 +13,156 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link rel="stylesheet" href="assets/css/style.css">
-        <link rel="stylesheet" href="assets/css/log-manager.css">
-        <link rel="stylesheet" href="assets/css/form.css">
+        <link rel="stylesheet" href="assets/css/index.css">
+        <link rel="stylesheet" href="assets/css/form-neon.css">
+        <link rel="stylesheet" href="assets/css/log-neon.css">
 
-        <title>index</title>
+        <link rel="shortcut icon"
+              href="https://img.icons8.com/external-becris-lineal-color-becris/64/000000/external-analytics-digital-economy-becris-lineal-color-becris-3.png"
+              type="image/x-icon">
+
+        <title>Agencia de Turismo</title>
+
     </head>
 
-    <body>         
+    <body>
 
-        <div class="logobar-default box-size">
-            <a href="index.jsp">
-                <h1>Agencia de Turismo UwU</h1>
-            </a>
-        </div>
+        <%
+            HttpSession thisSession = request.getSession();
 
-    <navbar class="navbar-default box-size">
-        <ul class="links">
-            <li><a href="https://youtu.be/dQw4w9WgXcQ">
-                    SOY UN LINK :D
-                </a></li>
-            <li><a href="#">
-                    GITHUB
-                </a></li>
-            <li><a href="#">
-                    SOBRE MI
-                </a></li>
-        </ul>
-    </navbar>
+            String userSession = (String) thisSession.getAttribute("username");
 
-    <main class="container-default box-size">
-        <section class="form-section">
+            if (userSession == null) {
+                response.sendRedirect("login.jsp");
+            } else if (userSession != null) {
+        %>
 
-            <!-- Hide/Show Form -->
+        <nav class="navbar">
+            <section class="buttons">
+                <div class="outer button">
+                    <a href="index.jsp">
+                        HOME
+                    </a>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="outer button" title="ola ke mira">
+                    <a target="_blank" href="https://youtu.be/dQw4w9WgXcQ">
+                        easter-egg
+                    </a>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="outer button">
+                    <a href="https://github.com/gaston38kpo/servicio-turistico">
+                        GITHUB
+                    </a>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="outer button">
+                    <a href="https://www.linkedin.com/in/gaston-giacobini/">
+                        SOBRE MI
+                    </a>
+                    <span></span>
+                    <span></span>
+                </div>
+            </section>
+            <section class="username-nav">
+                <p>Bienvenido <strong>
+                        <%= request.getSession().getAttribute("username")%>
+                    </strong> !</p>
+            </section>
+        </nav>
 
-            <input type="checkbox" id="show">
-            <label class="show-btn" for="show">Registrar nuevo servicio</label>
+        <main class="main-crud">
 
-            <!-- Form to create new services -->
+            <section class="section-form">
 
-            <form id="content" action="SvServiceCreate" method="POST">
+                <!-- Formulario de creacion -->
+                <form class="container-form" action="SvServiceCreate" method="POST">
 
-                <div class="form-group">
+                    <h2>Crear Servicio</h2>
+
+                    <br>
 
                     <h2>Informacion del Servicio</h2>
-                    
-                    <label for="name_id">Nombre*</label>
-                    <input type="text" name="name" id="name_id" placeholder="Pasajes de avión" required>
 
-                    <label for="description_id">Descripcion*</label>
-                    <input type="text-area" name="description" id="description_id" placeholder="Pasaje de ida y vuelta asegurado" required>
+                    <div class="row100">
+                        <div class="col">
+                            <div class="input-box">
+                                <input type="text" name="name" required>
+                                <span class="text">Nombre*</span>
+                                <span class="line"></span>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-box">
+                                <input type="text" name="destination" required>
+                                <span class="text">Destino*</span>
+                                <span class="line"></span>
+                            </div>
+                        </div>
+                    </div>
 
-                    <label for="destination_id">Destino*</label>
-                    <input type="text" name="destination" id="destination_id" placeholder="Noruega" required>
+                    <div class="row100">
+                        <div class="col">
+                            <div class="input-box">
+                                <input type="number" step="0.01" name="cost_service" required>
+                                <span class="text">Costo*</span>
+                                <span class="line"></span>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-box">
+                                <input type="date" name="date_service" required>
+                                <span class="text">Fecha*</span>
+                                <span class="line"></span>
+                            </div>
+                        </div>
+                    </div>
 
-                    <label for="cost_service_id">Costo*</label>
-                    <input type="number" name="cost_service" id="cost_service_id" placeholder="50000" required>
-
-                    <label for="date_service_id">Fecha*</label>
-                    <input type="date" name="date_service" id="date_service_id" required>                    
-
-                </div>
-
-                <input type="submit" value="Crear Servicio" class="submit-btn">
-
-            </form>
-
-        </section>
+                    <div class="row100">
+                        <div class="col">
+                            <div class="input-box textarea">
+                                <textarea name="description" required></textarea>
+                                <span class="text">Descripci&oacute;n*</span>
+                                <span class="line"></span>
+                            </div>
+                        </div>
+                    </div>
 
 
-        <!-- List all services on database -->
+                    <div class="row100">
+                        <div class="col">
+                            <input type="submit" value="Crear" class="submit-btn">
+                        </div>
+                    </div>
 
-        <section class="log-section">
-                    <p style="height: auto;">Recuerde que no puede eliminar un servicio que ya esta asignado a un paquete, da error!</p>
+                </form>
 
-            <h2>Lista de Servicios</h2>
+            </section>
 
-            <div class="table-wrapper">
-                <table class="fl-table">
 
-                    <thead class="log-header">
+            <!-- Tabla con todos los datos listados -->        
+            <section class="section-log">
+
+                <h1 contenteditable="true" class="title-log"><span>List&lt;&gt; Servicios</span></h1>
+
+                <table class="container">
+                    <thead>
                         <tr>
-
-                            <th></th>
-                            <th>Codigo</th>
-                            <th>Nombre</th>
-                            <th>Descripcion</th>
-                            <th>Destino</th>
-                            <th>Costo</th>
-                            <th>Fecha del servicio</th>
-                            <th></th>
-
+                            <th><h1></h1></th>
+                            <th><h1>Codigo</h1></th>
+                            <th><h1>Nombre</h1></th>
+                            <th><h1>Descripcion</h1></th>
+                            <th><h1>Destino</h1></th>
+                            <th><h1>Costo</h1></th>
+                            <th><h1>Fecha del servicio</h1></th>
+                            <th><h1></h1></th>
                         </tr>
                     </thead>
-
-                    <tbody class="log-body">
+                    <tbody>
                         <%
                             Controladora control = new Controladora();
 
@@ -120,12 +175,12 @@
                                 int service_code = service.getService_code();
                                 String date_service = DATE_FORMAT.format(service.getDate_service());
                         %>
-                        <tr>
 
-                            <td>
-                                <form class="form-edit" action="SvServiceEdit" method="POST" name="formEditEmployee">
+                        <tr>
+                            <td class="td-edit-btn">
+                                <form class="form-edit" action="SvServiceEdit" method="POST">
                                     <input type="hidden" name="service_code" value="<%= service_code%>">
-                                    <button type="submit" class="edit-btn">Editar</button>
+                                    <button type="submit" class="edit-btn"><span>EDITAR</span></button>
                                 </form>
                             </td>
                             <td><%= service.getService_code()%></td>
@@ -134,27 +189,28 @@
                             <td><%= service.getDestination()%></td>
                             <td>&dollar;<%= service.getCost_service()%></td>
                             <td><%= date_service%></td>
-                            <td>
-                                <form class="form-delete" action="SvServiceDelete" method="POST" name="formDeleteEmployee">
+                            <td class="td-delete-btn">
+                                <form class="form-delete" action="SvServiceDelete" method="POST" >
                                     <input type="hidden" name="service_code" value="<%= service_code%>">
-                                    <button type="submit" class="delete-btn">Eliminar</button>
+                                    <button type="submit" class="delete-btn"><span>ELIMINAR</span></button>
                                 </form>
                             </td>
-
                         </tr>
                         <% }%>
+
                     </tbody>
-
                 </table>
-            </div>
-        </section>
-    </main>
 
-    <footer class="box-size">
-        <p>
-            Hecho con ♥ por Gaston Giacobini (Proyecto Polo Tic Misiones 2021)
-        </p>
-    </footer>
+            </section>
 
-</body>
+        </main>
+        <footer class="box-size">
+            <p>
+                Hecho con &hearts; por Gaston Giacobini (Proyecto Polo Tic Misiones 2021)
+            </p>
+        </footer>
+
+        <% }%>
+    </body>
+
 </html>

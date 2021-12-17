@@ -1,10 +1,8 @@
 <%@page import="logica.Service"%>
-<%@page import="java.util.Date" %>
-<%@page import="java.text.SimpleDateFormat" %>
-<%@page import="logica.Employee" %>
-<%@page import="java.util.List" %>
-<%@page import="logica.Controladora" %>
-<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="logica.User"%>
+<%@page import="java.util.List"%>
+<%@page import="logica.Controladora"%>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -13,88 +11,154 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link rel="stylesheet" href="assets/css/style.css">
-        <link rel="stylesheet" href="assets/css/log-manager.css">
-        <link rel="stylesheet" href="assets/css/form.css">
+        <link rel="stylesheet" href="assets/css/index.css">
+        <link rel="stylesheet" href="assets/css/form-neon.css">
+        <link rel="stylesheet" href="assets/css/log-neon.css">
 
-        <title>index</title>
+        <link rel="shortcut icon"
+              href="https://img.icons8.com/external-becris-lineal-color-becris/64/000000/external-analytics-digital-economy-becris-lineal-color-becris-3.png"
+              type="image/x-icon">
+
+        <title>Agencia de Turismo</title>
+
     </head>
 
-    <body>         
+    <body>
 
-        <div class="logobar-default box-size">
-            <a href="index.jsp">
-                <h1>Agencia de Turismo UwU</h1>
-            </a>
-        </div>
-        
-    <navbar class="navbar-default box-size">
+        <%
+            HttpSession thisSession = request.getSession();
 
-        <ul class="links">
-            <li><a href="https://youtu.be/dQw4w9WgXcQ">
-                    SOY UN LINK :D
-                </a></li>
-            <li><a href="#">
-                    GITHUB
-                </a></li>
-            <li><a href="#">
-                    SOBRE MI
-                </a></li>
-        </ul>
+            String userSession = (String) thisSession.getAttribute("username");
 
-    </navbar>
+            if (userSession == null) {
+                response.sendRedirect("login.jsp");
+            } else if (userSession != null) {
+        %>
 
-    <main class="container-default box-size">
+        <nav class="navbar">
+            <section class="buttons">
+                <div class="outer button">
+                    <a href="index.jsp">
+                        HOME
+                    </a>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="outer button" title="ola ke mira">
+                    <a target="_blank" href="https://youtu.be/dQw4w9WgXcQ">
+                        easter-egg
+                    </a>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="outer button">
+                    <a href="https://github.com/gaston38kpo/servicio-turistico">
+                        GITHUB
+                    </a>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="outer button">
+                    <a href="https://www.linkedin.com/in/gaston-giacobini/">
+                        SOBRE MI
+                    </a>
+                    <span></span>
+                    <span></span>
+                </div>
+            </section>
+            <section class="username-nav">
+                <p>Bienvenido <strong>
+                        <%= request.getSession().getAttribute("username")%>
+                    </strong> !</p>
+            </section>
+        </nav>
 
-        <section class="form-section">
+        <main class="main-crud">
 
-            <input type=checkbox id="show">
-            <label class="show-btn" for="show">Editar Servicio</label>
+            <section class="section-form">
 
-            <!-- Form to create new employees -->
-            <form action="SvServiceEdit" method="GET">
-                <%
-                    HttpSession thisSession = request.getSession();
-                    Service service = (Service) thisSession.getAttribute("service");
+                <!-- Formulario de creacion -->
+                <form class="container-form" action="SvServiceEdit" method="GET">
+                    <%
+                        thisSession = request.getSession();
+                        Service service = (Service) thisSession.getAttribute("service");
 
-                    SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
-                    String date_service = DATE_FORMAT.format(service.getDate_service());
-                %>
-
-                <div class="form-group">
-
+                        SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+                        String date_service = DATE_FORMAT.format(service.getDate_service());
+                    %>
+                    
                     <input type="hidden" name="service_code" value="<%= service.getService_code()%>">
+
+                    <h2>Editar Servicio</h2>
+
+                    <br>
 
                     <h2>Informacion del Servicio</h2>
 
-                    <label for="name_id">Nombre*</label>
-                    <input type="text" name="name" id="name_id" value="<%= service.getName()%>" required>
+                    <div class="row100">
+                        <div class="col">
+                            <div class="input-box">
+                                <input type="text" name="name" value="<%= service.getName()%>" required>
+                                <span class="text">Nombre*</span>
+                                <span class="line"></span>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-box">
+                                <input type="text" name="destination" value="<%= service.getDestination()%>" required>
+                                <span class="text">Destino*</span>
+                                <span class="line"></span>
+                            </div>
+                        </div>
+                    </div>
 
-                    <label for="description_id">Descripcion*</label>
-                    <input type="text-area" name="description" id="description_id" value="<%= service.getDescription()%>" required>
+                    <div class="row100">
+                        <div class="col">
+                            <div class="input-box">
+                                <input type="number" step="0.01" name="cost_service" value="<%= service.getCost_service()%>" required>
+                                <span class="text">Costo*</span>
+                                <span class="line"></span>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-box">
+                                <input type="date" name="date_service" value="<%= date_service%>"required>
+                                <span class="text">Fecha*</span>
+                                <span class="line"></span>
+                            </div>
+                        </div>
+                    </div>
 
-                    <label for="destination_id">Destino*</label>
-                    <input type="text" name="destination" id="destination_id" value="<%= service.getDestination()%>" required>
+                    <div class="row100">
+                        <div class="col">
+                            <div class="input-box textarea">
+                                <textarea name="description" required><%= service.getDescription()%></textarea>
+                                <span class="text">Descripci&oacute;n*</span>
+                                <span class="line"></span>
+                            </div>
+                        </div>
+                    </div>
 
-                    <label for="cost_service_id">Costo*</label>
-                    <input type="number" step=".01" name="cost_service" id="cost_service_id" value="<%= service.getCost_service()%>" required>
 
-                    <label for="date_service_id">Fecha*</label>
-                    <input type="date" name="date_service" id="date_service_id" value="<%= date_service%>"required>                    
+                    <div class="row100">
+                        <div class="col">
+                            <input type="submit" value="Editar" class="submit-btn">
+                        </div>
+                    </div>
 
-                </div>                
+                </form>
 
-                <input type="submit" value="Modificar Servicio" class="submit-btn">
-            </form>
-        </section>
+            </section>
 
-    </main>
 
-    <footer class="box-size">
-        <p>
-            Hecho con ♥ por Gaston Giacobini (Proyecto Polo Tic Misiones 2021)
-        </p>
-    </footer>
+        </main>
+        <footer class="box-size">
+            <p>
+                Hecho con &hearts; por Gaston Giacobini (Proyecto Polo Tic Misiones 2021)
+            </p>
+        </footer>
 
-</body>
+        <% }%>
+    </body>
+
 </html>

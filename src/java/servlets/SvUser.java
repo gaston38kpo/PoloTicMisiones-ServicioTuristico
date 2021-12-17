@@ -104,10 +104,13 @@ public class SvUser extends HttpServlet {
                 // Almacenando los nuevos datos
                 username = request.getParameter("username");
                 password = request.getParameter("password");
-
+                
+                request.getSession().setAttribute("username", username);
+                request.getSession().setAttribute("password", password);
+                
                 // Envio de datos a la controladora 
-                control.createUser(username, password);
-
+                control.createUser(username, password);                
+                
                 // Redirecciona a si misma para ver el nuevo dato en la tabla.
                 response.sendRedirect("users.jsp");
 

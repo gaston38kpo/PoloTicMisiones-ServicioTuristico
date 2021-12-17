@@ -1,0 +1,246 @@
+/* --------------------------------- */
+/* ---- CSS HECHO CON ♥         ---- */
+/* ---- POR GASTON GIACOBINI    ---- */
+/* --------------------------------- */
+
+@import url("https://fonts.googleapis.com/css?family=Poppins:200,400,500,600,700,800&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+.main-crud {
+    position: absolute;
+    top: 81px;
+    display: flex;  
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+
+    min-height: calc(100vh - 81px - 50px);
+    width: 98vw; 
+}
+
+.section-form,
+.section-log {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 20vh;
+    padding: 20px 0;
+    width: 40%;
+    background: #00192305;
+}
+
+.section-log {
+    width: 100%;
+}
+
+.container-form {
+    position: relative;
+    z-index: 1000;
+    width: 100%;
+    max-width: 1000px;
+    padding: 25px 15px;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.container-form::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -40%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    pointer-events: none;
+    transform: skewX(-15deg);
+}
+
+.container-form h2 {
+    width: 100%;
+    text-align: center;
+    color: #FFF;
+    font-size: 36px;
+    margin-bottom: 5px;
+    font-weight: 200;
+}
+
+.container-form .row100 {
+    position: relative;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.container-form .row100 .col {
+    position: relative;
+    width: 100%;
+    padding: 0 10px;
+    margin: 30px 0 20px;
+}
+
+.container-form .row100 .col .input-box {
+    position: relative;
+    width: 100%;
+    height: 40px;
+    color: #FFF;
+}
+
+.container-form .row100 .col .input-box input, 
+.container-form .row100 .col .input-box textarea {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    box-shadow: none;
+    border: none;
+    outline: none;
+    font-size: 15px;
+    padding: 0 10px;
+    z-index: 1;
+    color: #000;
+}
+
+.container-form .row100 .col .input-box .text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    line-height: 40px;
+    font-size: 18px;
+    padding: 0 10px;
+    display: block;
+    transition: 0.5s;
+    pointer-events: none;
+} 
+
+
+.container-form .row100 .col .input-box input:focus + .text, 
+.container-form .row100 .col .input-box input:valid + .text,
+.container-form .row100 .col .input-box textarea:focus + .text, 
+.container-form .row100 .col .input-box textarea:valid + .text {
+    top: -35px;
+    left: -10px;
+    font-size: 14px;
+
+}
+
+.container-form .row100 .col .input-box .line {
+    position: absolute;
+    bottom: 0;
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: #FFF;
+    transition: 0.5s;
+    border-radius: 2px;
+    pointer-events: none;
+}
+
+.container-form .row100 .col .input-box input:focus ~ .line, 
+.container-form .row100 .col .input-box input:valid ~ .line {
+    height: 100%;
+}
+
+.container-form .row100 .col .input-box input[type="email"]:invalid {
+    color: transparent;
+}
+
+.container-form .row100 .col .input-box input:invalid:focus {
+    color: #000;
+}
+
+.container-form .row100 .col .input-box.textarea {
+    position: relative;
+    width: 100%;
+    height: 100px;
+    padding: 10px 0;
+}
+
+.container-form .row100 .col .input-box textarea:focus ~ .line, 
+.container-form .row100 .col .input-box textarea:valid ~ .line {
+    height: 100%;
+}
+
+.container-form .row100 .col input[type="submit"] {
+    border: none;
+    padding: 10px 40px;
+    background: #FFFFFFA0;
+    color: #000;
+    outline: none;
+    font-weight: 600;
+    font-size: 18px;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.container-form .row100 .col input[type="submit"]:hover {
+    background: #FFF;
+}
+
+.container-form .row100 .col input[type="date"] {
+    color: transparent;
+}
+.container-form .row100 .col input[type="date"]:valid {
+    color: #000;
+}
+.container-form .row100 .col input[type="date"]:focus {
+    color: #000;
+}
+
+/*checkbox*/
+
+.col.label {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.label-switch {
+    text-align: right;
+    text-align: right;
+    color: white;
+    font-weight: 300;
+    padding: 3px;
+    border-radius: 4px;
+    text-shadow: 0 0 2px black;
+}
+
+.row100 .checkbox {
+    display: flex;
+}
+
+.row100 .col input[type="checkbox"] {
+    width: 30px;
+    height: 30px;
+    align-self: center;
+}
+
+.label-switch .blue {
+    background: #0A23ACAA;
+    color: #ffffffb3;
+    text-shadow: 0 0 2px black;
+    border-radius: 3px;
+    padding: 4px;
+}
+
+.label-switch .white {
+    background: #ffffffAA;
+    color: #0A23AC;
+    text-shadow: 0 0 2px white;
+    border-radius: 3px;
+    padding: 4px;
+}
+
+select:disabled {
+    color: gray;
+    text-shadow: 0 0 2px black;
+}

@@ -1,13 +1,12 @@
 <%@page import="logica.Sale"%>
-<%@page import="logica.Package"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="logica.Service"%>
+<%@page import="logica.Package"%>
+<%@page import="logica.Employee"%>
 <%@page import="logica.Client"%>
-<%@page import="java.util.Date" %>
-<%@page import="java.text.SimpleDateFormat" %>
-<%@page import="logica.Employee" %>
-<%@page import="java.util.List" %>
-<%@page import="logica.Controladora" %>
-<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@page import="logica.User"%>
+<%@page import="java.util.List"%>
+<%@page import="logica.Controladora"%>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -16,11 +15,17 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link rel="stylesheet" href="assets/css/style.css">
-        <link rel="stylesheet" href="assets/css/log-manager.css">
-        <link rel="stylesheet" href="assets/css/form.css">
+        <link rel="stylesheet" href="assets/css/index.css">
+        <link rel="stylesheet" href="assets/css/form-neon.css">
+        <link rel="stylesheet" href="assets/css/log-neon.css">
+        <link rel="stylesheet" href="assets/css/checkbox.css">
 
-        <title>VENTAS</title>
+        <link rel="shortcut icon"
+              href="https://img.icons8.com/external-becris-lineal-color-becris/64/000000/external-analytics-digital-economy-becris-lineal-color-becris-3.png"
+              type="image/x-icon">
+
+        <title>Agencia de Turismo</title>
+
         <script>
             function toggle() {
                 let service = document.getElementById('service_code_fk_id');
@@ -37,173 +42,252 @@
                 }
             }
         </script>
+
+        <style>
+            .container-form .row100 .col .input-box .line {
+                background: #ffffff3d;
+                border: 1px solid black;
+                border-radius: 4px;
+            }
+            .container-form .row100 .col input[type="date"]:valid {
+                color: #fff;
+                text-shadow: 0 0 56px #fff, 0 0 16px #000;
+            }
+            .container-form .row100 .col input[type="date"] {
+                text-align: center;
+            }
+            .container-form .row100 .col select {
+                width: 100%;
+            }
+            .container-form .row100 .col .checkbox-sp {
+                background: #0000005a;
+                padding: 8px;
+                border-radius: 4px;
+                color: white;
+                font-weight: 400;
+            }
+        </style>
+
     </head>
 
     <body>
+
         <%
             HttpSession thisSession = request.getSession();
-            String user = (String) thisSession.getAttribute("username");
-            
-            if (user == null) {
+
+            String userSession = (String) thisSession.getAttribute("username");
+
+            if (userSession == null) {
                 response.sendRedirect("login.jsp");
-            } else {
-        %>   
+            } else if (userSession != null) {
+        %>
 
-        <div class="logobar-default box-size">
-            <a href="index.jsp">
-                <h1>Agencia de Turismo UwU</h1>
-            </a>
-        </div>
-    <navbar class="navbar-default box-size">
-        <ul class="links">
-            <li><a href="https://youtu.be/dQw4w9WgXcQ">
-                    SOY UN LINK :D
-                </a></li>
-            <li><a href="#">
-                    GITHUB
-                </a></li>
-            <li><a href="#">
-                    SOBRE MI
-                </a></li>
-        </ul>
-    </navbar>
+        <nav class="navbar">
+            <section class="buttons">
+                <div class="outer button">
+                    <a href="index.jsp">
+                        HOME
+                    </a>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="outer button" title="ola ke mira">
+                    <a target="_blank" href="https://youtu.be/dQw4w9WgXcQ">
+                        easter-egg
+                    </a>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="outer button">
+                    <a href="https://github.com/gaston38kpo/servicio-turistico">
+                        GITHUB
+                    </a>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="outer button">
+                    <a href="https://www.linkedin.com/in/gaston-giacobini/">
+                        SOBRE MI
+                    </a>
+                    <span></span>
+                    <span></span>
+                </div>
+            </section>
+            <section class="username-nav">
+                <p>Bienvenido <strong>
+                        <%= request.getSession().getAttribute("username")%>
+                    </strong> !</p>
+            </section>
+        </nav>
 
-    <main class="container-default box-size">
-        <section class="form-section">
+        <main class="main-crud">
 
-            <input type=checkbox id="show">
-            <label class="show-btn" for="show">Registrar nueva Venta</label>
+            <section class="section-form">
 
-            <!-- NUEVA VENTA -->
-            <form id="content" action="SvSaleCreate" method="POST">
+                <!-- Formulario de creacion -->
+                <form class="container-form" action="SvSaleCreate" method="POST">
 
-                <div class="form-group">
+                    <h2>Nueva Venta</h2>
+
+                    <br>
 
                     <h2>Informacion de Venta</h2>
 
-                    <label for="payment_mehod_id">Metodo de pago*</label>
-                    <select name="payment_mehod" id="payment_mehod_id" required>
-                        <option disabled selected value> -- SELECCIONE UNA OPCION -- </option>
-                        <optgroup label="SISTEMA DE COMISIONES AUN NO IMPLEMENTADO"></optgroup>
-                        <optgroup label="Sin comisión">                            
-                            <option value="efectivo">Efectivo</option>
-                            <option value="Monedero Virtual">Monedero Virtual</option>
-                        </optgroup>
-                        <optgroup label="2.45%">                            
-                            <option value="Transferencia">Transferencia</option>
-                        </optgroup>
-                        <optgroup label="3%">                            
-                            <option value="Tarjeta de Debito">Tarjeta de D&eacute;bito</option>
-                        </optgroup>
-                        <optgroup label="9%">                            
-                            <option value="Tarjeta de Credito">Tarjeta de Cr&eacute;dito</option>
-                        </optgroup>
-                    </select>
 
-                    <label for="date_sale_id">Fecha de venta*</label>
-                    <input type="date" name="date_sale" id="date_sale_id" required>
 
-                    <label for="client_fk_id">CLIENTES*</label>
-                    <select name="client_fk" id="client_fk_id" required>
-                        <option disabled selected value> -- SELECCIONE UNA OPCION -- </option>
-                        <%
-                            Controladora control = new Controladora();
-
-                            List<Client> clientList = control.getAllClients();
-
-                            for (Client client : clientList) {
-                        %>                  
-
-                        <option value="<%= client.getId()%>">
-                            <%= client.getDni()%> - <%= client.getLast_name()%> <%= client.getFirst_name()%>
-                        </option>
-
-                        <% }%>
-
-                    </select>
-
-                    <label for="employee_fk_id">EMPLEADOS*</label>
-                    <select name="employee_fk" id="employee_fk_id" required>
-                        <option disabled selected value> -- SELECCIONE UNA OPCION -- </option>
-                        <%
-                            List<Employee> employeeList = control.getAllEmployees();
-
-                            for (Employee employee : employeeList) {
-                        %>                  
-
-                        <option value="<%= employee.getId()%>">
-                            <%= employee.getLast_name()%> <%= employee.getFirst_name()%>
-                        </option>
-
-                        <% }%>
-
-                    </select>
-
-                    <div>
-                        <input type="checkbox" id="toggle_id" checked="checked" onclick="toggle()">
-                        <label for="toggle_id">SERVICIO/PAQUETE</label>
+                    <div class="row100">
+                        <div class="col">
+                            <div class="input-box">
+                                <input type="date" name="date_sale" required>
+                                <span class="text">Fecha de venta*</span>
+                                <span class="line"></span>
+                            </div>
+                        </div>                        
                     </div>
 
-                    <label for="service_code_fk_id">SERVICIOS</label>
-                    <select name="service_code_fk" id="service_code_fk_id" >
-                        <option selected value> -- SELECCIONE UNA OPCION -- </option>
-                        <%
-                            List<Service> serviceList = control.getAllServices();
-
-                            for (Service service : serviceList) {
-                        %>                  
-
-                        <option value="<%= service.getService_code()%>">
-                            Servicio: <%= service.getName()%> (&dollar; <%= service.getCost_service()%>)
-                        </option>
-
-                        <% }%>
-
-                    </select>
-
-                    <label for="package_code_fk_id">PAQUETES</label>
-                    <select name="package_code_fk" id="package_code_fk_id" disabled>
-                        <option selected value> -- SELECCIONE UNA OPCION -- </option>
-                        <%
-                            List<Package> packageList = control.getAllPackages();
-
-                            for (Package pkg : packageList) {
-                        %>                  
-
-                        <option value="<%= pkg.getPackage_code()%>">
-                            Codigo: <%= pkg.getPackage_code()%> (&dollar; <%= pkg.getPackage_cost()%>). Cant. servicios: <%= pkg.getList_of_services().size()%> 
-                        </option>
-
-                        <% }%>
-
-                    </select>
-
-                </div>               
-                <input type="submit" value="Crear Venta" class="submit-btn">
-            </form>
-        </section>
+                    <div class="row100">
+                        <div class="col">
+                            <select name="payment_mehod" id="payment_mehod_id" required>
+                                <option disabled selected value> -- METODO DE PAGO -- </option>
+                                <optgroup label="SISTEMA DE COMISIONES AUN NO IMPLEMENTADO"></optgroup>
+                                <optgroup label="Sin comisi�n">                            
+                                    <option value="efectivo">Efectivo</option>
+                                    <option value="Monedero Virtual">Monedero Virtual</option>
+                                </optgroup>
+                                <optgroup label="2.45%">                            
+                                    <option value="Transferencia">Transferencia</option>
+                                </optgroup>
+                                <optgroup label="3%">                            
+                                    <option value="Tarjeta de Debito">Tarjeta de D&eacute;bito</option>
+                                </optgroup>
+                                <optgroup label="9%">                            
+                                    <option value="Tarjeta de Credito">Tarjeta de Cr&eacute;dito</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
 
 
-        <!-- List all sales on database -->
 
-        <section class="log-section">
-            <h2>Lista de Ventas</h2>
-            <div class="table-wrapper">
-                <table class="fl-table">
-                    <thead class="log-header">
-                        <tr>                                                    
-                            <th></th>
-                            <th>Numero de venta</th>
-                            <th>Metodo de pago</th>
-                            <th>Fecha de venta</th>
-                            <th>Cliente (DNI)</th>
-                            <th>Empleado</th>
-                            <th>Servicio (Si corresponde)</th>
-                            <th>Paquete (Si corresponde)</th>
-                            <th></th>
+                    <div class="row100">
+                        <div class="col">
+                            <select name="client_fk" id="client_fk_id" required>
+                                <option disabled selected value> -- CLIENTES -- </option>
+                                <%
+                                    Controladora control = new Controladora();
+
+                                    List<Client> clientList = control.getAllClients();
+
+                                    for (Client client : clientList) {
+                                %>                  
+
+                                <option value="<%= client.getId()%>">
+                                    <%= client.getDni()%> - <%= client.getLast_name()%> <%= client.getFirst_name()%>
+                                </option>
+
+                                <% }%>
+
+                            </select>
+                        </div>
+                        <div class="col">
+                            <select name="employee_fk" id="employee_fk_id" required>
+                                <option disabled selected value> -- EMPLEADOS -- </option>
+                                <%
+                                    List<Employee> employeeList = control.getAllEmployees();
+
+                                    for (Employee employee : employeeList) {
+                                %>                  
+
+                                <option value="<%= employee.getId()%>">
+                                    <%= employee.getLast_name()%> <%= employee.getFirst_name()%>
+                                </option>
+
+                                <% }%>
+
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row100">
+                        <div class="col label">           
+                            <h3 class="label-switch">                                
+                                <span class="blue">Servicio</span>/<span class="white">Paquete</span>
+                            </h3>
+
+                        </div>
+                        <div class="col checkbox">
+                            <input type="checkbox" id="toggle_id" onclick="toggle()" checked>                                    
+                        </div>
+                    </div>
+
+                    <div class="row100">
+                        <div class="col select">
+                            <select name="service_code_fk" id="service_code_fk_id" >
+                                <option selected value> -- SERVICIOS -- </option>
+                                <%
+                                    List<Service> serviceList = control.getAllServices();
+
+                                    for (Service service : serviceList) {
+                                %>                  
+
+                                <option value="<%= service.getService_code()%>">
+                                    Servicio: <%= service.getName()%> (&dollar; <%= service.getCost_service()%>)
+                                </option>
+
+                                <% }%>
+
+                            </select>
+                        </div>
+                        <div class="col">
+                            <select name="package_code_fk" id="package_code_fk_id" disabled>
+                                <option selected value> -- PAQUETES -- </option>
+                                <%
+                                    List<Package> packageList = control.getAllPackages();
+
+                                    for (Package pkg : packageList) {
+                                %>                  
+
+                                <option value="<%= pkg.getPackage_code()%>">
+                                    Codigo: <%= pkg.getPackage_code()%> (&dollar; <%= pkg.getPackage_cost()%>). Cant. servicios: <%= pkg.getList_of_services().size()%> 
+                                </option>
+
+                                <% }%>
+
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row100">
+                        <div class="col">
+                            <input type="submit" value="Crear" class="submit-btn">
+                        </div>
+                    </div>
+
+                </form>
+
+            </section>
+
+
+            <!-- Tabla con todos los datos listados -->        
+            <section class="section-log">
+
+                <h1 contenteditable="true" class="title-log"><span>List&lt;&gt; Ventas</span></h1>
+
+                <table class="container">
+                    <thead>
+                        <tr>
+                            <th><h1></h1></th>
+                            <th><h1>Numero de venta</h1></th>
+                            <th><h1>Metodo de pago</h1></th>
+                            <th><h1>Fecha de venta</h1></th>
+                            <th><h1>Cliente (DNI)</h1></th>
+                            <th><h1>Empleado</h1></th>
+                            <th><h1>Servicio (Si corresponde)</h1></th>
+                            <th><h1>Paquete (Si corresponde)</h1></th>
+                            <th><h1></h1></th>
                         </tr>
                     </thead>
-                    <tbody class="log-body">
+                    <tbody>
                         <%
                             SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -246,11 +330,12 @@
                                 }
 
                         %>
+
                         <tr>
-                            <td>
+                            <td class="td-edit-btn">
                                 <form class="form-edit" action="SvSaleEdit" method="POST">
                                     <input type="hidden" name="sale_number" value="<%= sale.getSale_number()%>">
-                                    <button type="submit" class="edit-btn">Editar</button>
+                                    <button type="submit" class="edit-btn"><span>EDITAR</span></button>
                                 </form>
                             </td>
                             <td>
@@ -297,25 +382,28 @@
                                     <%}%>
                                 </select> 
                             </td>
-                            <td>
-                                <form class="form-edit" action="SvSaleDelete" method="POST">
+                            <td class="td-delete-btn">
+                                <form class="form-delete" action="SvSaleDelete" method="POST">
                                     <input type="hidden" name="sale_number" value="<%= sale.getSale_number()%>">
-                                    <button type="submit" class="delete-btn">Eliminar</button>
+                                    <button type="submit" class="delete-btn"><span>ELIMINAR</span></button>
                                 </form>
                             </td>
                         </tr>
                         <% }%>
+
                     </tbody>
                 </table>
-            </div>
-        </section>
-    </main>
 
-    <footer class="box-size">
-        <p>
-            Hecho con ♥ por Gaston Giacobini (Proyecto Polo Tic Misiones 2021)
-        </p>
-    </footer>
-    <% }%>    
-</body>
+            </section>
+
+        </main>
+        <footer class="box-size">
+            <p>
+                Hecho con &hearts; por Gaston Giacobini (Proyecto Polo Tic Misiones 2021)
+            </p>
+        </footer>
+
+        <% }%>
+    </body>
+
 </html>
