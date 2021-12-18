@@ -1,9 +1,10 @@
+<%@page import="logica.Sale"%>
 <%@page import="logica.Client"%>
-<%@page import="java.util.Date" %>
-<%@page import="java.text.SimpleDateFormat" %>
-<%@page import="java.util.List" %>
-<%@page import="logica.Controladora" %>
-<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@page import="logica.Employee"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="logica.User"%>
+<%@page import="java.util.List"%>
+<%@page import="logica.Controladora"%>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -12,98 +13,202 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link rel="stylesheet" href="assets/css/style.css">
-        <link rel="stylesheet" href="assets/css/log-manager.css">
-        <link rel="stylesheet" href="assets/css/form.css">
+        <link rel="stylesheet" href="assets/css/index.css">
+        <link rel="stylesheet" href="assets/css/form-neon.css">
+        <link rel="stylesheet" href="assets/css/log-neon.css">
 
-        <title>index</title>
+        <link rel="shortcut icon"
+              href="https://img.icons8.com/external-becris-lineal-color-becris/64/000000/external-analytics-digital-economy-becris-lineal-color-becris-3.png"
+              type="image/x-icon">
+
+        <title>Agencia de Turismo</title>
+
     </head>
 
-    <body>         
+    <body>
 
-        <div class="logobar-default box-size">
-            <a href="index.jsp">
-                <h1>Agencia de Turismo UwU</h1>
-            </a>
-        </div>
-        
-    <navbar class="navbar-default box-size">
+        <%
+            HttpSession thisSession = request.getSession();
 
-        <ul class="links">
-            <li><a href="https://youtu.be/dQw4w9WgXcQ">
-                    SOY UN LINK :D
-                </a></li>
-            <li><a href="#">
-                    GITHUB
-                </a></li>
-            <li><a href="#">
-                    SOBRE MI
-                </a></li>
-        </ul>
+            String userSession = (String) thisSession.getAttribute("username");
 
-    </navbar>
+            if (userSession == null) {
+                response.sendRedirect("login.jsp");
+            } else if (userSession != null) {
+        %>
 
-    <main class="container-default box-size">
-
-        <section class="form-section">
-
-            <input type=checkbox id="show">
-            <label class="show-btn" for="show">Editar Cliente</label>
-
-            <!-- Form to create new employees -->
-            <form action="SvClientEdit" method="GET">
+        <nav class="navbar">
+            <section class="buttons">
+                <div class="outer button">
+                    <a href="index.jsp">
+                        HOME
+                    </a>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="outer button" title="ola ke mira">
+                    <a target="_blank" href="https://youtu.be/dQw4w9WgXcQ">
+                        easter-egg
+                    </a>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="outer button">
+                    <a href="https://github.com/gaston38kpo/servicio-turistico">
+                        GITHUB
+                    </a>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="outer button">
+                    <a href="https://www.linkedin.com/in/gaston-giacobini/">
+                        SOBRE MI
+                    </a>
+                    <span></span>
+                    <span></span>
+                </div>
+            </section>
+            <section class="profits-nav">
+                <% Sale saleEarnings = new Sale(); %>
+                <span>Promedio de Ganancias Diarias : &dollar;<%= saleEarnings.getDailyEarnings() %></span>
+                <span>Promedio de Ganancias Mensuales : &dollar;<%= saleEarnings.getMonthlyEarnings() %></span>
+            </section>
+            <section class="username-nav">
                 <%
-                    HttpSession thisSession = request.getSession();
-                    Client client = (Client) thisSession.getAttribute("client");
+                    thisSession = request.getSession();
 
-                    SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
-                    String birthdate = DATE_FORMAT.format(client.getBirthdate());
-                %>
+                    userSession = (String) thisSession.getAttribute("username");
 
-                <div class="form-group form-personal-info">
+                    if (userSession != null) {%>
+                <p>Bienvenido 
+                    <strong>
+                        <%= request.getSession().getAttribute("username")%>
+                    </strong> !
+                </p>
+                <form id="form-logout" action="SvUserLogout" method="POST">
+                    <input type="hidden" name="logout" value="true">
+                    <button type="submit">
+                        <img src="https://img.icons8.com/ios-glyphs/30/ffffff/logout-rounded-left.png"/>
+                    </button>
+                </form>
+
+                <%}%>
+
+            </section>
+        </nav>
+
+        <main class="main-crud">
+
+            <section class="section-form">
+
+                <!-- Formulario de creacion -->
+                <form class="container-form" action="SvClientEdit" method="GET">
+
+                    <%
+                        thisSession = request.getSession();
+                        Client client = (Client) thisSession.getAttribute("client");
+
+                        SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+                        String birthdate = DATE_FORMAT.format(client.getBirthdate());
+                    %>
 
                     <input type="hidden" name="id" value="<%= client.getId()%>">
 
-                    <h2>Informacion personal</h2>                    
+                    <h2>Editar Cliente</h2>
 
-                    <label for="first_name_id">Nombre*</label>
-                    <input type="text" name="first_name" id="first_name_id" value="<%= client.getFirst_name()%>" required>
+                    <br>
 
-                    <label for="last_name_id">Apellido*</label>
-                    <input type="text" name="last_name" id="last_name_id" value="<%= client.getLast_name()%>" required>
+                    <h2>Informacion personal</h2>
 
-                    <label for="street_id">Dirección*</label>
-                    <input type="text" name="street" id="street_id" value="<%= client.getStreet()%>" required>
+                    <div class="row100">
+                        <div class="col">
+                            <div class="input-box">
+                                <input type="text" name="first_name" value="<%= client.getFirst_name()%>" required>
+                                <span class="text">Nombre*</span>
+                                <span class="line"></span>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-box">
+                                <input type="text" name="last_name" value="<%= client.getLast_name()%>" required>
+                                <span class="text">Apellido*</span>
+                                <span class="line"></span>
+                            </div>
+                        </div>
+                    </div>
 
-                    <label for="dni_id">DNI*</label>
-                    <input type="number" name="dni" id="dni_id" value="<%= client.getDni()%>" required>
+                    <div class="row100">
+                        <div class="col">
+                            <div class="input-box">
+                                <input type="text" name="street" value="<%= client.getStreet()%>" required>
+                                <span class="text">Direcci&oacute;n*</span>
+                                <span class="line"></span>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-box">
+                                <input type="number" name="dni" value="<%= client.getDni()%>" required>
+                                <span class="text">DNI*</span>
+                                <span class="line"></span>
+                            </div>
+                        </div>
+                    </div>
 
-                    <label for="birthdate_id">Fecha de nacimiento*</label>
-                    <input type="date" name="birthdate" value="<%= birthdate%>" required>
+                    <div class="row100">
+                        <div class="col">
+                            <div class="input-box">
+                                <input type="date" name="birthdate" value="<%= birthdate%>" required>
+                                <span class="text">Fecha de nacimiento*</span>
+                                <span class="line"></span>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-box">
+                                <input type="text" name="nationality" value="<%= client.getNationality()%>" required>
+                                <span class="text">Nacionalidad*</span>
+                                <span class="line"></span>
+                            </div>
+                        </div>
+                    </div>
 
-                    <label for="nationality_id">Nacionalidad*</label>
-                    <input type="text" name="nationality" id="nationality_" value="<%= client.getNationality()%>" required>
+                    <div class="row100">
+                        <div class="col">
+                            <div class="input-box">
+                                <input type="text" name="cellphone" value="<%= client.getCellphone()%>" required>
+                                <span class="text">Telefono*</span>
+                                <span class="line"></span>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-box">
+                                <input type="email" name="email" value="<%= client.getEmail()%>" required>
+                                <span class="text">Email*</span>
+                                <span class="line"></span>
+                            </div>
+                        </div>
+                    </div>                   
 
-                    <label for="cellphone_id">Telefono*</label>
-                    <input type="text" name="cellphone" id="cellphone_id" value="<%= client.getCellphone()%>" required>
 
-                    <label for="email_id">Email*</label>
-                    <input type="email" name="email" id="email_id" value="<%= client.getEmail()%>" required>
+                    <div class="row100">
+                        <div class="col">
+                            <input type="submit" value="Editar" class="submit-btn">
+                        </div>
+                    </div>
 
-                </div>                  
+                </form>
 
-                <input type="submit" value="Modificar Cliente" class="submit-btn">
-                
-            </form>
-        </section>
+            </section>
 
-    </main>
 
-    <footer class="box-size">
-        <p>
-            Hecho con ♥ por Gaston Giacobini (Proyecto Polo Tic Misiones 2021)
-        </p>
-    </footer>
+        </main>
+        <footer class="box-size">
+            <p>
+                Hecho con &hearts; por Gaston Giacobini (Proyecto Polo Tic Misiones 2021)
+            </p>
+        </footer>
 
-</body>
+        <% }%>
+        <script src="assets/js/global.js"></script>
+    </body>
+
 </html>

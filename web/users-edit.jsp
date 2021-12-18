@@ -1,7 +1,7 @@
-<%@page import="logica.User" %>
-<%@page import="java.util.List" %>
-<%@page import="logica.Controladora" %>
-<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@page import="logica.Sale"%>
+<%@page import="logica.User"%>
+<%@page import="java.util.List"%>
+<%@page import="logica.Controladora"%>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -10,78 +10,142 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link rel="stylesheet" href="assets/css/style.css">
-        <link rel="stylesheet" href="assets/css/log-manager.css">
-        <link rel="stylesheet" href="assets/css/form.css">
+        <link rel="stylesheet" href="assets/css/index.css">
+        <link rel="stylesheet" href="assets/css/form-neon.css">
+        <link rel="stylesheet" href="assets/css/log-neon.css">
 
-        <title>index</title>
+        <link rel="shortcut icon"
+              href="https://img.icons8.com/external-becris-lineal-color-becris/64/000000/external-analytics-digital-economy-becris-lineal-color-becris-3.png"
+              type="image/x-icon">
+
+        <title>Agencia de Turismo</title>
+
     </head>
 
-    <body>         
+    <body>
 
-        <div class="logobar-default box-size">
-            <a href="index.jsp">
-                <h1>Agencia de Turismo UwU</h1>
-            </a>
-        </div>
+        <%
+            HttpSession thisSession = request.getSession();
 
-    <navbar class="navbar-default box-size">
+            String userSession = (String) thisSession.getAttribute("username");
 
-        <ul class="links">
-            <li><a href="https://youtu.be/dQw4w9WgXcQ">
-                    SOY UN LINK :D
-                </a></li>
-            <li><a href="#">
-                    GITHUB
-                </a></li>
-            <li><a href="#">
-                    SOBRE MI
-                </a></li>
-        </ul>
+            if (userSession == null) {
+                response.sendRedirect("login.jsp");
+            } else if (userSession != null) {
+        %>
 
-    </navbar>
-
-    <main class="container-default box-size">
-
-        <section class="form-section">
-
-            <input type=checkbox id="show">
-            <label class="show-btn" for="show">Editar Usuario</label>
-
-            <!-- Form to create new employees -->
-            <form action="SvUserEdit" method="GET">
+        <nav class="navbar">
+            <section class="buttons">
+                <div class="outer button">
+                    <a href="index.jsp">
+                        HOME
+                    </a>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="outer button" title="ola ke mira">
+                    <a target="_blank" href="https://youtu.be/dQw4w9WgXcQ">
+                        easter-egg
+                    </a>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="outer button">
+                    <a href="https://github.com/gaston38kpo/servicio-turistico">
+                        GITHUB
+                    </a>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="outer button">
+                    <a href="https://www.linkedin.com/in/gaston-giacobini/">
+                        SOBRE MI
+                    </a>
+                    <span></span>
+                    <span></span>
+                </div>
+            </section>
+            <section class="profits-nav">
+                <% Sale saleEarnings = new Sale(); %>
+                <span>Promedio de Ganancias Diarias : &dollar;<%= saleEarnings.getDailyEarnings() %></span>
+                <span>Promedio de Ganancias Mensuales : &dollar;<%= saleEarnings.getMonthlyEarnings() %></span>
+            </section>
+            <section class="username-nav">
                 <%
-                    HttpSession thisSession = request.getSession();
-                    User user = (User) thisSession.getAttribute("user");
-                %>                
+                    thisSession = request.getSession();
 
-                <div class="form-group form-user-info">
+                    userSession = (String) thisSession.getAttribute("username");
+
+                    if (userSession != null) {%>
+                <p>Bienvenido 
+                    <strong>
+                        <%= request.getSession().getAttribute("username")%>
+                    </strong> !
+                </p>
+                <form id="form-logout" action="SvUserLogout" method="POST">
+                    <input type="hidden" name="logout" value="true">
+                    <button type="submit">
+                        <img src="https://img.icons8.com/ios-glyphs/30/ffffff/logout-rounded-left.png"/>
+                    </button>
+                </form>
+
+                <%}%>
+
+            </section>
+
+        </nav>
+
+        <main class="main-crud">
+
+            <section class="section-form">
+
+                <!-- Formulario de creacion -->
+                <form class="container-form" action="SvUserEdit" method="GET">
+                    <%
+                        thisSession = request.getSession();
+                        User user = (User) thisSession.getAttribute("user");
+                    %>
+                    <h2>Editar Usuario</h2>
 
                     <input type="hidden" name="id" value="<%= user.getId()%>">
-                    
-                    <h2>Cuenta</h2>                   
 
-                    <label for="username_id">Nombre de Usuario*</label>
-                    <input type="text" name="username" id="username_id" value="<%= user.getUsername()%>" required>
+                    <div class="row100">
+                        <div class="col">
+                            <div class="input-box">
+                                <input type="text" name="username" value="<%= user.getUsername()%>" required>
+                                <span class="text">Nombre de Usuario*</span>
+                                <span class="line"></span>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-box">
+                                <input type="text" name="password" value="<%= user.getPassword()%>" required>
+                                <span class="text">Contrase&ntilde;a*</span>
+                                <span class="line"></span>
+                            </div>
+                        </div>
+                    </div>
 
-                    <label for="password_id">Contraseña*</label>
-                    <input type="text" name="password" id="password_id" value="<%= user.getPassword()%>" required>
+                    <div class="row100">
+                        <div class="col">
+                            <input type="submit" value="Editar" class="submit-btn">
+                        </div>
+                    </div>
 
-                </div>                    
+                </form>
 
-                <input type="submit" value="Modificar Usuario" class="submit-btn">
+            </section>
 
-            </form>
 
-        </section>
+        </main>
+        <footer class="box-size">
+            <p>
+                Hecho con &hearts; por Gaston Giacobini (Proyecto Polo Tic Misiones 2021)
+            </p>
+        </footer>
 
-    </main>
+        <% }%>
+        <script src="assets/js/global.js"></script>
+    </body>
 
-    <footer class="box-size">
-        <p>
-            Hecho con ♥ por Gaston Giacobini (Proyecto Polo Tic Misiones 2021)
-        </p>
-    </footer>
-
-</body>
 </html>

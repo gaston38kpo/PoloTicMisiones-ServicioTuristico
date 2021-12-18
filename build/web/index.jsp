@@ -1,98 +1,113 @@
+<%@page import="logica.Sale"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="assets/css/style.css">
+        <link rel="stylesheet" href="assets/css/index.css">        
 
-    <title>Agencia de Turismo</title>
-</head>
+        <link rel="shortcut icon" href="https://img.icons8.com/external-becris-lineal-color-becris/64/000000/external-analytics-digital-economy-becris-lineal-color-becris-3.png" type="image/x-icon">
 
-<body>
-    <%        
-    HttpSession thisSession = request.getSession();
-    String user = (String) thisSession.getAttribute("username");
-    if (user == null) {
-        response.sendRedirect("login.jsp");
-    } else {
-    %>    
+        <title>Agencia de Turismo</title>
 
-    <div class="logobar-default box-size">
-        <a href="index.jsp">
-            <h1>Agencia de Turismo UwU</h1>
-        </a>
-        <p>Konnichiwa <%= request.getSession().getAttribute("username")%>-chan!</p>
-    </div>
-    <navbar class="navbar-default box-size">
-        <ul class="links">
-            <li><a href="https://youtu.be/dQw4w9WgXcQ">
-                    SOY UN LINK :D
-                </a></li>
-            <li><a href="https://github.com/gaston38kpo/servicio-turistico">
-                    GITHUB
-                </a></li>
-            <li><a href="https://www.linkedin.com/in/gaston-giacobini/">
-                    SOBRE MI
-                </a></li>
-        </ul>
-    </navbar>
+    </head>
 
-    <main class="container-default box-size">
-        <article>
-            <img src="https://img.icons8.com/fluency/144/000000/bmo.png" />
-            <a class="users-link main-link" href="users.jsp">
-                <h3>USUARIOS</h3>
-            </a>
-            <p>Administre todos los usuarios nuevos con los que contamos! Para crear usuarios nuevos por favor hagalo creando un empleado nuevo! </p>
-        </article>
-        <article>
-            <img src="https://img.icons8.com/fluency/144/000000/finn.png" />
-            <a class="employees-link main-link" href="employees.jsp">
-                <h3>EMPLEADOS</h3>
-            </a>
-            <p>Aqui puede manejar todos los empleados, cuidadito aqui. </p>
-        </article>
-        <article>
-            <img src="https://img.icons8.com/fluency/144/000000/ice-king.png" />
-            <a class="clients-link main-link" href="clients.jsp">
-                <h3>CLIENTES</h3>
-            </a>
-            <p>Aqui se listaran y manejaran todos los clientes</p>
-        </article>
-        <article>
-            <img src="https://img.icons8.com/fluency/144/000000/lumpy-space-princess.png" />
-            <a class="services-link main-link" href="services.jsp">
-                <h3>SERVICIOS</h3>
-            </a>
-            <p>Queres saber que servicios hay? pues no esperes mas y pincha el boton!</p>
-        </article>
-        <article>
-            <img src="https://img.icons8.com/fluency/144/000000/princess-bubblegum.png" />
-            <a class="packages-link main-link" href="packages.jsp">
-                <h3>PAQUETES DE SERVICIOS</h3>
-            </a>
-            <p>Paquetes ! A todos nos gustan los empaques con cosas dentro, animate y revisalos !</p>
-        </article>
-        <article>
-            <img src="https://img.icons8.com/fluency/144/000000/jake.png" />
-            <a class="sales-link main-link" href="sales.jsp">
-                <h3>VENTAS</h3>
-            </a>
-            <p>Desde esta zona podra ver todas las ventas !</p>
-        </article>
-    </main>
+    <body>
 
+        <%
+            HttpSession thisSession = request.getSession();
+            String userSession = (String) thisSession.getAttribute("username");
+            if (userSession == null) {
+                response.sendRedirect("login.jsp");
+            } else {
+        %> 
 
-    <footer class="box-size">
-        <p>
-            Hecho con ♥ por Gaston Giacobini (Proyecto Polo Tic Misiones 2021)
-        </p>
-    </footer>
+        <nav class="navbar">
+            <section class="buttons">
+                <div class="outer button">
+                    <a href="index.jsp">
+                        HOME
+                    </a>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="outer button" title="ola ke mira">
+                    <a target="_blank" href="https://youtu.be/dQw4w9WgXcQ">
+                        easter-egg
+                    </a>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="outer button">
+                    <a href="https://github.com/gaston38kpo/servicio-turistico">
+                        GITHUB
+                    </a>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="outer button">
+                    <a href="https://www.linkedin.com/in/gaston-giacobini/">
+                        SOBRE MI
+                    </a>
+                    <span></span>
+                    <span></span>
+                </div>
+            </section>
+            <section class="profits-nav">
+                <% Sale saleEarnings = new Sale(); %>
+                <span>Promedio de Ganancias Diarias : &dollar;<%= saleEarnings.getDailyEarnings() %></span>
+                <span>Promedio de Ganancias Mensuales : &dollar;<%= saleEarnings.getMonthlyEarnings() %></span>
 
-    <% } %>
-</body>
+            </section>
+            <section class="username-nav">
+                <%
+                    thisSession = request.getSession();
+
+                    userSession = (String) thisSession.getAttribute("username");
+
+                    if (userSession != null) {%>
+                <p>Bienvenido 
+                    <strong>
+                        <%= request.getSession().getAttribute("username")%>
+                    </strong> !
+                </p>
+                <form id="form-logout" action="SvUserSession" method="POST">
+                    <input type="hidden" name="logout" value="true">
+                    <button type="submit">
+                        <img src="https://img.icons8.com/ios-glyphs/30/ffffff/logout-rounded-left.png"/>
+                    </button>
+                </form>
+
+                <%}%>
+
+            </section>
+        </nav>
+
+        <section class="container-index">
+            <div class="left-box">
+                <div class="btn"><a href="users.jsp">USUARIOS</a></div>
+                <div class="btn"><a href="employees.jsp">EMPLEADOS</a></div>
+                <div class="btn"><a href="clients.jsp">CLIENTES</a></div>
+            </div>
+            <div class="right-box">
+                <div class="btn"><a href="services.jsp">SERVICIOS</a></div>
+                <div class="btn"><a href="packages.jsp">PAQUETES</a></div>
+                <div class="btn"><a href="sales.jsp">VENTAS</a></div>
+            </div>
+
+        </section>
+        <footer class="box-size">
+            <p>
+                Hecho con &hearts; por Gaston Giacobini (Proyecto Polo Tic Misiones 2021)
+            </p>
+        </footer>
+
+        <% }%>
+        <script src="assets/js/global.js"></script>
+    </body>
+
 </html>

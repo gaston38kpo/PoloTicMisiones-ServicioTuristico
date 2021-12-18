@@ -2,6 +2,7 @@ package logica;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,36 +12,36 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import persistencia.ControladoraPersistencia;
 
 @Entity
 public class Sale implements Serializable {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int sale_number;    
-    
+    private int sale_number;
+
     @Basic
     private String payment_mehod;
-    
+
     @Temporal(TemporalType.DATE)
-    private Date date_sale;    
-    
+    private Date date_sale;
+
     @ManyToOne
-    @JoinColumn(name="client_fk")
+    @JoinColumn(name = "client_fk")
     private Client client_fk;
-    
+
     @ManyToOne
-    @JoinColumn(name="employee_fk")
+    @JoinColumn(name = "employee_fk")
     private Employee employee_fk;
-    
+
     @ManyToOne
-    @JoinColumn(name="service_code_fk")
+    @JoinColumn(name = "service_code_fk")
     private Service service_code_fk;
-    
+
     @ManyToOne
-    @JoinColumn(name="package_code_fk")
+    @JoinColumn(name = "package_code_fk")
     private Package package_code_fk;
-    
 
     public Sale() {
     }
@@ -111,6 +112,84 @@ public class Sale implements Serializable {
         this.package_code_fk = package_code_fk;
     }
 
-    
-    
+    public double getSaleCost(double item_cost, String payment_method) {
+
+        switch (payment_method) {
+            case "Transferencia":
+                return item_cost + item_cost * 0.245;
+            case "Tarjeta de Debito":
+                return item_cost + item_cost * 0.3;
+            case "Tarjeta de Credito":
+                return item_cost + item_cost * 0.9;
+            default:
+                return item_cost;
+        }
+    }
+
+    public int getDaysBetweenTodayAnd(Date other_date) {
+
+        // La fecha actual
+        Date today = new Date(System.currentTimeMillis());
+
+        int milisecondsByDay = 86400000;
+        int days = (int) ((today.getTime() - other_date.getTime()) / milisecondsByDay);
+
+        return days;
+    }
+
+    public double getDailyEarnings() {
+
+        ControladoraPersistencia controlPersis = new ControladoraPersistencia();
+
+        int max_difference = 0;
+        double cost_with_commission;
+        double global_cost = 0;
+
+        for (Sale sale : controlPersis.getAllSales()) {
+            // Obtengo la diferencia entre el dia de la primera compra y el presente
+            int days = getDaysBetweenTodayAnd(sale.getDate_sale());
+
+            if (max_difference < days) {
+                max_difference = days;
+            }
+
+            if (sale.getService_code_fk() != null) {
+                cost_with_commission = getSaleCost(sale.getService_code_fk().getCost_service(), sale.getPayment_mehod());
+                global_cost += cost_with_commission;
+            } else if (sale.getPackage_code_fk() != null) {
+                cost_with_commission = getSaleCost(sale.getPackage_code_fk().getPackage_cost(), sale.getPayment_mehod());
+                global_cost += cost_with_commission;
+            }
+        }
+
+        double daily_profit = global_cost / max_difference;
+
+        double daily_profit_rounded = Math.round(daily_profit * Math.pow(10, 2)) / Math.pow(10, 2);
+        return daily_profit_rounded;
+    }
+  
+    public double getMonthlyEarnings() {
+
+        ControladoraPersistencia controlPersis = new ControladoraPersistencia();
+
+        double cost_with_commission;
+        double global_cost = 0;
+
+        for (Sale sale : controlPersis.getAllSales()) {
+
+            if (sale.getService_code_fk() != null) {
+                cost_with_commission = getSaleCost(sale.getService_code_fk().getCost_service(), sale.getPayment_mehod());
+                global_cost += cost_with_commission;
+            } else if (sale.getPackage_code_fk() != null) {
+                cost_with_commission = getSaleCost(sale.getPackage_code_fk().getPackage_cost(), sale.getPayment_mehod());
+                global_cost += cost_with_commission;
+            }
+        }
+
+        double monthly_profit = global_cost / 30;
+        double monthly_profit_rounded = Math.round(monthly_profit * Math.pow(10, 2)) / Math.pow(10, 2);
+        return monthly_profit_rounded;
+    }
+
+
 }

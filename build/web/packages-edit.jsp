@@ -1,10 +1,12 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="logica.Package"%>
 <%@page import="logica.Service"%>
-<%@page import="logica.User" %>
-<%@page import="java.util.List" %>
-<%@page import="logica.Controladora" %>
-<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@page import="logica.Client"%>
+<%@page import="logica.Employee"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="logica.User"%>
+<%@page import="java.util.List"%>
+<%@page import="logica.Controladora"%>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -13,134 +15,213 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link rel="stylesheet" href="assets/css/style.css">
-        <link rel="stylesheet" href="assets/css/log-manager.css">
-        <link rel="stylesheet" href="assets/css/form.css">
+        <link rel="stylesheet" href="assets/css/index.css">
+        <link rel="stylesheet" href="assets/css/form-neon.css">
+        <link rel="stylesheet" href="assets/css/log-neon.css">
 
-        <title>index</title>
+        <link rel="shortcut icon"
+              href="https://img.icons8.com/external-becris-lineal-color-becris/64/000000/external-analytics-digital-economy-becris-lineal-color-becris-3.png"
+              type="image/x-icon">
+
+        <title>Agencia de Turismo</title>
+
         <style>
-            .table-wrapper{
-                max-width: 60%;
-                margin: 0 auto;
+            .row100 .col {
+                text-shadow: 1px 0 2px black, -1px 0 2px black, 0 1px 2px black;
+                font-size: 21px;
             }
-            .box-size {
-                max-width: 60%;
-                min-width: 825px;
+            .section-log {
+                width: 60%;
             }
         </style>
+
     </head>
 
-    <body>         
+    <body>
 
-        <div class="logobar-default box-size">
-            <a href="index.jsp">
-                <h1>Agencia de Turismo UwU</h1>
-            </a>
-        </div>
+        <%
+            HttpSession thisSession = request.getSession();
 
-    <navbar class="navbar-default box-size">
+            String userSession = (String) thisSession.getAttribute("username");
 
-        <ul class="links">
-            <li><a href="https://youtu.be/dQw4w9WgXcQ">
-                    SOY UN LINK :D
-                </a></li>
-            <li><a href="#">
-                    GITHUB
-                </a></li>
-            <li><a href="#">
-                    SOBRE MI
-                </a></li>
-        </ul>
+            if (userSession == null) {
+                response.sendRedirect("login.jsp");
+            } else if (userSession != null) {
+        %>
 
-    </navbar>
+        <nav class="navbar">
+            <section class="buttons">
+                <div class="outer button">
+                    <a href="index.jsp">
+                        HOME
+                    </a>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="outer button" title="ola ke mira">
+                    <a target="_blank" href="https://youtu.be/dQw4w9WgXcQ">
+                        easter-egg
+                    </a>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="outer button">
+                    <a href="https://github.com/gaston38kpo/servicio-turistico">
+                        GITHUB
+                    </a>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="outer button">
+                    <a href="https://www.linkedin.com/in/gaston-giacobini/">
+                        SOBRE MI
+                    </a>
+                    <span></span>
+                    <span></span>
+                </div>
+            </section>
+            <section class="profits-nav">
+                <% Sale saleEarnings = new Sale(); %>
+                <span>Promedio de Ganancias Diarias : &dollar;<%= saleEarnings.getDailyEarnings() %></span>
+                <span>Promedio de Ganancias Mensuales : &dollar;<%= saleEarnings.getMonthlyEarnings() %></span>
+            </section>
+            <section class="username-nav">
+                <%
+                    thisSession = request.getSession();
 
-    <main class="container-default box-size">
+                    userSession = (String) thisSession.getAttribute("username");
 
-        <section class="form-section">
+                    if (userSession != null) {%>
+                <p>Bienvenido 
+                    <strong>
+                        <%= request.getSession().getAttribute("username")%>
+                    </strong> !
+                </p>
+                <form id="form-logout" action="SvUserLogout" method="POST">
+                    <input type="hidden" name="logout" value="true">
+                    <button type="submit">
+                        <img src="https://img.icons8.com/ios-glyphs/30/ffffff/logout-rounded-left.png"/>
+                    </button>
+                </form>
 
-            <input type=checkbox id="show">
-            <label class="show-btn" for="show">Editar Paquete</label>
+                <%}%>
 
-            <!-- Form to edit package -->
-            <form action="SvPackageEdit" method="GET">
+            </section>
+        </nav>
 
-                <h2>Paquete</h2> 
+        <main class="main-crud">
 
-                <div class="form-group">
+            <section class="section-form">
 
-                    <%
-                        Controladora control = new Controladora();
+                <!-- Formulario de creacion -->
+                <form class="container-form" action="SvPackageEdit" method="GET">
 
-                        // SERVICIOS EN EL PAQUETE
-                        Package pkg = (Package) request.getSession().getAttribute("pkg");
-                        List<Service> list_of_services = pkg.getList_of_services();
+                    <h2>Editar Paquete</h2>
 
-                        // TODOS LOS SERVICIOS 
-                        List<Service> serviceList = control.getAllServices();
+                    <br>
 
-                        // A LA LISTA COMPLETA SE LE RESTAN LOS SERVICIOS DEL PAQUETE
-                        List<Service> newServiceList = new <Service> ArrayList();
+                    <h2>Informacion del Paquete</h2>
 
-                        // (1) RECORRO LOS SERVICIOS DE MI PAQUETE Y LOS MUESTRO
-                        for (Service serviceInPkg : list_of_services) {
-                    %>
 
-                    <label  class="checkbox-label" >
-                        <input type="checkbox" name="service_code" value="<%= serviceInPkg.getService_code()%>" checked="checked">
-                        <%= serviceInPkg.getName()%>
-                    </label>
+                    <div class="row100">
 
-                    <%
-                            // (2) RECORRO TODOS LOS SERVICIOS DE LA BD
-                            for (Service service : serviceList) {
-                                // (3) VALIDACION 1: SI NO COINCIDEN LAS PK CONTINÃšA (ESTO ES PARA MOSTRAR SOLO LOS QUE NO TIENE MI PAQUETE)
-                                if (serviceInPkg.getService_code() != service.getService_code()) {
-                                    boolean exist = false;
+                        <%
+                            Controladora control = new Controladora();
 
-                                    // (4) RECORRO LOS SERVICIOS DE MI PAQUETE
-                                    for (Service serviceRecheck : list_of_services) {
-                                        // (5) VALIDACION 2: SI COINCIDE EL SERVICIO DE LA BD CON EL DE LA PK CONTINÃšA
-                                        if (service.getService_code() == serviceRecheck.getService_code()) {
-                                            exist = true;
-                                            break;
+                            // SERVICIOS EN EL PAQUETE
+                            Package pkg = (Package) request.getSession().getAttribute("pkg");
+                            List<Service> list_of_services = pkg.getList_of_services();
+
+                            // TODOS LOS SERVICIOS 
+                            List<Service> serviceList = control.getAllServices();
+
+                            // A LA LISTA COMPLETA SE LE RESTAN LOS SERVICIOS DEL PAQUETE
+                            List<Service> newServiceList = new <Service> ArrayList();
+
+                            // (1) RECORRO LOS SERVICIOS DE MI PAQUETE Y LOS MUESTRO
+                            for (Service serviceInPkg : list_of_services) {
+                        %>
+
+                        <div class="col">
+
+                            <label  class="checkbox-label" >
+                                <input 
+                                    type="checkbox" 
+                                    name="service_code" 
+                                    value="<%= serviceInPkg.getService_code()%>" 
+                                    checked="checked">
+                                <%= serviceInPkg.getName()%>
+                            </label>
+
+                        </div>
+
+                        <%
+                                // (2) RECORRO TODOS LOS SERVICIOS DE LA BD
+                                for (Service service : serviceList) {
+                                    // (3) VALIDACION 1: SI NO COINCIDEN LAS PK CONTINÚA (ESTO ES PARA MOSTRAR SOLO LOS QUE NO TIENE MI PAQUETE)
+                                    if (serviceInPkg.getService_code() != service.getService_code()) {
+                                        boolean exist = false;
+
+                                        // (4) RECORRO LOS SERVICIOS DE MI PAQUETE
+                                        for (Service serviceRecheck : list_of_services) {
+                                            // (5) VALIDACION 2: SI COINCIDE EL SERVICIO DE LA BD CON EL DE LA PK CONTINÚA
+                                            if (service.getService_code() == serviceRecheck.getService_code()) {
+                                                exist = true;
+                                                break;
+                                            }
                                         }
-                                    }
-                                    for (Service serviceCheck : newServiceList) {
-                                        if (service.getService_code() == serviceCheck.getService_code()) {
-                                            exist = true;
-                                            break;
+                                        for (Service serviceCheck : newServiceList) {
+                                            if (service.getService_code() == serviceCheck.getService_code()) {
+                                                exist = true;
+                                                break;
+                                            }
                                         }
-                                    }
-                                    if (!exist) {
-                                        newServiceList.add(service);
+                                        if (!exist) {
+                                            newServiceList.add(service);
+                                        }
                                     }
                                 }
-                            }
-                        }%>
+                            }%>
 
-                    <% for (Service service : newServiceList) {%>
+                        <% for (Service service : newServiceList) {%>
 
-                    <label  class="checkbox-label" >
-                        <input type="checkbox" name="service_code" value="<%= service.getService_code()%>">
-                        <%= service.getName()%>
-                    </label>
+                        <div class="col">
 
-                    <%}%>
-                </div>
-                <input type="hidden" name="package_code" value="<%= pkg.getPackage_code()%>">
-                <input type="submit" value="Modificar Paquete" class="submit-btn">
+                            <label  class="checkbox-label" >
+                                <input 
+                                    type="checkbox" 
+                                    name="service_code" 
+                                    value="<%= service.getService_code()%>">
+                                <%= service.getName()%>
+                            </label>
 
-            </form>
+                        </div>
 
-        </section>
+                        <%}%>
 
-    </main>
+                    </div>
 
-    <footer class="box-size">
-        <p>
-            Hecho con â™¥ por Gaston Giacobini (Proyecto Polo Tic Misiones 2021)
-        </p>
-    </footer>
+                    <input type="hidden" name="package_code" value="<%= pkg.getPackage_code()%>">
 
-</body>
+                    <div class="row100">
+                        <div class="col">
+                            <input type="submit" value="Editar" class="submit-btn">
+                        </div>
+                    </div>
+
+                </form>
+
+            </section>            
+
+        </main>
+        <footer class="box-size">
+            <p>
+                Hecho con &hearts; por Gaston Giacobini (Proyecto Polo Tic Misiones 2021)
+            </p>
+        </footer>
+
+        <% }%>
+        <script src="assets/js/global.js"></script>
+    </body>
+
 </html>
