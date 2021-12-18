@@ -1,11 +1,27 @@
 # Trabajo practico final del Polo Tic de Misiones (Silicon Misiones)
 ### Datos:
 ```
-{
-  "Nombre BD": "servicio_turistico",
-  "usuario": "root",
-  "password": 
-}
+[
+  {
+    "Nombre BD": "servicio_turistico",
+    "usuario": "root",
+    "password": ""
+  },
+  {
+    "Elementos usados": [
+      {
+        "NetBeans": "8.2",
+        "jdk": "8u301",
+        "jre": "8u301",
+        "Tomcat": "8.0.53",
+        "MySQL Connector java": "5.1.23",
+        "Persistencia": "javax.persistence-2.0.0",
+        "XAMPP": "v3.3.0"
+      }
+    ]
+  }
+]
+
 ```
 ## SUPUESTOS
 
