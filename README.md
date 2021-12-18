@@ -16,7 +16,8 @@
         "Tomcat": "8.0.53",
         "MySQL Connector java": "5.1.23",
         "Persistencia": "javax.persistence-2.0.0",
-        "XAMPP": "v3.3.0"
+        "XAMPP": "v3.3.0",
+        "Mucho": "♥"
       }
     ]
   }
