@@ -5,6 +5,18 @@ Nombre BD: servicio_turistico
 usuario: root
 password:
 
+SUPUESTOS
+
+Seccion VENTAS:
+En el listado de ventas, aquel campo (servicio o paquete) que este vacio, se mostrara con un guion "-" lo que supone que no se contrató ese y se contrato el otro campo.
+Al vender un paquete, se supone que este debe de estar previamente creado en la seccion PAQUETES para conocer su codigo de paquete.
+
+Seccion PAQUETES:
+El servicio adquirido para armar el mismo es por unidad y deben elegirse 2 o mas para que se pueda crear el paquete.
+
+Bonus:
+Las ganancias diarias se calculan en base a la media de ingresos dividido la cantidad de dias desde la primera compra, las ganancias mensuales se divide el ingreso entre 30, este ultimo valor representa un aproximado (porque tambien existen meses de 31 y 28 dias).
+
 Primeros conceptos y diseños previos al actual:
 
 ![boceto pagina web](https://user-images.githubusercontent.com/77559010/146626339-fd8a458d-4d74-4579-8fa1-a4a8ced22cb8.png)
