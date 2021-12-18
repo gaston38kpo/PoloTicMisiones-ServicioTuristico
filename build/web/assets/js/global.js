@@ -30,4 +30,6 @@ console.log(`%c ____________________________
                 ||----w |
                 ||     ||`, "font-family:monospace")
 
-console.log("%cHecho con ♥ por Gaston Giacobini\n(Proyecto Polo Tic Misiones 2021)", "color: yellow; font-size:10px"); 
+console.log("%c\nFelicidades encontraste el easter egg!\n(Y no, no era el video)\n", "color: yellow; font-size:10px"); 
+
+console.log("%c🐱‍🐉\n%cAdios visitante-nya", "color: yellow; font-size:200px", "font-size: 20px"); 

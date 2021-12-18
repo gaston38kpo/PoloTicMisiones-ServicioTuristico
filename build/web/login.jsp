@@ -18,7 +18,7 @@
     <body>
         <section class="login-box">
 
-            <h1>LOGIN</h1>
+            <h1>INICIAR SESI&Oacute;N</h1>
             <form name="loginform" class="login-form" action="SvUserSession" method="POST">
                 <div class="user-box">
                     <input type="text" name="username" id="username_id" required>
@@ -33,7 +33,7 @@
                     <span></span>
                     <span></span>
                     <span></span>
-                    LOGIN
+                    ENTRAR
                 </button>
             </form>
             <form class="login-form" >
@@ -42,7 +42,7 @@
                     <span></span>
                     <span></span>
                     <span></span>
-                    REGISTER
+                    REGISTRARSE
                 </a>
             </form>
         </section>
