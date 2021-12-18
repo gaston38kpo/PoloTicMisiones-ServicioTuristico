@@ -11,6 +11,8 @@
     "Elementos usados": [
       {
         "NetBeans": "8.2",
+        "Java EE": "6 Web",
+        "EclipseLink": "JPA 2.1",
         "jdk": "8u301",
         "jre": "8u301",
         "Tomcat": "8.0.53",
