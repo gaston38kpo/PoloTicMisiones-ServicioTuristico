@@ -5,7 +5,7 @@ Nombre BD: servicio_turistico
 usuario: root
 password:
 
-Primer concepto:
+Primeros conceptos y diseños previos al actual:
 
 ![boceto pagina web](https://user-images.githubusercontent.com/77559010/146626339-fd8a458d-4d74-4579-8fa1-a4a8ced22cb8.png)
 
