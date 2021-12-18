@@ -156,6 +156,8 @@ select {
     text-shadow: 0 0 56px #fff, 0 0 16px #000;
     width: 86%;
 }
+
+
 .col select {
     margin: 0;
 }

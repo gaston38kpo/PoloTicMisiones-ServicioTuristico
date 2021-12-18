@@ -28,23 +28,27 @@
                     <input type="password" name="password" id="password_id" required>
                     <label for="password_id">Contrase&ntilde;a</label>
                 </div>            
-                <button type="submit" onclick="document.loginform.action = 'SvUserSession'">
+                <button type="submit">
                     <span></span>
                     <span></span>
                     <span></span>
                     <span></span>
                     LOGIN
                 </button>
-                <button type="submit" onclick="document.loginform.action = 'SvUserCreate'">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    REGISTER & LOGIN
-                </button>
             </form>
-
+            <form class="login-form" >
+                <a href='users.jsp'>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    REGISTER
+                </a>
+            </form>
         </section>
+
+        <script src="assets/js/global.js"></script>
+
     </body>
 
 </html>

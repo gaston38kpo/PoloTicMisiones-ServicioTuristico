@@ -1,3 +1,4 @@
+<%@page import="logica.Sale"%>
 <%@page import="logica.User"%>
 <%@page import="java.util.List"%>
 <%@page import="logica.Controladora"%>
@@ -28,16 +29,6 @@
     </head>
 
     <body>
-
-        <%
-            HttpSession thisSession = request.getSession();
-
-            String userSession = (String) thisSession.getAttribute("username");
-
-            if (userSession == null) {
-                response.sendRedirect("login.jsp");
-            } else if (userSession != null) {
-        %>
 
         <nav class="navbar">
             <section class="buttons">
@@ -70,10 +61,37 @@
                     <span></span>
                 </div>
             </section>
+            <section class="profits-nav">
+                <%
+                    HttpSession thisSession = request.getSession();
+
+                    String userSession = (String) thisSession.getAttribute("username");
+
+                    Sale saleEarnings = new Sale();
+                    if (userSession != null) {
+                %>
+                <span>Promedio de Ganancias Diarias : &dollar;<%= saleEarnings.getDailyEarnings()%></span>
+                <span>Promedio de Ganancias Mensuales : &dollar;<%= saleEarnings.getMonthlyEarnings()%></span>
+
+                <%}%>
+            </section>
             <section class="username-nav">
-                <p>Bienvenido <strong>
+                <%
+                    if (userSession != null) {%>
+                <p>Bienvenido 
+                    <strong>
                         <%= request.getSession().getAttribute("username")%>
-                    </strong> !</p>
+                    </strong> !
+                </p>
+                <form id="form-logout" action="SvUserLogout" method="POST">
+                    <input type="hidden" name="logout" value="true">
+                    <button type="submit">
+                        <img src="https://img.icons8.com/ios-glyphs/30/ffffff/logout-rounded-left.png"/>
+                    </button>
+                </form>
+
+                <%}%>
+
             </section>
         </nav>
 
@@ -112,6 +130,12 @@
 
             </section>
 
+            <%
+                thisSession = request.getSession();
+
+                userSession = (String) thisSession.getAttribute("username");
+
+                if (userSession != null) { %>
 
             <!-- Tabla con todos los datos listados -->        
             <section class="section-log">

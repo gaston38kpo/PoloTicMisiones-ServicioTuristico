@@ -1,3 +1,4 @@
+<%@page import="logica.Sale"%>
 <%@page import="logica.Service"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="logica.User"%>
@@ -66,10 +67,33 @@
                     <span></span>
                 </div>
             </section>
+            <section class="profits-nav">
+                <% Sale saleEarnings = new Sale(); %>
+                <span>Promedio de Ganancias Diarias : &dollar;<%= saleEarnings.getDailyEarnings() %></span>
+                <span>Promedio de Ganancias Mensuales : &dollar;<%= saleEarnings.getMonthlyEarnings() %></span>
+            </section>
             <section class="username-nav">
-                <p>Bienvenido <strong>
+                <%
+                    thisSession = request.getSession();
+
+                    userSession = (String) thisSession.getAttribute("username");
+
+                    if (userSession != null) {
+                %>
+                <p>Bienvenido 
+                    <strong>
                         <%= request.getSession().getAttribute("username")%>
-                    </strong> !</p>
+                    </strong> !
+                </p>
+                <form id="form-logout" action="SvUserLogout" method="POST">
+                    <input type="hidden" name="logout" value="true">
+                    <button type="submit">
+                        <img src="https://img.icons8.com/ios-glyphs/30/ffffff/logout-rounded-left.png"/>
+                    </button>
+                </form>
+
+                <%}%>
+
             </section>
         </nav>
 
@@ -86,7 +110,7 @@
                         SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
                         String date_service = DATE_FORMAT.format(service.getDate_service());
                     %>
-                    
+
                     <input type="hidden" name="service_code" value="<%= service.getService_code()%>">
 
                     <h2>Editar Servicio</h2>

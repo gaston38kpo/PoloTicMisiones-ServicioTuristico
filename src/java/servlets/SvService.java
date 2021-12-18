@@ -1,8 +1,12 @@
 package servlets;
 
 import java.io.IOException;
-import java.sql.Date;
+import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,7 +37,7 @@ public class SvService extends HttpServlet {
         String description;
         String destination;
         double cost_service;
-        Date date_service;
+        Date date_service = new Date();
 
         Service service;
 
@@ -60,7 +64,15 @@ public class SvService extends HttpServlet {
                 description = request.getParameter("description");
                 destination = request.getParameter("destination");
                 cost_service = Double.parseDouble(request.getParameter("cost_service"));
-                date_service = Date.valueOf(request.getParameter("date_service"));
+                
+                SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");                
+                try {
+                    date_service = formato.parse(request.getParameter("date_service"));
+                } catch (ParseException ex) {
+                    Logger.getLogger(SvClient.class.getName()).log(
+                            Level.SEVERE, null, ex);
+                }
+                
 
                 // Traigo el objeto con su respectivo ID
                 service = control.searchService(service_code);
@@ -99,7 +111,7 @@ public class SvService extends HttpServlet {
         String description;
         String destination;
         double cost_service;
-        Date date_service;
+        Date date_service = new Date();
 
         Service service;
         HttpSession thisSession;
@@ -115,7 +127,14 @@ public class SvService extends HttpServlet {
                 description = request.getParameter("description");
                 destination = request.getParameter("destination");
                 cost_service = Double.parseDouble(request.getParameter("cost_service"));
-                date_service = Date.valueOf(request.getParameter("date_service"));
+                
+                SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");                
+                try {
+                    date_service = formato.parse(request.getParameter("date_service"));
+                } catch (ParseException ex) {
+                    Logger.getLogger(SvClient.class.getName()).log(
+                            Level.SEVERE, null, ex);
+                }
 
                 // Envio de datos a la controladora 
                 control.createService(name, description, destination, cost_service, date_service);

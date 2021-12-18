@@ -1,3 +1,4 @@
+<%@page import="logica.Sale"%>
 <%@page import="logica.Package"%>
 <%@page import="logica.Service"%>
 <%@page import="logica.Client"%>
@@ -23,7 +24,7 @@
               type="image/x-icon">
 
         <title>Agencia de Turismo</title>
-        
+
         <style>
             .row100 .col {
                 text-shadow: 1px 0 2px black, -1px 0 2px black, 0 1px 2px black;
@@ -79,10 +80,32 @@
                     <span></span>
                 </div>
             </section>
+            <section class="profits-nav">
+                <% Sale saleEarnings = new Sale(); %>
+                <span>Promedio de Ganancias Diarias : &dollar;<%= saleEarnings.getDailyEarnings() %></span>
+                <span>Promedio de Ganancias Mensuales : &dollar;<%= saleEarnings.getMonthlyEarnings() %></span>
+            </section>
             <section class="username-nav">
-                <p>Bienvenido <strong>
+                <%
+                    thisSession = request.getSession();
+
+                    userSession = (String) thisSession.getAttribute("username");
+
+                    if (userSession != null) {%>
+                <p>Bienvenido 
+                    <strong>
                         <%= request.getSession().getAttribute("username")%>
-                    </strong> !</p>
+                    </strong> !
+                </p>
+                <form id="form-logout" action="SvUserLogout" method="POST">
+                    <input type="hidden" name="logout" value="true">
+                    <button type="submit">
+                        <img src="https://img.icons8.com/ios-glyphs/30/ffffff/logout-rounded-left.png"/>
+                    </button>
+                </form>
+
+                <%}%>
+
             </section>
         </nav>
 
@@ -99,21 +122,21 @@
 
                     <h2>Informacion del Paquete</h2>
 
-                        
+
                     <div class="row100">
-                        
-                            <%
-                                Controladora control = new Controladora();
 
-                                List<Service> serviceList = control.getAllServices();
+                        <%
+                            Controladora control = new Controladora();
 
-                                for (Service service : serviceList) {
+                            List<Service> serviceList = control.getAllServices();
 
-                                    String name = service.getName();
-                            %>
+                            for (Service service : serviceList) {
+
+                                String name = service.getName();
+                        %>
 
                         <div class="col">
-                            
+
                             <label  class="checkbox-label" >
                                 <input 
                                     type="checkbox"
@@ -122,9 +145,9 @@
                                 <%= name%>
                             </label>
 
-                            
+
                         </div>
-                            <%}%>                        
+                        <%}%>                        
                     </div>                   
 
 

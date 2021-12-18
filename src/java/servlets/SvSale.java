@@ -1,8 +1,12 @@
 package servlets;
 
 import java.io.IOException;
-import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -34,7 +38,7 @@ public class SvSale extends HttpServlet {
 
         int sale_number;
         String payment_mehod;
-        Date date_sale;
+        Date date_sale = new Date();
         int client_id_fk;
         int employee_id_fk;
         String service_code_id_fk;
@@ -64,7 +68,15 @@ public class SvSale extends HttpServlet {
 
                 // Almacenando los nuevos datos
                 payment_mehod = request.getParameter("payment_mehod");
-                date_sale = Date.valueOf(request.getParameter("date_sale"));
+                
+                SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");                
+                try {
+                    date_sale = formato.parse(request.getParameter("date_sale"));
+                } catch (ParseException ex) {
+                    Logger.getLogger(SvClient.class.getName()).log(
+                            Level.SEVERE, null, ex);
+                }
+                
                 client_id_fk = Integer.parseInt(request.getParameter("client_fk"));
                 employee_id_fk = Integer.parseInt(request.getParameter("employee_fk"));
                 service_code_id_fk = request.getParameter("service_code_fk");
@@ -123,7 +135,7 @@ public class SvSale extends HttpServlet {
 
         int sale_number;
         String payment_mehod;
-        Date date_sale;
+        Date date_sale = new Date();
         int client_id_fk;
         int employee_id_fk;
         String service_code_id_fk;
@@ -144,7 +156,15 @@ public class SvSale extends HttpServlet {
 
                 // Almacenando los datos
                 payment_mehod = request.getParameter("payment_mehod");
-                date_sale = Date.valueOf(request.getParameter("date_sale"));
+                
+                SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");                
+                try {
+                    date_sale = formato.parse(request.getParameter("date_sale"));
+                } catch (ParseException ex) {
+                    Logger.getLogger(SvClient.class.getName()).log(
+                            Level.SEVERE, null, ex);
+                }
+                
                 client_id_fk = Integer.parseInt(request.getParameter("client_fk"));
                 employee_id_fk = Integer.parseInt(request.getParameter("employee_fk"));
                 service_code_id_fk = request.getParameter("service_code_fk");

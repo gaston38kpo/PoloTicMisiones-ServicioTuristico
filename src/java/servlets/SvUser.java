@@ -12,7 +12,7 @@ import logica.Controladora;
 import logica.User;
 
 @WebServlet(name = "SvUser", urlPatterns = {"/SvUserCreate",
-    "/SvUserDelete", "/SvUserEdit", "/SvUserRead", "/SvUserSession"})
+    "/SvUserDelete", "/SvUserEdit", "/SvUserRead", "/SvUserSession", "/SvUserLogout"})
 public class SvUser extends HttpServlet {
 
     Controladora control = new Controladora();
@@ -104,13 +104,13 @@ public class SvUser extends HttpServlet {
                 // Almacenando los nuevos datos
                 username = request.getParameter("username");
                 password = request.getParameter("password");
-                
+
                 request.getSession().setAttribute("username", username);
                 request.getSession().setAttribute("password", password);
-                
+
                 // Envio de datos a la controladora 
-                control.createUser(username, password);                
-                
+                control.createUser(username, password);
+
                 // Redirecciona a si misma para ver el nuevo dato en la tabla.
                 response.sendRedirect("users.jsp");
 
@@ -176,6 +176,23 @@ public class SvUser extends HttpServlet {
 
                     response.sendRedirect("index.jsp");
                 } else {
+                    response.sendRedirect("login.jsp");
+                }
+
+//</editor-fold>
+                break;
+            case "/SvUserLogout":
+                //<editor-fold defaultstate="collapsed" desc="[POST]LOGOUT">
+
+                String logout = request.getParameter("logout");
+
+                if (logout.equals("true") || logout == null) {
+                    thisSession = request.getSession(true);
+
+                    thisSession.setAttribute("username", null);
+                    thisSession.setAttribute("password", null);
+                    thisSession.setAttribute("logout", "false");
+
                     response.sendRedirect("login.jsp");
                 }
 

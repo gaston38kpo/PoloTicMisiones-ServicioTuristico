@@ -113,10 +113,32 @@
                     <span></span>
                 </div>
             </section>
+            <section class="profits-nav">
+                <% Sale saleEarnings = new Sale(); %>
+                <span>Promedio de Ganancias Diarias : &dollar;<%= saleEarnings.getDailyEarnings() %></span>
+                <span>Promedio de Ganancias Mensuales : &dollar;<%= saleEarnings.getMonthlyEarnings() %></span>
+            </section>
             <section class="username-nav">
-                <p>Bienvenido <strong>
+                <%
+                    thisSession = request.getSession();
+
+                    userSession = (String) thisSession.getAttribute("username");
+
+                    if (userSession != null) {%>
+                <p>Bienvenido 
+                    <strong>
                         <%= request.getSession().getAttribute("username")%>
-                    </strong> !</p>
+                    </strong> !
+                </p>
+                <form id="form-logout" action="SvUserLogout" method="POST">
+                    <input type="hidden" name="logout" value="true">
+                    <button type="submit">
+                        <img src="https://img.icons8.com/ios-glyphs/30/ffffff/logout-rounded-left.png"/>
+                    </button>
+                </form>
+
+                <%}%>
+
             </section>
         </nav>
 
@@ -149,7 +171,6 @@
                         <div class="col">
                             <select name="payment_mehod" id="payment_mehod_id" required>
                                 <option disabled selected value> -- METODO DE PAGO -- </option>
-                                <optgroup label="SISTEMA DE COMISIONES AUN NO IMPLEMENTADO"></optgroup>
                                 <optgroup label="Sin comisión">                            
                                     <option value="efectivo">Efectivo</option>
                                     <option value="Monedero Virtual">Monedero Virtual</option>
@@ -284,6 +305,7 @@
                             <th><h1>Empleado</h1></th>
                             <th><h1>Servicio (Si corresponde)</h1></th>
                             <th><h1>Paquete (Si corresponde)</h1></th>
+                            <th><h1>Costo final(Comision incluida)</h1></th>
                             <th><h1></h1></th>
                         </tr>
                     </thead>
@@ -382,6 +404,19 @@
                                     <%}%>
                                 </select> 
                             </td>
+                            
+                            <% if (sale.getPackage_code_fk() == null) {%>
+                            
+                            <td>
+                                <%= sale.getSaleCost(sale.getService_code_fk().getCost_service(), sale.getPayment_mehod()) %>
+                            </td> 
+                            <%} else {%>
+                            
+                            <td>
+                                <%= sale.getSaleCost(sale.getPackage_code_fk().getPackage_cost(), sale.getPayment_mehod()) %>
+                            </td> 
+                            
+                            <%}%>
                             <td class="td-delete-btn">
                                 <form class="form-delete" action="SvSaleDelete" method="POST">
                                     <input type="hidden" name="sale_number" value="<%= sale.getSale_number()%>">

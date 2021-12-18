@@ -1,3 +1,4 @@
+<%@page import="logica.Sale"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
@@ -7,10 +8,10 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link rel="stylesheet" href="assets/css/index.css">
-        
+        <link rel="stylesheet" href="assets/css/index.css">        
+
         <link rel="shortcut icon" href="https://img.icons8.com/external-becris-lineal-color-becris/64/000000/external-analytics-digital-economy-becris-lineal-color-becris-3.png" type="image/x-icon">
-        
+
         <title>Agencia de Turismo</title>
 
     </head>
@@ -19,8 +20,8 @@
 
         <%
             HttpSession thisSession = request.getSession();
-            String user = (String) thisSession.getAttribute("username");
-            if (user == null) {
+            String userSession = (String) thisSession.getAttribute("username");
+            if (userSession == null) {
                 response.sendRedirect("login.jsp");
             } else {
         %> 
@@ -56,8 +57,33 @@
                     <span></span>
                 </div>
             </section>
+            <section class="profits-nav">
+                <% Sale saleEarnings = new Sale(); %>
+                <span>Promedio de Ganancias Diarias : &dollar;<%= saleEarnings.getDailyEarnings() %></span>
+                <span>Promedio de Ganancias Mensuales : &dollar;<%= saleEarnings.getMonthlyEarnings() %></span>
+
+            </section>
             <section class="username-nav">
-                <p>Bienvenido <strong><%= request.getSession().getAttribute("username")%></strong> !</p>
+                <%
+                    thisSession = request.getSession();
+
+                    userSession = (String) thisSession.getAttribute("username");
+
+                    if (userSession != null) {%>
+                <p>Bienvenido 
+                    <strong>
+                        <%= request.getSession().getAttribute("username")%>
+                    </strong> !
+                </p>
+                <form id="form-logout" action="SvUserSession" method="POST">
+                    <input type="hidden" name="logout" value="true">
+                    <button type="submit">
+                        <img src="https://img.icons8.com/ios-glyphs/30/ffffff/logout-rounded-left.png"/>
+                    </button>
+                </form>
+
+                <%}%>
+
             </section>
         </nav>
 
@@ -81,7 +107,7 @@
         </footer>
 
         <% }%>
-
+        <script src="assets/js/global.js"></script>
     </body>
 
 </html>

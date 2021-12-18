@@ -1,8 +1,12 @@
 package servlets;
 
 import java.io.IOException;
-import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -34,7 +38,7 @@ public class SvEmployee extends HttpServlet {
         String last_name;
         String street;
         String dni;
-        Date birthdate;
+        Date birthdate = new Date();
         String nationality;
         String cellphone;
         String email;
@@ -71,7 +75,15 @@ public class SvEmployee extends HttpServlet {
                 last_name = request.getParameter("last_name");
                 street = request.getParameter("street");
                 dni = request.getParameter("dni");
-                birthdate = Date.valueOf(request.getParameter("birthdate"));
+                
+                SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");                
+                try {
+                    birthdate = formato.parse(request.getParameter("birthdate"));
+                } catch (ParseException ex) {
+                    Logger.getLogger(SvClient.class.getName()).log(
+                            Level.SEVERE, null, ex);
+                }
+                
                 nationality = request.getParameter("nationality");
                 cellphone = request.getParameter("cellphone");
                 email = request.getParameter("email");
@@ -129,7 +141,7 @@ public class SvEmployee extends HttpServlet {
         String last_name;
         String street;
         String dni;
-        Date birthdate;
+        Date birthdate = new Date();
         String nationality;
         String cellphone;
         String email;
@@ -153,7 +165,15 @@ public class SvEmployee extends HttpServlet {
                 last_name = request.getParameter("last_name");
                 street = request.getParameter("street");
                 dni = request.getParameter("dni");
-                birthdate = Date.valueOf(request.getParameter("birthdate"));
+                
+                SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");                
+                try {
+                    birthdate = formato.parse(request.getParameter("birthdate"));
+                } catch (ParseException ex) {
+                    Logger.getLogger(SvClient.class.getName()).log(
+                            Level.SEVERE, null, ex);
+                }
+                
                 nationality = request.getParameter("nationality");
                 cellphone = request.getParameter("cellphone");
                 email = request.getParameter("email");
