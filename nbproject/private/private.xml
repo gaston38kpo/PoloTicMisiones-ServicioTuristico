@@ -3,12 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Flacus/workspace/Polo%20TIC%20Misiones/TpFinal/web/sales.jsp</file>
-            <file>file:/C:/Users/Flacus/workspace/Polo%20TIC%20Misiones/TpFinal/web/sales-edit.jsp</file>
-            <file>file:/C:/Users/Flacus/workspace/Polo%20TIC%20Misiones/TpFinal/web/users-edit.jsp</file>
-            <file>file:/C:/Users/Flacus/workspace/Polo%20TIC%20Misiones/TpFinal/web/assets/css/form-neon.css</file>
-            <file>file:/C:/Users/Flacus/workspace/Polo%20TIC%20Misiones/TpFinal/web/employees-edit.jsp</file>
-            <file>file:/C:/Users/Flacus/workspace/Polo%20TIC%20Misiones/TpFinal/src/java/servlets/SvSale.java</file>
+            <file>file:/C:/Users/Flacus/workspace/Polo%20TIC%20Misiones/TpFinal/src/java/servlets/SvUser.java</file>
+            <file>file:/C:/Users/Flacus/workspace/Polo%20TIC%20Misiones/TpFinal/src/java/logica/Controladora.java</file>
+            <file>file:/C:/Users/Flacus/workspace/Polo%20TIC%20Misiones/TpFinal/web/login.jsp</file>
+            <file>file:/C:/Users/Flacus/workspace/Polo%20TIC%20Misiones/TpFinal/src/java/servlets/SvPackage.java</file>
+            <file>file:/C:/Users/Flacus/workspace/Polo%20TIC%20Misiones/TpFinal/src/java/logica/Sale.java</file>
+            <file>file:/C:/Users/Flacus/workspace/Polo%20TIC%20Misiones/TpFinal/src/java/servlets/SvEmployee.java</file>
+            <file>file:/C:/Users/Flacus/workspace/Polo%20TIC%20Misiones/TpFinal/web/assets/js/global.js</file>
         </group>
     </open-files>
 </project-private>

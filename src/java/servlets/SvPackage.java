@@ -98,7 +98,7 @@ public class SvPackage extends HttpServlet {
                 // Guardo los values seleccionados en una lista
                 service_code_list = request.getParameterValues("service_code");
 
-                if (service_code_list.length < 2) {
+                if (service_code_list.length < 2 || service_code_list.length > 5) {
                     System.out.println("No se puede crear el paquete porque tiene menos de 2 items");
                     // Si no tiene mas de 1 servicio no hace nada y vuelve a la misma pagina
                     response.sendRedirect("packages.jsp");
