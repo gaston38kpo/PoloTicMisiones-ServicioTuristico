@@ -85,7 +85,7 @@
                         <%= request.getSession().getAttribute("username")%>
                     </strong> !
                 </p>
-                <form id="form-logout" action="SvUserSession" method="POST">
+                <form id="form-logout" action="SvUserLogout" method="POST">
                     <input type="hidden" name="logout" value="true">
                     <button type="submit">
                         <img src="https://img.icons8.com/ios-glyphs/30/ffffff/logout-rounded-left.png"/>

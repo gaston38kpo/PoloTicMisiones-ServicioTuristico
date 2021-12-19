@@ -2,7 +2,6 @@ package logica;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -161,21 +160,36 @@ public class Sale implements Serializable {
                 global_cost += cost_with_commission;
             }
         }
-
-        double daily_profit = global_cost / max_difference;
-
+        
+        double daily_profit;
+        
+        // Si da la casualidad que la diferencia de dias es 0 (es decir dentro de las 24 horas) se toma el valor sin modificar
+        if (max_difference > 0) {
+            daily_profit = global_cost / max_difference;
+        } else {
+            daily_profit = global_cost;
+        }
+        
         double daily_profit_rounded = Math.round(daily_profit * Math.pow(10, 2)) / Math.pow(10, 2);
         return daily_profit_rounded;
+
     }
-  
+
     public double getMonthlyEarnings() {
 
         ControladoraPersistencia controlPersis = new ControladoraPersistencia();
 
+        int max_difference = 0;
         double cost_with_commission;
-        double global_cost = 0;
+        double global_cost = 0;  
 
         for (Sale sale : controlPersis.getAllSales()) {
+            // Obtengo la diferencia entre el dia de la primera compra y el presente
+            int days = getDaysBetweenTodayAnd(sale.getDate_sale());
+
+            if (max_difference < days) {
+                max_difference = days;
+            }
 
             if (sale.getService_code_fk() != null) {
                 cost_with_commission = getSaleCost(sale.getService_code_fk().getCost_service(), sale.getPayment_mehod());
@@ -186,10 +200,19 @@ public class Sale implements Serializable {
             }
         }
 
-        double monthly_profit = global_cost / 30;
+        double monthly_profit;
+        
+        // Si la venta mas lejana esta dentro de los ultimos 30 dias se toma el resultado como ganancia mensual
+        // de lo contrario, si la venta mas lejana es mayor a 30 dias, las ganancias se dividen entre 30 para calcular un 
+        // aproximado de ganancias mensuales.       
+        if (max_difference > 30) {
+            monthly_profit = global_cost / 30;
+        } else {
+            monthly_profit = global_cost;
+        }
+        
         double monthly_profit_rounded = Math.round(monthly_profit * Math.pow(10, 2)) / Math.pow(10, 2);
         return monthly_profit_rounded;
     }
-
 
 }

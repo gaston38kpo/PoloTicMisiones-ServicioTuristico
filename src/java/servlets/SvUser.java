@@ -32,6 +32,9 @@ public class SvUser extends HttpServlet {
         String password;
         int id;
 
+        HttpSession thisSession;
+        User user;
+
 //</editor-fold>
         switch (action) {
             case "/SvUserCreate":
@@ -50,12 +53,23 @@ public class SvUser extends HttpServlet {
                 // Se almacena el ID
                 id = Integer.parseInt(request.getParameter("id"));
 
-                // Almacenando los nuevos datos
+                // Almacenando los nuevos datos en variables
                 username = request.getParameter("username");
                 password = request.getParameter("password");
 
-                // Traigo el objeto con su respectivo ID
-                User user = control.searchUser(id);
+                // Traigo el objeto                 
+                thisSession = request.getSession();
+                user = (User) thisSession.getAttribute("user");
+                String user_session_username = user.getUsername();
+                String user_session_password = user.getPassword();
+
+                String session_username = (String) thisSession.getAttribute("username");
+                String session_password = (String) thisSession.getAttribute("password");
+
+                if (user_session_username.equals(session_username) && user_session_password.equals(session_password)) {
+                    thisSession.setAttribute("username", username);
+                    thisSession.setAttribute("password", password);
+                }
 
                 // Asignacion de los datos anteriormente almacenados al objeto
                 user.setUsername(username);
@@ -92,9 +106,11 @@ public class SvUser extends HttpServlet {
         int id;
         String username;
         String password;
+        String session_username;
 
         HttpSession thisSession;
         List<User> userList;
+        User user;
 
 //</editor-fold>
         switch (action) {
@@ -105,12 +121,15 @@ public class SvUser extends HttpServlet {
                 username = request.getParameter("username");
                 password = request.getParameter("password");
 
-                request.getSession().setAttribute("username", username);
-                request.getSession().setAttribute("password", password);
-
                 // Envio de datos a la controladora 
                 control.createUser(username, password);
 
+                thisSession = request.getSession();
+                session_username = (String) thisSession.getAttribute("username");
+                if (session_username == null) {
+                    thisSession.setAttribute("username", username);
+                    thisSession.setAttribute("password", password);
+                }
                 // Redirecciona a si misma para ver el nuevo dato en la tabla.
                 response.sendRedirect("users.jsp");
 
@@ -121,6 +140,19 @@ public class SvUser extends HttpServlet {
 
                 // Se almacena el id de ese momento del ciclo
                 id = Integer.parseInt(request.getParameter("id"));
+
+                thisSession = request.getSession();
+
+                user = control.searchUser(id);
+                String user_name = user.getUsername();
+
+                String session_user_name = (String) thisSession.getAttribute("username");
+
+                if (user_name.equals(session_user_name)) {
+                    thisSession.setAttribute("username", null);
+                    thisSession.setAttribute("password", null);
+                    thisSession.setAttribute("logout", null);
+                }
 
                 // Se envia el dato a la controladora 
                 control.deleteUser(id);
@@ -137,7 +169,7 @@ public class SvUser extends HttpServlet {
                 id = Integer.parseInt(request.getParameter("id"));
 
                 // Traigo el objeto 
-                User user = control.searchUser(id);
+                user = control.searchUser(id);
 
                 // Almaceno el objeto en la sesion
                 thisSession = request.getSession();
@@ -186,12 +218,15 @@ public class SvUser extends HttpServlet {
 
                 String logout = request.getParameter("logout");
 
-                if (logout.equals("true") || logout == null) {
-                    thisSession = request.getSession(true);
+                if (logout == null) {
+                    response.sendRedirect("login.jsp");
+                } else if (logout.equals("true")) {
+
+                    thisSession = request.getSession();
 
                     thisSession.setAttribute("username", null);
                     thisSession.setAttribute("password", null);
-                    thisSession.setAttribute("logout", "false");
+                    thisSession.setAttribute("logout", null);
 
                     response.sendRedirect("login.jsp");
                 }

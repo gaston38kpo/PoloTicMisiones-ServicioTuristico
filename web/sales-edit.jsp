@@ -172,8 +172,6 @@
                         } catch (Exception e) {
                             package_code_fk = null;
                         }
-                        System.out.println(sale.getPayment_mehod());
-
                     %>
 
                     <h2>Editar Venta</h2>
