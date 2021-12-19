@@ -1,3 +1,4 @@
+<%@page import="logica.Sale"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="logica.Package"%>
 <%@page import="logica.Service"%>

@@ -116,7 +116,7 @@
                 <!-- Formulario de creacion -->
                 <form class="container-form" action="SvPackageCreate" method="POST">
 
-                    <h2>Crear Paquete</h2>
+                    <h2>Crear Paquete<br><sup style="font-size:14px">(Max 5 Serv.)</sup></h2>
 
                     <br>
 
@@ -132,7 +132,7 @@
 
                             for (Service service : serviceList) {
 
-                                String name = service.getName();
+                                String name = service.getName();                                
                         %>
 
                         <div class="col">
@@ -142,7 +142,7 @@
                                     type="checkbox"
                                     name="service_code"
                                     value="<%= service.getService_code()%>">
-                                <%= name%>
+                                <%= name%> <br> (&dollar;<%=service.getCost_service()%>)
                             </label>
 
 
@@ -202,7 +202,7 @@
                                     <%for (Service pkgService : packageServiceList) {%>
 
                                     <option>
-                                        <%= pkgService.getName()%>
+                                        <%= pkgService.getName()%> (&dollar;<%=pkgService.getCost_service()%>)
                                     </option>
 
                                     <% }%>
