@@ -27,6 +27,8 @@ public class Controladora {
 //⢹⣿⣵⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣯⡁
 //
 // Bienvenido a la Controladora que te controla!
+//                                                                  Espera khé?    
+//    
     
     ControladoraPersistencia controlPersis = new ControladoraPersistencia();
 
