@@ -2,7 +2,7 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="logica.User"%>
 <%@page import="logica.Employee"%>
-<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@page contentType="text/html"%>
 <!DOCTYPE html>
 <html lang="es">
 
