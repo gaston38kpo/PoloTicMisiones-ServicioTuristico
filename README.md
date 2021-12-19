@@ -43,6 +43,11 @@
 - Ganancias mensuales: se divide la suma total de los ingresos de ventas entre 30, en caso de que la ganancia mas lejana este por debajo de los 30 dias, 
 se toma como ganancia mensual la suma total sin aplicarle la division.
 
+## Errores conocidos:
+- No se puede eliminar un elemento que esta siendo usado por otro, por ejemplo, un usuario que pertenece a un empleado.
+- Hay problemas con la codificacion por lo que suelen fallar las acentuaciones y demas caracteres especiales.
+- La pagina no cuenta con diseño web responsivo actualmente.
+
 # Primeros conceptos y diseños previos al actual:
 
 ![boceto pagina web](https://user-images.githubusercontent.com/77559010/146664366-a1a91366-4844-454e-b6bd-8147104ea437.jpg)
