@@ -31,7 +31,7 @@
 
 ### Seccion VENTAS:
 - En el listado de ventas, aquel campo (servicio o paquete) que este vacio, se mostrara con un guion "-" lo que supone que no se contrató ese y se contrato el otro campo.
-Al vender un paquete, se supone que este debe de estar previamente creado en la seccion PAQUETES para conocer su codigo de paquete.
+- Al vender un paquete, se supone que este debe de estar previamente creado en la seccion PAQUETES para conocer su codigo de paquete.
 
 ### Seccion PAQUETES:
 - El servicio adquirido para armar el mismo es por unidad y deben elegirse 2 o mas para que se pueda crear el paquete.
