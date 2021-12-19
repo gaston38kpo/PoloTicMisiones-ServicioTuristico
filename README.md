@@ -3,9 +3,13 @@
 ```
 [
   {
-    "Nombre BD": "servicio_turistico",
-    "usuario": "root",
-    "password": ""
+    "Base de datos": [
+      {
+        "Nombre BD": "servicio_turistico",
+        "usuario": "root",
+        "password": ""
+      }
+    ]
   },
   {
     "Elementos usados": [
