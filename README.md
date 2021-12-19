@@ -42,7 +42,7 @@ Las ganancias diarias se calculan en base a la media de ingresos dividido la can
 
 # Primeros conceptos y diseños previos al actual:
 
-![boceto pagina web](https://user-images.githubusercontent.com/77559010/146626339-fd8a458d-4d74-4579-8fa1-a4a8ced22cb8.png)
+![boceto pagina web](https://user-images.githubusercontent.com/77559010/146664366-a1a91366-4844-454e-b6bd-8147104ea437.jpg)
 
 # Diagrama de clases:
 
