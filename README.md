@@ -36,10 +36,10 @@
 ### Seccion PAQUETES:
 - El servicio adquirido para armar el mismo es por unidad y deben elegirse 2 o mas para que se pueda crear el paquete.
 - El maximo de servicios en un paquete es de 5 (Cinco).
+- El minimo de servicios en un paquete es de 2 (Dos).
 
 ### Bonus:
 - Las ganancias diarias se calculan en base a la media de ingresos dividido la cantidad de dias desde la primera compra, las ganancias mensuales se divide el ingreso entre 30, este ultimo valor representa un aproximado (porque tambien existen meses de 31 y 28 dias).
-- El maximo de servicios en un paquete es de 5 (Cinco).
 
 # Primeros conceptos y diseños previos al actual:
 
