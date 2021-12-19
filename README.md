@@ -39,7 +39,9 @@
 - El minimo de servicios en un paquete es de 2 (Dos).
 
 ### Bonus:
-- Las ganancias diarias se calculan en base a la media de ingresos dividido la cantidad de dias desde la primera compra, las ganancias mensuales se divide el ingreso entre 30, este ultimo valor representa un aproximado (porque tambien existen meses de 31 y 28 dias).
+- Ganancias diarias: se divide la suma total de los ingresos de ventas entre la cantidad de dias entre la ganancia mas lejana y el presente.
+- Ganancias mensuales: se divide la suma total de los ingresos de ventas entre 30, en caso de que la ganancia mas lejana este por debajo de los 30 dias, 
+se toma como ganancia mensual la suma total sin aplicarle la division.
 
 # Primeros conceptos y diseños previos al actual:
 
