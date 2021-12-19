@@ -35,6 +35,7 @@ Al vender un paquete, se supone que este debe de estar previamente creado en la 
 
 ### Seccion PAQUETES:
 El servicio adquirido para armar el mismo es por unidad y deben elegirse 2 o mas para que se pueda crear el paquete.
+El maximo de servicios en un paquete es de 5 (Cinco).
 
 ### Bonus:
 Las ganancias diarias se calculan en base a la media de ingresos dividido la cantidad de dias desde la primera compra, las ganancias mensuales se divide el ingreso entre 30, este ultimo valor representa un aproximado (porque tambien existen meses de 31 y 28 dias).
