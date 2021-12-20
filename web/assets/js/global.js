@@ -31,5 +31,3 @@ console.log(`%c ____________________________
                 ||     ||`, "font-family:monospace")
 
 console.log("%c\nFelicidades encontraste el easter egg!\n(Y no, no era el video)\n", "color: yellow; font-size:10px"); 
-
-console.log("%c🐱‍🐉\n%cAdios visitante-nya", "color: yellow; font-size:200px", "font-size: 20px"); 
